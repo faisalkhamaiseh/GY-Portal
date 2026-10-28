@@ -66,6 +66,7 @@ export default function GuidePage() {
                   {group.title}
                   <span className="chip bg-mint text-forest">{group.place}</span>
                 </h3>
+                {group.note && <p className="mt-2 max-w-3xl leading-relaxed text-ink-2">{group.note}</p>}
                 <ul className="mt-4 space-y-2">
                   {group.items.map((item) => {
                     const on = !!ticks?.[item.id]
@@ -83,7 +84,13 @@ export default function GuidePage() {
                             <span className="mt-1 block leading-relaxed text-ink-2">{item.text}</span>
                           </span>
                         </button>
-                        {item.official && <OfficialLink {...item.official} className="ms-14 mt-2" />}
+                        {item.official && (
+                          <div className="ms-14 mt-2 flex flex-wrap gap-2">
+                            {[].concat(item.official).map((link) => (
+                              <OfficialLink key={link.href} {...link} />
+                            ))}
+                          </div>
+                        )}
                       </li>
                     )
                   })}

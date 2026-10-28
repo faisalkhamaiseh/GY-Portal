@@ -8,6 +8,11 @@ export const officialSources = {
   makeIt: { label: 'البوابة الرسمية Make it in Germany', href: 'https://www.make-it-in-germany.com/en/' },
   rundfunk: { label: 'الموقع الرسمي لرسوم البث', href: 'https://www.rundfunkbeitrag.de/' },
   gju: { label: 'الجامعة الألمانية الأردنية (GJU)', href: 'https://www.gju.edu.jo/' },
+  gjuEligibility: { label: 'GJU: شروط بدء السنة الألمانية', href: 'https://www.gju.edu.jo/node/13323' },
+  gjuTerms: { label: 'GJU: متطلبات بدء السنة الألمانية', href: 'https://www.gju.edu.jo/node/16241' },
+  gjuLanguage: { label: 'GJU: أنظمة اللغة الألمانية للسنة الألمانية', href: 'https://www.gju.edu.jo/content/german-language-regulations-german-year-12359' },
+  gjuManual: { label: 'GJU: دليل السنة الألمانية (PDF)', href: 'https://www.gju.edu.jo/sites/default/files/german_year_manual_final.pdf' },
+  fintiba: { label: 'الحساب المجمّد من Fintiba', href: 'https://www.fintiba.com/solutions/blocked-account-germany/' },
   daad: { label: 'DAAD: الدراسة في ألمانيا', href: 'https://www.daad.de/en/' },
   dticket: { label: 'الموقع الرسمي لتذكرة ألمانيا', href: 'https://deutschlandticket.de/' },
   ba: { label: 'الوكالة الاتحادية للعمل', href: 'https://www.arbeitsagentur.de/en/' },
@@ -17,12 +22,25 @@ const search = (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
 
 export const checklist = [
   {
+    id: 'gju',
+    title: 'قبل أن تذهب: متطلبات GJU',
+    place: 'GJU',
+    note: 'لا تسمح لك GJU ببدء السنة الألمانية قبل إنهاء هذه الخطوات. الشروط والمواعيد والرسوم الدقيقة تحددها GJU وقد تختلف حسب الكلية والدفعة، فتأكد من كل خطوة مع منسق التبادل ودائرة الشؤون الدولية.',
+    items: [
+      { id: 'gy-eligible', title: 'تأكد أنك تستوفي شروط بدء السنة الألمانية', text: 'تحدد GJU حداً أدنى للمعدل وعدداً أدنى من الساعات المنجزة (دون مساقات اللغة الألمانية) لكل كلية، ويجب أن يبقى معدلك فوق الحد الأدنى عند السفر.', official: officialSources.gjuEligibility },
+      { id: 'gy-german', title: 'حقّق متطلب اللغة الألمانية', text: 'أنهِ مساقات اللغة والمستوى المطلوب (مسار B1 أو أعلى) حسب أنظمة اللغة في GJU، واسأل مبكراً عمّا يحدث إن لم تنجح في المستوى الأخير قبل السفر.', official: officialSources.gjuLanguage },
+      { id: 'gy-apply', title: 'قدّم طلبك عبر منسق التبادل', text: 'قدّم طلب السنة الألمانية عبر منسق التبادل في كليتك ودائرة الشؤون الدولية لتُدرج في قائمة الطلبة المغادرين وتُوزّع على جامعة شريكة.', official: officialSources.gjuTerms },
+      { id: 'gy-training', title: 'أنهِ أي تدريب تشترطه خطتك الدراسية أولاً', text: 'بعض الكليات تشترط التدريب الميداني في الأردن قبل السنة الألمانية. راجع خطتك الدراسية وأنهِه في الوقت المناسب.', official: officialSources.gjuManual },
+      { id: 'gy-fee', title: 'ادفع رسوم السنة الألمانية قبل موعد GJU', text: 'تتقاضى GJU رسوماً تنظيمية للسنة الألمانية. تحقق من المبلغ الحالي والموعد وشروط الإلغاء لدى GJU قبل الدفع.', official: officialSources.gjuManual },
+    ],
+  },
+  {
     id: 'before',
     title: 'قبل السفر',
     place: 'عمّان',
     items: [
       { id: 'dorm', title: 'قدّم على السكن الطلابي بمجرد فتح التقديم', text: 'التقديم يفتح عادةً قبل بداية الفصل بعدة أشهر، والغرف بالأسبقية. يمكن غالباً التقديم قبل وصول رسالة القبول، ويجب تأكيد الحجز عبر رسالة المتابعة.', official: { label: 'ابحث عن Studierendenwerk مدينتك', href: search('Studierendenwerk Wohnheim Bewerbung') } },
-      { id: 'sperrkonto', title: 'افتح الحساب المجمّد (Sperrkonto)', text: 'تودع فيه مبلغ سنة كاملة يُصرف لك شهرياً. المبلغ المطلوب يحدده القانون الألماني ويتغير، فتحقق منه رسمياً قبل التحويل، وأضف مبلغاً بسيطاً لرسوم التحويل.', official: officialSources.foreignOffice },
+      { id: 'sperrkonto', title: 'افتح الحساب المجمّد (Sperrkonto)', text: 'تودع فيه مبلغ سنة كاملة يُصرف لك شهرياً. مزودون مثل Fintiba يتيحون فتحه عبر الإنترنت خلال دقائق، وهو مقبول للتأشيرة. المبلغ المطلوب يحدده القانون الألماني ويتغير، فتحقق منه رسمياً قبل التحويل، وأضف مبلغاً بسيطاً لرسوم التحويل.', official: [officialSources.foreignOffice, officialSources.fintiba] },
       { id: 'visa', title: 'احصل على تأشيرة الدراسة', text: 'احجز موعد السفارة مبكراً قدر الإمكان. الوثائق المطلوبة وطريقة الحجز تُحدد رسمياً من السفارة.', official: officialSources.visa },
       { id: 'insurance', title: 'اختر التأمين الصحي', text: 'التأمين الصحي إلزامي للتسجيل في الجامعة. قارن بين شركات التأمين الحكومية، واحرص على تأمين سفر للأيام الأولى حتى يبدأ تأمينك.', official: { label: 'قارن TK وAOK', href: '/compare#health', internal: true } },
       { id: 'folder', title: 'جهّز ملف الوثائق', text: 'جواز السفر والتأشيرة وصور بيومترية ورسالة القبول ووثائق GJU وكشف العلامات ورسالة التأمين وعقد الإيجار، مع نسخ ورقية من كل شيء، ومبلغ نقدي يكفي الأيام الأولى.' },
