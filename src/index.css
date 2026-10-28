@@ -1,0 +1,136 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-display: 'Cairo', 'IBM Plex Sans Arabic', system-ui, sans-serif;
+  --font-sans: 'IBM Plex Sans Arabic', 'Cairo', system-ui, sans-serif;
+  --font-mono: 'IBM Plex Sans Arabic', ui-monospace, monospace;
+
+  --color-ink: #1d2420;
+  --color-ink-2: #3b443f;
+  --color-muted: #66706a;
+  --color-line: #ddd6c8;
+  --color-paper: #f7f4ee;
+  --color-card: #fffdf8;
+  --color-sand: #efe8da;
+  --color-rust: #b0472d;
+  --color-rust-dark: #8e3721;
+  --color-forest: #1f5b45;
+  --color-forest-dark: #164434;
+  --color-mint: #dfeee6;
+  --color-gold: #d9a43b;
+  --color-amber: #f6e8c6;
+  --color-blush: #f7ddd5;
+  --color-link: #1d5a8c;
+  --color-navy: #0f1a33;
+  --color-navy-2: #17264a;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.7;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-rust);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@utility wrap {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+@utility eyebrow {
+  @apply font-sans text-[13px] font-bold text-rust;
+}
+@utility h-display {
+  @apply font-display font-extrabold text-ink;
+  line-height: 1.25;
+}
+@utility card {
+  @apply rounded-2xl border border-line bg-card;
+}
+@utility chip {
+  @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs font-semibold;
+}
+@utility link {
+  @apply text-link underline decoration-link/30 underline-offset-2 transition-colors hover:decoration-link;
+}
+@utility btn {
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors;
+}
+@utility btn-primary {
+  @apply btn bg-ink text-paper hover:bg-forest;
+}
+@utility btn-ghost {
+  @apply btn border border-line bg-card text-ink hover:border-ink;
+}
+
+/* Arabic letters must stay joined: never letter-space them. */
+[dir='rtl'] * {
+  letter-spacing: 0 !important;
+}
+
+/* Arrows point the other way in a right-to-left layout. */
+[dir='rtl'] .lucide-arrow-right,
+[dir='rtl'] .lucide-arrow-left,
+[dir='rtl'] .lucide-arrow-up-right,
+[dir='rtl'] .lucide-chevron-right,
+[dir='rtl'] .lucide-corner-down-left {
+  transform: scaleX(-1);
+}
+
+.num {
+  font-family: 'Cairo', system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+.grain {
+  background-image: radial-gradient(rgba(29, 36, 32, 0.06) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.rise {
+  animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
