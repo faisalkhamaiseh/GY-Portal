@@ -5,7 +5,7 @@ import RegionArt from '../components/RegionArt.jsx'
 import VideoGrid from '../components/VideoGrid.jsx'
 import UniversityCard from '../components/UniversityCard.jsx'
 import PriceTable from '../components/PriceTable.jsx'
-import { SectionHead, LinkRow, Callout } from '../components/ui.jsx'
+import { SectionHead, LinkRow, Callout, EstimateNote } from '../components/ui.jsx'
 import { regionBySlug, regions } from '../data/regions.js'
 import { portals, dormSearch } from '../data/housing.js'
 import { rentFor, tiers } from '../data/costs.js'
@@ -201,6 +201,7 @@ export default function RegionPage() {
               <SectionHead id="costs" eyebrow="الأسعار" title={`تكلفة كل شيء في ${region.name}`}>
                 الإيجار هو الأكثر اختلافاً بين المدن، والأسعار اليومية تتبعه قليلاً. اختر مدينة ليتعدّل الجدول كله.
               </SectionHead>
+              <EstimateNote className="mb-4" />
               <div className="mb-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                 {cheapest.map((c) => {
                   const r = rentFor(c)

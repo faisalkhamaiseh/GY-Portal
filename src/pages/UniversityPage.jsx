@@ -6,7 +6,7 @@ import VideoGrid, { VideoModal, thumb } from '../components/VideoGrid.jsx'
 import PriceTable from '../components/PriceTable.jsx'
 import BudgetPlanner from '../components/BudgetPlanner.jsx'
 import UniversityCard from '../components/UniversityCard.jsx'
-import { SectionHead, LinkRow, Callout, Tag, ExtLink } from '../components/ui.jsx'
+import { SectionHead, LinkRow, Callout, Tag, ExtLink, OfficialLink, EstimateNote } from '../components/ui.jsx'
 import { universityById, universitiesIn, regionOf, requirementTags, rentForUniversity, coverVideoId } from '../lib/data.js'
 import { tiers } from '../data/costs.js'
 import { portals, dormSearch } from '../data/housing.js'
@@ -176,8 +176,12 @@ export default function UniversityPage() {
             </div>
           </div>
           <p className="mt-4 flex items-start gap-2 text-muted">
-            <Info className="mt-1 size-4 shrink-0" /> الشروط قد تتغير كل سنة. تأكد مع مكتب السنة الألمانية في GJU قبل تقديم اختياراتك.
+            <Info className="mt-1 size-4 shrink-0" /> الشروط والرسوم والمواعيد قد تتغير في أي وقت. هذه معلومات عامة فقط؛ تأكد مع مكتب السنة الألمانية في GJU ومع الجامعة المضيفة قبل تقديم اختياراتك.
           </p>
+          <div className="mt-3 flex flex-wrap gap-2">
+            <OfficialLink href={u.site} label="الجامعة المضيفة" />
+            <OfficialLink href="https://www.gju.edu.jo/" label="GJU" />
+          </div>
         </section>
 
         <section>
@@ -225,6 +229,7 @@ export default function UniversityPage() {
             <SectionHead id="housing" eyebrow="السكن" title={<>أين تسكن في <span dir="ltr">{u.city}</span></>}>
               معظم طلاب GJU يسكنون في سكن Studierendenwerk: رخيص ومفروش وشامل الفواتير. إن فاتك، استخدم المواقع الخاصة أدناه وابدأ مبكراً.
             </SectionHead>
+            <EstimateNote className="mb-4" />
             <div className="mb-5 grid gap-3 sm:grid-cols-3">
               {[
                 ['غرفة سكن طلابي', rent.dorm, 'شاملة الفواتير'],

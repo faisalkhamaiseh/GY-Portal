@@ -1,8 +1,10 @@
 # GY-Portal: German Year Guide for GJU students
 
-An Arabic (RTL) guide for German Jordanian University students on their German Year. It covers all 126 host universities, the 16 German states and the partner universities abroad. It is an **unofficial, independent** guide that is not affiliated with GJU or any German authority.
+A bilingual guide, in **Arabic and English**, for German Jordanian University students on their German Year. It covers all 126 host universities, the 16 German states and the partner universities abroad. It is an **unofficial, independent** guide that is not affiliated with GJU or any German authority.
 
 ## Features
+
+- **Arabic or English: the student chooses.** Arabic (RTL) lives at `/` and English (LTR) at `/en`. The language button in the header switches the current page to the other language and remembers the choice in the browser.
 
 - **126 universities and 17 regions**, each with real YouTube campus, city and region videos, housing links (Studierendenwerk and trusted portals), estimated prices, and halal food and mosques.
 - **Smart search** in the top bar (Arabic and English): it handles typos and routes queries like "prices in Berlin", "housing in Munich", "halal food Erfurt" and "E120" to the right page.
@@ -17,7 +19,7 @@ An Arabic (RTL) guide for German Jordanian University students on their German Y
 - **Global disclaimer.** The exact disclaimer text (English and Arabic) appears permanently in the footer of every page and in a one-time modal on the first visit (`src/components/Disclaimer.jsx`).
 - **No volatile data.** Exact fees, contribution amounts and event dates were removed. Check official sources for current values.
 
-When you edit content in `src/data/*.js`, keep to these rules.
+When you edit content in `src/data/*.js` (Arabic) or `src/en/data/*.js` (English), keep to these rules and update both languages.
 
 ## Tech
 
@@ -37,11 +39,18 @@ npm run dev        # http://localhost:5173
 npm run build      # production build in dist/
 ```
 
+## Project layout
+
+- `src/`: the Arabic site (`App.jsx`, `pages/`, `components/`, `data/`, `lib/`).
+- `src/en/`: the English site, with the same structure and routes.
+- `src/main.jsx`: loads the Arabic or English app depending on the URL (`/en` prefix) and the saved choice. Each language is its own bundle.
+- Shared pieces: `src/components/Disclaimer.jsx`, `src/components/LangSwitch.jsx`, `src/lib/lang.js`, `src/data/videos.json` and `src/index.css`.
+
 ## Data
 
 | File | What |
 | --- | --- |
-| `src/data/universities.tsv` | The 126 host universities: GJU requirements, fees, notes and websites |
+| `src/data/universities.tsv`, `src/en/data/universities.tsv` | The 126 host universities (Arabic and English): GJU requirements, fees, notes and websites |
 | `src/data/videos.json` | Curated YouTube videos per university, city, state and topic |
 | `src/data/regions.js` | States: events, sights, housing and airports |
 | `src/data/costs.js` | Estimated price ranges and rent tiers |

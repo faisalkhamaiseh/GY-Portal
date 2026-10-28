@@ -9,19 +9,20 @@ export const DISCLAIMER_AR =
 
 const KEY = 'gy-disclaimer-accepted'
 
-export function DisclaimerText({ className = '' }) {
+export function DisclaimerText({ className = '', lang = 'ar' }) {
   return (
     <div className={className}>
       <p dir="ltr" lang="en" className="text-start">
         {DISCLAIMER}
       </p>
-      <p className="mt-2">{DISCLAIMER_AR}</p>
+      {lang === 'ar' && <p className="mt-2">{DISCLAIMER_AR}</p>}
     </div>
   )
 }
 
 // Shown once on the first visit; acceptance is remembered in this browser.
-export default function DisclaimerModal() {
+export default function DisclaimerModal({ lang = 'ar' }) {
+  const en = lang === 'en'
   const [open, setOpen] = useState(false)
   const button = useRef(null)
 
@@ -56,12 +57,12 @@ export default function DisclaimerModal() {
         <p className="flex items-center gap-2 text-rust">
           <ShieldAlert className="size-6" aria-hidden />
           <span id="disclaimer-title" className="text-xl font-extrabold text-ink">
-            قبل أن تبدأ
+            {en ? 'Before you start' : 'قبل أن تبدأ'}
           </span>
         </p>
-        <DisclaimerText className="mt-4 space-y-2 leading-relaxed text-ink-2" />
+        <DisclaimerText lang={lang} className="mt-4 space-y-2 leading-relaxed text-ink-2" />
         <button ref={button} type="button" onClick={accept} className="btn-primary mt-6 w-full justify-center">
-          فهمت وأوافق
+          {en ? 'I understand and agree' : 'فهمت وأوافق'}
         </button>
       </div>
     </div>

@@ -1,0 +1,58 @@
+import { Link } from 'react-router-dom'
+import { ArrowRight } from 'lucide-react'
+import GermanyMap from '../components/GermanyMap.jsx'
+import RegionArt from '../components/RegionArt.jsx'
+import { SectionHead } from '../components/ui.jsx'
+import { regions } from '../data/regions.js'
+import { universitiesIn, cityList } from '../lib/data.js'
+
+export default function RegionsPage() {
+  return (
+    <div className="wrap pt-12">
+      <p className="eyebrow">Regions</p>
+      <h1 className="h-display mt-2 text-5xl sm:text-6xl">Germany, state by state</h1>
+      <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
+        Each state page brings together its host universities, videos, events, things to do, local prices, Studierendenwerk dorms and daily-life tips.
+      </p>
+      <div className="mt-12">
+        <GermanyMap />
+      </div>
+
+      <div className="mt-20">
+        <SectionHead eyebrow="All regions" title="Pick your region" />
+        <div className="space-y-4">
+          {regions.map((r) => {
+            const n = universitiesIn(r.code).length
+            const cities = cityList(r.code)
+            return (
+              <Link key={r.code} to={`/regions/${r.slug}`} className="group card grid overflow-hidden transition-colors hover:border-ink md:grid-cols-[320px_1fr]">
+                <RegionArt region={r} label={false} className="aspect-[2/1] w-full md:aspect-auto md:h-full" />
+                <div className="flex flex-col p-5 sm:p-6">
+                  <div className="flex flex-wrap items-baseline justify-between gap-2">
+                    <h2 className="font-display text-2xl font-semibold group-hover:text-rust">{r.name}</h2>
+                    <span className="font-mono text-xs text-muted">
+                      {n} {n === 1 ? 'university' : 'universities'}
+                    </span>
+                  </div>
+                  <p className="mt-1 text-ink-2 italic">{r.tagline}</p>
+                  <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-muted">{r.intro}</p>
+                  <div className="mt-4 flex flex-wrap gap-1.5">
+                    {cities.slice(0, 10).map((c) => (
+                      <span key={c} className="chip bg-sand text-ink-2">
+                        {c}
+                      </span>
+                    ))}
+                    {cities.length > 10 && <span className="chip bg-sand text-ink-2">+{cities.length - 10}</span>}
+                  </div>
+                  <span className="mt-auto flex items-center gap-1 pt-4 text-sm font-semibold text-forest">
+                    Explore {r.name} <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+                  </span>
+                </div>
+              </Link>
+            )
+          })}
+        </div>
+      </div>
+    </div>
+  )
+}

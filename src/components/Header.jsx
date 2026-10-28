@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
 import { Link, NavLink, useLocation } from 'react-router-dom'
 import { ChevronDown, Menu, Search, X, MapPinned, Scale, Columns3, Bus, AppWindow, Play, ListChecks, ScanBarcode } from 'lucide-react'
+import LangSwitch from './LangSwitch.jsx'
 import { FinderDialog } from './UniversityFinder.jsx'
 
 const nav = [
@@ -121,6 +122,7 @@ export default function Header() {
           <ToolkitMenu />
         </nav>
         <div className="flex items-center gap-2">
+          <LangSwitch to="en" />
           <button
             type="button"
             onClick={() => setFinder(true)}

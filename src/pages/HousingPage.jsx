@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { ShieldAlert, Building2 } from 'lucide-react'
-import { SectionHead, LinkRow } from '../components/ui.jsx'
+import { SectionHead, LinkRow, EstimateNote } from '../components/ui.jsx'
 import { portals, scamRules, housingWords, housingTimeline, dormSearch } from '../data/housing.js'
 import { regions } from '../data/regions.js'
 import { rentFor } from '../data/costs.js'
@@ -33,6 +33,7 @@ export default function HousingPage() {
             ))}
           </select>
         </label>
+        {city && <EstimateNote className="mt-4" />}
         {city && (
           <div className="mt-6 grid gap-6 lg:grid-cols-[1fr_1.4fr]">
             <div>

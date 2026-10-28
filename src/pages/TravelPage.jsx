@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Bus, Car, TrainFront, Plane, Tag } from 'lucide-react'
 import ShareButton from '../components/ShareButton.jsx'
-import { SectionHead, Callout } from '../components/ui.jsx'
+import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
 import { borderTrips, borderNote, weekendPlans, travelApps, saveMoney } from '../data/budgetTravel.js'
 
 const appIcons = [Bus, Car, TrainFront, Plane]
@@ -73,6 +73,7 @@ export default function TravelPage() {
 
         <section>
           <SectionHead id="weekends" eyebrow="خطط جاهزة" title="رحلات نهاية أسبوع تحت 50 يورو" />
+          <EstimateNote className="mb-4" />
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
             {weekendPlans.map((p) => (
               <article key={p.title} className="card flex flex-col overflow-hidden">
