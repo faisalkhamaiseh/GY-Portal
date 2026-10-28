@@ -6,8 +6,8 @@ import { DisclaimerText } from '../../components/Disclaimer.jsx'
 
 export default function Footer() {
   return (
-    <footer className="mt-24 bg-ink text-paper">
-      <div className="wrap grid gap-12 py-16 md:grid-cols-[1.3fr_2fr]">
+    <footer className="mt-12 bg-ink text-paper lg:mt-24">
+      <div className="wrap grid gap-12 py-8 md:grid-cols-[1.3fr_2fr] lg:py-16">
         <div>
           <Logo light />
           <p className="mt-5 max-w-sm text-sm leading-relaxed text-paper/70">
@@ -22,7 +22,7 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className="grid gap-10 sm:grid-cols-3">
+        <div className="grid gap-10 max-xl:hidden sm:grid-cols-3">
           <div>
             <p className="font-mono text-[11px] tracking-[0.14em] text-paper/50 uppercase">Explore</p>
             <ul className="mt-4 space-y-2 text-sm">
@@ -73,7 +73,7 @@ export default function Footer() {
           <p>*Estimated cost. Prices are subject to change.</p>
           <p>Videos © their YouTube creators. Photos: A.Savin (FAL), Maxl2003 (CC BY 4.0), Wikimedia Commons.</p>
         </div>
-        <div className="wrap pb-6 text-center text-[11px] tracking-wide text-paper/40 sm:text-left">
+        <div className="wrap pb-6 text-center text-[11px] tracking-wide text-paper/60 sm:text-left">
           Designed &amp; built by <span className="font-semibold text-paper/70">Faisal Khamaiseh</span>
         </div>
       </div>

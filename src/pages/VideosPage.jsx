@@ -13,7 +13,7 @@ const kinds = [
 ]
 
 export default function VideosPage() {
-  const videos = useVideos()
+  const videos = useVideos({ eager: true })
   const [params] = useSearchParams()
   const [region, setRegion] = useState(() => (regions.some((r) => r.code === params.get('region')) ? params.get('region') : 'all'))
   const [uni, setUni] = useState(() => (universityById[params.get('uni')] ? params.get('uni') : 'all'))
@@ -40,12 +40,12 @@ export default function VideosPage() {
   }, [videos, uni, kind, region, q, unisInRegion])
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">مكتبة الفيديو</p>
-      <h1 className="h-display mt-2 max-w-4xl text-5xl sm:text-6xl">شاهدها قبل أن تختارها</h1>
+      <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">شاهدها قبل أن تختارها</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">جولات في الحرم والسكن ومدونات فيديو طلابية وأدلة للمدن، لكل جامعة ومدينة مضيفة. فلتر حسب المنطقة أو الجامعة، ثم اضغط تشغيل.</p>
 
-      <div className="sticky top-16 z-20 -mx-4 mt-10 border-b border-line bg-paper/95 px-4 py-4 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-5">
+      <div className="sticky top-14 lg:top-16 z-20 -mx-4 mt-10 border-b border-line bg-paper lg:bg-paper/95 px-4 py-4 lg:backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-5">
         <div className="grid gap-3 md:grid-cols-[1fr_1fr_1.3fr]">
           <select
             value={region}

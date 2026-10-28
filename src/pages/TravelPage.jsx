@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Bus, Car, TrainFront, Plane, Tag } from 'lucide-react'
 import ShareButton from '../components/ShareButton.jsx'
 import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
+import Sections, { Panel } from '../components/Sections.jsx'
 import { borderTrips, borderNote, weekendPlans, travelApps, saveMoney } from '../data/budgetTravel.js'
 
 const appIcons = [Bus, Car, TrainFront, Plane]
@@ -31,8 +32,8 @@ export default function TravelPage() {
         </div>
       </section>
 
-      <div className="wrap space-y-24 pt-16">
-        <section>
+      <Sections className="wrap lg:pt-16" label="أقسام الصفحة">
+        <Panel id="borders" label="الحدود">
           <SectionHead
             id="borders"
             eyebrow="بتذكرة ألمانيا حتى الحدود"
@@ -69,9 +70,9 @@ export default function TravelPage() {
           <div className="mt-5">
             <Callout>{borderNote}</Callout>
           </div>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="weekends" label="نهاية الأسبوع">
           <SectionHead id="weekends" eyebrow="خطط جاهزة" title="رحلات نهاية أسبوع تحت 50 يورو" />
           <EstimateNote className="mb-4" />
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -98,9 +99,9 @@ export default function TravelPage() {
               </article>
             ))}
           </div>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="apps" label="التطبيقات">
           <SectionHead id="apps" eyebrow="تطبيقات السفر" title="FlixBus وBlaBlaCar وغيرها" action={<Link to="/apps" className="btn-ghost">كل التطبيقات الأساسية <ArrowRight className="size-4" /></Link>} />
           <div className="grid gap-5 md:grid-cols-2">
             {travelApps.map((a, i) => {
@@ -128,9 +129,9 @@ export default function TravelPage() {
           <p className="mt-5 text-muted">
             تسافر أبعد؟ شاهد <Link to="/survival-map#airports" className="link">المطارات الاقتصادية قرب كل منطقة</Link>.
           </p>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="savings" label="الخصومات">
           <SectionHead id="savings" eyebrow="مواسم الخصومات" title="متى وأين تشتري بأرخص سعر" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {saveMoney.map((s) => (
@@ -143,8 +144,8 @@ export default function TravelPage() {
               </article>
             ))}
           </div>
-        </section>
-      </div>
+        </Panel>
+      </Sections>
     </>
   )
 }

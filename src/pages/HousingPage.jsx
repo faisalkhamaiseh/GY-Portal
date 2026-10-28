@@ -5,6 +5,7 @@ import { SectionHead, LinkRow, EstimateNote } from '../components/ui.jsx'
 import { portals, scamRules, housingWords, housingTimeline, dormSearch } from '../data/housing.js'
 import { regions } from '../data/regions.js'
 import { rentFor } from '../data/costs.js'
+import Sections, { Panel } from '../components/Sections.jsx'
 import { universities } from '../lib/data.js'
 
 const cities = [...new Set(universities.filter((u) => !u.abroad).map((u) => u.city))].sort((a, b) => a.localeCompare(b, 'de'))
@@ -16,9 +17,11 @@ export default function HousingPage() {
   const region = city ? regions.find((r) => r.code === universities.find((u) => u.city === city)?.region) : null
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">السكن</p>
-      <h1 className="h-display mt-2 max-w-4xl text-5xl sm:text-6xl">اعثر على غرفة تثق بها</h1>
+
+      <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">اعثر على غرفة تثق بها</h1>
+
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
         معظم طلاب GJU يسكنون في سكن Studierendenwerk: رخيص ومفروش وشامل الفواتير. إن فاتك، استخدم المواقع الموثوقة أدناه، وابدأ مبكراً، ولا تدفع أبداً قبل أن ترى الغرفة.
       </p>
@@ -77,80 +80,82 @@ export default function HousingPage() {
         )}
       </section>
 
-      <section className="mt-20">
-        <SectionHead eyebrow="الجدول الزمني" title="ماذا تفعل ومتى" />
-        <ol className="grid gap-4 md:grid-cols-4">
-          {housingTimeline.map((t, i) => (
-            <li key={t.title} className="card p-5">
-              <p className="num text-3xl font-black text-rust">0{i + 1}</p>
-              <p className="mt-3 text-sm font-bold text-muted">{t.when}</p>
-              <p className="mt-1 text-lg font-extrabold">{t.title}</p>
-              <p className="mt-2 leading-relaxed text-ink-2">{t.text}</p>
-            </li>
-          ))}
-        </ol>
-      </section>
-
-      <section className="mt-20 grid gap-6 lg:grid-cols-[1.2fr_1fr]">
-        <div className="card p-5 sm:p-7">
-          <p className="eyebrow">مواقع موثوقة</p>
-          <h2 className="mt-1 text-3xl font-extrabold">غرف في شقق مشتركة وشقق خاصة</h2>
-          <div className="mt-3">
-            {portals.map((p) => (
-              <LinkRow key={p.name} href={p.url} title={p.name} text={`${p.kind}. ${p.text}`} badge={p.trust} />
+      <Sections className="mt-8 lg:mt-20" label="أقسام الصفحة">
+        <Panel id="timeline" label="الجدول الزمني">
+          <SectionHead eyebrow="الجدول الزمني" title="ماذا تفعل ومتى" />
+          <ol className="grid gap-4 md:grid-cols-4">
+            {housingTimeline.map((t, i) => (
+              <li key={t.title} className="card p-5">
+                <p className="num text-3xl font-black text-rust">0{i + 1}</p>
+                <p className="mt-3 text-sm font-bold text-muted">{t.when}</p>
+                <p className="mt-1 text-lg font-extrabold">{t.title}</p>
+                <p className="mt-2 leading-relaxed text-ink-2">{t.text}</p>
+              </li>
             ))}
-          </div>
-        </div>
-        <div className="space-y-6">
-          <div className="rounded-2xl border-2 border-rust bg-blush/60 p-5 sm:p-7">
-            <ShieldAlert className="size-8 text-rust" aria-hidden />
-            <h2 className="mt-3 text-3xl font-extrabold">احذر من النصب</h2>
-            <ul className="mt-4 space-y-3">
-              {scamRules.map((r) => (
-                <li key={r} className="flex gap-3 leading-relaxed">
-                  <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-rust" />
-                  {r}
-                </li>
+          </ol>
+        </Panel>
+
+        <Panel id="portals" label="المواقع الموثوقة" className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
+          <div className="card p-5 sm:p-7">
+            <p className="eyebrow">مواقع موثوقة</p>
+            <h2 className="mt-1 text-3xl font-extrabold">غرف في شقق مشتركة وشقق خاصة</h2>
+            <div className="mt-3">
+              {portals.map((p) => (
+                <LinkRow key={p.name} href={p.url} title={p.name} text={`${p.kind}. ${p.text}`} badge={p.trust} />
               ))}
-            </ul>
+            </div>
           </div>
-          <div className="card overflow-hidden">
-            <p className="px-5 pt-5 text-xl font-extrabold">كلمات ستراها في كل إعلان</p>
-            <dl className="mt-3 divide-y divide-line">
-              {housingWords.map(([de, ar]) => (
-                <div key={de} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] gap-3 px-5 py-2.5">
-                  <dt dir="ltr" className="text-start font-bold">
-                    {de}
-                  </dt>
-                  <dd className="text-muted">{ar}</dd>
+          <div className="space-y-6">
+            <div className="rounded-2xl border-2 border-rust bg-blush/60 p-5 sm:p-7">
+              <ShieldAlert className="size-8 text-rust" aria-hidden />
+              <h2 className="mt-3 text-3xl font-extrabold">احذر من النصب</h2>
+              <ul className="mt-4 space-y-3">
+                {scamRules.map((r) => (
+                  <li key={r} className="flex gap-3 leading-relaxed">
+                    <span className="mt-2.5 size-1.5 shrink-0 rounded-full bg-rust" />
+                    {r}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="card overflow-hidden">
+              <p className="px-5 pt-5 text-xl font-extrabold">كلمات ستراها في كل إعلان</p>
+              <dl className="mt-3 divide-y divide-line">
+                {housingWords.map(([de, ar]) => (
+                  <div key={de} className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)] gap-3 px-5 py-2.5">
+                    <dt dir="ltr" className="text-start font-bold">
+                      {de}
+                    </dt>
+                    <dd className="text-muted">{ar}</dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          </div>
+        </Panel>
+
+        <Panel id="dorms" label="السكن الطلابي">
+          <SectionHead eyebrow="السكن الطلابي الرسمي" title="كل مؤسسات Studierendenwerk حسب الولاية">
+            Studierendenwerke خدمات طلابية حكومية غير ربحية. سكناتها أرخص الغرف في كل مدينة.
+          </SectionHead>
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {regions
+              .filter((r) => r.studierendenwerke.length)
+              .map((r) => (
+                <div key={r.code} className="card p-5">
+                  <Link to={`/regions/${r.slug}#housing`} className="text-xl font-extrabold hover:text-rust">
+                    {r.name}
+                  </Link>
+                  <div className="mt-1">
+                    {r.studierendenwerke.map((s) => (
+                      <LinkRow key={s.name} href={s.url} title={s.name} text={s.serves} />
+                    ))}
+                  </div>
                 </div>
               ))}
-            </dl>
           </div>
-        </div>
-      </section>
-
-      <section className="mt-20">
-        <SectionHead eyebrow="السكن الطلابي الرسمي" title="كل مؤسسات Studierendenwerk حسب الولاية">
-          Studierendenwerke خدمات طلابية حكومية غير ربحية. سكناتها أرخص الغرف في كل مدينة.
-        </SectionHead>
-        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {regions
-            .filter((r) => r.studierendenwerke.length)
-            .map((r) => (
-              <div key={r.code} className="card p-5">
-                <Link to={`/regions/${r.slug}#housing`} className="text-xl font-extrabold hover:text-rust">
-                  {r.name}
-                </Link>
-                <div className="mt-1">
-                  {r.studierendenwerke.map((s) => (
-                    <LinkRow key={s.name} href={s.url} title={s.name} text={s.serves} />
-                  ))}
-                </div>
-              </div>
-            ))}
-        </div>
-      </section>
+        </Panel>
+      </Sections>
     </div>
   )
 }

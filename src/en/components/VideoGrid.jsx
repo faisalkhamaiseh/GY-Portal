@@ -10,7 +10,10 @@ export function VideoCard({ v, onPlay, compact = false }) {
         <img
           src={thumb(v.id)}
           alt=""
+          width={320}
+          height={180}
           loading="lazy"
+          decoding="async"
           className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]"
         />
         <span className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent opacity-70" />

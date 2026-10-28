@@ -24,14 +24,13 @@ export default function GermanyMap({ activeCode }) {
 
   return (
     <div className="grid items-start gap-8 lg:grid-cols-[minmax(0,640px)_1fr]">
-      <div dir="ltr" className="grid w-full max-w-[640px] grid-cols-5 gap-1.5 [grid-auto-rows:clamp(62px,15vw,112px)] sm:gap-2.5" role="list" aria-label="الولايات الألمانية">
+      <div dir="ltr" className="grid w-full max-w-[640px] grid-cols-5 gap-1.5 [grid-auto-rows:clamp(62px,15vw,112px)] sm:gap-2.5" role="group" aria-label="الولايات الألمانية">
         {Object.entries(tileLayout).map(([code, [col, row, span = 1]]) => {
           const r = regions.find((x) => x.code === code)
           const n = counts[code]
           return (
             <Link
               key={code}
-              role="listitem"
               to={`/regions/${r.slug}`}
               onMouseEnter={() => setHover(code)}
               onMouseLeave={() => setHover(null)}
@@ -39,12 +38,12 @@ export default function GermanyMap({ activeCode }) {
               onBlur={() => setHover(null)}
               style={{ gridColumn: `${col + 1} / span ${span}`, gridRow: row + 1 }}
               className={`group relative flex flex-col justify-between rounded-xl border p-2 transition-all hover:-translate-y-0.5 hover:shadow-lg sm:rounded-2xl sm:p-3 ${shade(n)} ${activeCode === code ? 'ring-2 ring-rust ring-offset-2 ring-offset-paper' : ''}`}
-              aria-label={`${r.name}: ${n} جامعات مضيفة`}
             >
-              <span className="text-[10px] font-bold opacity-70 sm:text-xs">{code}</span>
+              <span className="text-[10px] font-bold opacity-90 sm:text-xs">{code}</span>
               <span dir="rtl" className="text-start">
                 <span className="num block text-xl leading-none font-extrabold sm:text-3xl">{n}</span>
-                <span className="mt-1 hidden truncate text-[11px] leading-tight font-semibold opacity-85 sm:block">{r.name}</span>
+                <span className="sr-only mt-1 truncate text-[11px] leading-tight font-semibold opacity-85 sm:not-sr-only sm:block">{r.name}</span>
+                <span className="sr-only"> جامعات مضيفة</span>
               </span>
             </Link>
           )

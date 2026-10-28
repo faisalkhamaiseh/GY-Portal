@@ -14,6 +14,7 @@ import useVideos, { mergeVideos } from '../lib/useVideos.js'
 import { CompanyList, FairList } from '../components/Careers.jsx'
 import { HalalMap, AirportList } from '../components/SurvivalMap.jsx'
 import ShareButton from '../components/ShareButton.jsx'
+import Sections, { Panel } from '../components/Sections.jsx'
 import NotFound from './NotFound.jsx'
 
 const sections = [
@@ -67,20 +68,20 @@ export default function RegionPage() {
     <>
       {/* Hero */}
       <section className="relative isolate overflow-hidden border-b border-line">
-        <RegionArt region={region} className="absolute inset-0 -z-10 size-full" />
+        <RegionArt region={region} priority className="absolute inset-0 -z-10 size-full" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-l from-paper via-paper/85 to-paper/10" />
-        <div className="wrap py-14 sm:py-20">
+        <div className="wrap py-6 sm:py-20">
           <div className="flex items-center justify-between gap-4">
             <Link to="/regions" className="inline-flex items-center gap-1.5 font-semibold text-ink-2 hover:text-ink">
               <ArrowRight className="size-4 rotate-180" /> كل المناطق
             </Link>
             <ShareButton title={`${region.name}: دليل السنة الألمانية`} />
           </div>
-          <p className="eyebrow mt-8">{region.nameDe}</p>
-          <h1 className="h-display mt-2 max-w-3xl text-5xl leading-[1.1] sm:text-7xl">{region.name}</h1>
-          <p className="mt-4 max-w-2xl text-xl font-bold text-ink-2 sm:text-2xl">{region.tagline}</p>
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ink-2">{region.intro}</p>
-          <dl className="mt-8 flex flex-wrap gap-3">
+          <p className="eyebrow mt-4 sm:mt-8">{region.nameDe}</p>
+          <h1 className="h-display mt-2 max-w-3xl text-4xl leading-[1.1] sm:text-7xl">{region.name}</h1>
+          <p className="mt-2 max-w-2xl text-lg font-bold text-ink-2 sm:mt-4 sm:text-2xl">{region.tagline}</p>
+          <p className="mt-3 max-w-2xl leading-relaxed text-ink-2 sm:mt-6 sm:text-lg">{region.intro}</p>
+          <dl className="no-scrollbar -mx-4 mt-5 flex gap-2 overflow-x-auto px-4 sm:mx-0 sm:mt-8 sm:flex-wrap sm:gap-3 sm:px-0">
             {[
               ['الجامعات المضيفة', unis.length],
               [abroad ? 'الدول' : 'المدن المضيفة', abroad ? new Set(unis.map((u) => u.countryName)).size : cities.length],
@@ -89,7 +90,7 @@ export default function RegionPage() {
             ]
               .filter(Boolean)
               .map(([k, v]) => (
-                <div key={k} className="rounded-xl border border-line bg-card/90 px-4 py-2.5 backdrop-blur">
+                <div key={k} className="shrink-0 rounded-xl border border-line bg-card/95 px-4 py-2.5">
                   <dt className="text-xs font-bold text-muted">{k}</dt>
                   <dd className="max-w-[280px] font-bold">{v}</dd>
                 </div>
@@ -99,7 +100,7 @@ export default function RegionPage() {
       </section>
 
       {/* Section nav */}
-      <nav className="sticky top-16 z-20 border-b border-line bg-paper/95 backdrop-blur" aria-label="في هذه الصفحة">
+      <nav className="sticky top-14 z-20 border-b max-lg:hidden lg:top-16 border-line bg-paper lg:bg-paper/95 lg:backdrop-blur" aria-label="في هذه الصفحة">
         <div className="wrap no-scrollbar flex gap-1 overflow-x-auto py-2">
           {sections
             .filter(([id]) => !abroad || ['universities', 'videos'].includes(id))
@@ -111,52 +112,52 @@ export default function RegionPage() {
         </div>
       </nav>
 
-      <div className="wrap space-y-24 pt-16">
-        <section>
-          <SectionHead id="universities" eyebrow={`${unis.length} جامعات مضيفة`} title={abroad ? 'الجامعات الشريكة خارج ألمانيا' : `الدراسة في ${region.name}`}>
-            لكل جامعة دليل فيه فيديوهات الحرم وشروط GJU والأسعار المحلية وروابط السكن.
-          </SectionHead>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {unis.map((u) => (
-              <UniversityCard key={u.id} u={u} videoId={coverVideoId(videos, u.id)} />
-            ))}
-          </div>
-        </section>
+      <div className="wrap space-y-12 lg:space-y-24 lg:pt-16">
+        <Sections label="أقسام الصفحة">
+          <Panel id="universities" label="الجامعات">
+            <SectionHead id="universities" eyebrow={`${unis.length} جامعات مضيفة`} title={abroad ? 'الجامعات الشريكة خارج ألمانيا' : `الدراسة في ${region.name}`}>
+              لكل جامعة دليل فيه فيديوهات الحرم وشروط GJU والأسعار المحلية وروابط السكن.
+            </SectionHead>
+            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {unis.map((u) => (
+                <UniversityCard key={u.id} u={u} videoId={coverVideoId(videos, u.id)} />
+              ))}
+            </div>
+          </Panel>
 
-        <section>
-          <SectionHead
-            id="videos"
-            eyebrow="شاهد"
-            title={`${region.name} بالفيديو`}
-            action={
-              <div className="flex flex-wrap gap-2">
-                {[
-                  ['all', 'الكل'],
-                  ['region', 'المنطقة'],
-                  ['cities', 'المدن'],
-                  ['campus', 'جولات الحرم'],
-                ].map(([id, label]) => (
-                  <button
-                    key={id}
-                    type="button"
-                    onClick={() => setVideoFilter(id)}
-                    aria-pressed={videoFilter === id}
-                    className={`rounded-full border px-4 py-1.5 font-bold ${videoFilter === id ? 'border-ink bg-ink text-paper' : 'border-line bg-card hover:border-ink'}`}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
-            }
-          >
-            أدلة سفر وجولات في المدن وجولات في الحرم لكل مدينة مضيفة في {region.name}.
-          </SectionHead>
-          <VideoGrid key={videoFilter} videos={allVideos} limit={12} emptyQuery={`${region.nameDe} travel`} />
-        </section>
+          <Panel id="videos" label="الفيديوهات">
+            <SectionHead
+              id="videos"
+              eyebrow="شاهد"
+              title={`${region.name} بالفيديو`}
+              action={
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    ['all', 'الكل'],
+                    ['region', 'المنطقة'],
+                    ['cities', 'المدن'],
+                    ['campus', 'جولات الحرم'],
+                  ].map(([id, label]) => (
+                    <button
+                      key={id}
+                      type="button"
+                      onClick={() => setVideoFilter(id)}
+                      aria-pressed={videoFilter === id}
+                      className={`rounded-full border px-4 py-1.5 font-bold ${videoFilter === id ? 'border-ink bg-ink text-paper' : 'border-line bg-card hover:border-ink'}`}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              }
+            >
+              أدلة سفر وجولات في المدن وجولات في الحرم لكل مدينة مضيفة في {region.name}.
+            </SectionHead>
+            <VideoGrid key={videoFilter} videos={allVideos} limit={12} emptyQuery={`${region.nameDe} travel`} />
+          </Panel>
 
-        {!abroad && (
-          <>
-            <section>
+          {!abroad && (
+            <Panel id="events" label="الفعاليات">
               <SectionHead id="events" eyebrow="التقويم" title="مهرجانات وفعاليات تستحق عطلتك">
                 معظمها مجاني الدخول، والوصول إليها بالقطارات الإقليمية مجاني بتذكرتك الفصلية.
               </SectionHead>
@@ -182,9 +183,11 @@ export default function RegionPage() {
                   <p className="mt-2 text-paper/70">من أواخر نوفمبر تمتلئ ساحات كل المدن الألمانية بالأكشاك والأضواء واللوز المحمّص. ابحث عن الكريب والمشروبات الساخنة الخالية من الكحول (Kinderpunsch).</p>
                 </article>
               </div>
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="todo" label="أماكن للزيارة">
               <SectionHead id="todo" eyebrow="استكشف" title="أماكن تستحق الزيارة" />
               <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {region.highlights.map((h) => (
@@ -195,9 +198,11 @@ export default function RegionPage() {
                   </article>
                 ))}
               </div>
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="costs" label="التكاليف">
               <SectionHead id="costs" eyebrow="الأسعار" title={`تكلفة كل شيء في ${region.name}`}>
                 الإيجار هو الأكثر اختلافاً بين المدن، والأسعار اليومية تتبعه قليلاً. اختر مدينة ليتعدّل الجدول كله.
               </SectionHead>
@@ -233,9 +238,11 @@ export default function RegionPage() {
                   خطط ميزانيتك الشهرية
                 </Link>
               </div>
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="housing" label="السكن">
               <SectionHead id="housing" eyebrow="السكن" title="السكنات الطلابية ومواقع السكن الموثوقة">
                 سكنات Studierendenwerk الطلابية هي الأرخص وتشمل الفواتير. قدّم يوم فتح التقديم.
               </SectionHead>
@@ -274,18 +281,22 @@ export default function RegionPage() {
                   لا ترسل أي تأمين قبل أن ترى الغرفة شخصياً أو بمكالمة فيديو مباشرة. المؤجر "المسافر" الذي سيرسل لك المفاتيح بالبريد نصّاب دائماً. <Link to="/housing" className="link">نصائح سكن أكثر</Link>
                 </Callout>
               </div>
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="internships" label="التدريب">
               <SectionHead id="internships" eyebrow="فصل التدريب العملي" title={`التدريب العملي في ${region.name}`} action={<Link to={`/internships?region=${region.code}`} className="btn-ghost">مركز التدريب</Link>}>
                 شركات في {region.name} تستقبل متدربين في الهندسة وإدارة الأعمال وعلم الحاسوب. اضغط على الشركة لتبحث عن فرصها الحالية.
               </SectionHead>
               <CompanyList code={region.code} />
               <h3 className="mt-12 mb-5 text-2xl font-extrabold">معارض التوظيف</h3>
               <FairList code={region.code} />
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="halal" label="الحلال والسفر">
               <SectionHead id="halal" eyebrow="خريطة البقاء" title="الطعام الحلال والمساجد والمطارات">
                 ملاحم حلال وسوبرماركتات تركية وعربية ومساجد في كل مدينة مضيفة، والمطارات الاقتصادية القريبة.
               </SectionHead>
@@ -295,9 +306,11 @@ export default function RegionPage() {
               <p className="mt-4 text-muted">
                 تذكرتك الفصلية تغطي القطارات الإقليمية لمعظم هذه المطارات. <Link to="/survival-map#ticket" className="link">ماذا تغطي التذكرة</Link>
               </p>
-            </section>
+            </Panel>
+          )}
 
-            <section>
+          {!abroad && (
+            <Panel id="life" label="الحياة اليومية">
               <SectionHead id="life" eyebrow="الحياة اليومية" title={`العيش في ${region.name}`} />
               <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
                 {[
@@ -314,9 +327,9 @@ export default function RegionPage() {
                   </article>
                 ))}
               </div>
-            </section>
-          </>
-        )}
+            </Panel>
+          )}
+        </Sections>
 
         {abroad && <Callout title="قوانين مختلفة خارج ألمانيا.">{region.tip}</Callout>}
 

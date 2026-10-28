@@ -6,7 +6,7 @@ export function SectionHead({ eyebrow, title, children, id, action }) {
       <div className="max-w-2xl">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h2 className="h-display mt-2 text-3xl sm:text-4xl">{title}</h2>
-        {children && <div className="mt-3 text-[15px] leading-relaxed text-muted">{children}</div>}
+        {children && <div className="mt-3 text-[15px] leading-relaxed text-muted max-lg:line-clamp-3">{children}</div>}
       </div>
       {action}
     </div>

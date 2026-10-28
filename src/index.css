@@ -35,7 +35,6 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
-  text-rendering: optimizeLegibility;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -133,4 +132,93 @@ body {
 }
 .rise {
   animation: rise 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes sheet-up {
+  from {
+    transform: translateY(24px);
+  }
+  to {
+    transform: none;
+  }
+}
+.sheet-up {
+  animation: sheet-up 0.28s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+/* Native-app feel on phones: no grey tap flash, no text-size jumps on
+   rotation, and press feedback that only uses transform. */
+html {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+a,
+button,
+[role='tab'] {
+  touch-action: manipulation;
+}
+.press {
+  transition: transform 0.12s ease;
+}
+.press:active {
+  transform: scale(0.97);
+}
+
+
+/* The one-time disclaimer is in the pre-rendered HTML; it only shows while
+   index.html's inline script has flagged <html data-disclaimer>. */
+.disclaimer {
+  display: none;
+}
+[data-disclaimer] .disclaimer {
+  display: grid;
+}
+
+/* Section tabs: each panel slides in when shown (transform + opacity only). */
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@media (max-width: 1023px) {
+  .panel {
+    animation: panel-in 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+.fade-in {
+  animation: fade-in 0.2s ease both;
+}
+
+/* On phones a card grid becomes a horizontal, snapping rail: one swipe shows
+   the next card instead of scrolling down through all of them. */
+@media (max-width: 1023px) {
+  .rail {
+    display: flex !important;
+    gap: 12px;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none;
+    margin-inline: -1rem;
+    padding-inline: 1rem;
+    scroll-padding-inline: 1rem;
+  }
+  .rail::-webkit-scrollbar {
+    display: none;
+  }
+  .rail > * {
+    flex: 0 0 min(82%, 340px);
+    scroll-snap-align: start;
+  }
 }

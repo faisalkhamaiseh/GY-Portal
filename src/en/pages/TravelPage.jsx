@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { ArrowRight, Bus, Car, TrainFront, Plane, Tag } from 'lucide-react'
 import ShareButton from '../components/ShareButton.jsx'
 import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
+import Sections, { Panel } from '../../components/Sections.jsx'
 import { borderTrips, borderNote, weekendPlans, travelApps, saveMoney } from '../data/budgetTravel.js'
 
 const appIcons = [Bus, Car, TrainFront, Plane]
@@ -32,8 +33,8 @@ export default function TravelPage() {
         </div>
       </section>
 
-      <div className="wrap space-y-24 pt-16">
-        <section>
+      <Sections className="wrap lg:pt-16" label="Page sections">
+        <Panel id="borders" label="Border trips">
           <SectionHead
             id="borders"
             eyebrow="Deutschlandticket to the border"
@@ -65,9 +66,9 @@ export default function TravelPage() {
           <div className="mt-5">
             <Callout>{borderNote}</Callout>
           </div>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="weekends" label="Weekends">
           <SectionHead id="weekends" eyebrow="Ready-made plans" title="Weekend trips under €50" />
           <EstimateNote className="mb-4" />
           <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
@@ -92,9 +93,9 @@ export default function TravelPage() {
               </article>
             ))}
           </div>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="apps" label="Apps">
           <SectionHead id="apps" eyebrow="Travel apps" title="FlixBus, BlaBlaCar & co." action={<Link to="/apps" className="btn-ghost">All essential apps <ArrowRight className="size-4" /></Link>} />
           <div className="grid gap-5 md:grid-cols-2">
             {travelApps.map((a, i) => {
@@ -122,9 +123,9 @@ export default function TravelPage() {
           <p className="mt-5 text-sm text-muted">
             Flying further? See the <Link to="/survival-map#airports" className="link">budget airports near each region</Link>.
           </p>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="savings" label="Discounts">
           <SectionHead id="savings" eyebrow="Discount seasons" title="When and where to buy for less" />
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {saveMoney.map((s) => (
@@ -137,8 +138,8 @@ export default function TravelPage() {
               </article>
             ))}
           </div>
-        </section>
-      </div>
+        </Panel>
+      </Sections>
     </>
   )
 }

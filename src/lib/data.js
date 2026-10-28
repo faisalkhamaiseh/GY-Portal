@@ -1,5 +1,6 @@
 import tsv from '../data/universities.tsv?raw'
 import { regionByCode, countryNames } from '../data/regions.js'
+import covers from '../data/covers.json'
 import { rentFor } from '../data/costs.js'
 
 const LEVEL_RANK = { B1: 1, B2: 2, C1: 3 }
@@ -87,22 +88,8 @@ export function searchUniversities(q, list = universities) {
   })
 }
 
-// One cover video per university, avoiding the same thumbnail on sister
-// campuses that share a video list.
-let coverCache
-export function coverVideoId(videos, id) {
-  if (!videos) return undefined
-  if (!coverCache) {
-    coverCache = {}
-    const used = new Set()
-    for (const u of universities) {
-      const list = videos.universities[u.id] || []
-      const pick = list.find((v) => !used.has(v.id)) ?? list[0]
-      if (pick) {
-        used.add(pick.id)
-        coverCache[u.id] = pick.id
-      }
-    }
-  }
-  return coverCache[id]
-}
+// One cover video per university (precomputed by scripts/covers.mjs so cards
+// render before the full video index loads).
+export const coverVideoId = (_videos, id) => covers.universities[id]?.cover
+export const heroVideo = (id) => covers.universities[id]?.hero
+export const gjuVideo = covers.gju

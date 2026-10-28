@@ -58,7 +58,7 @@ export default function IngredientsPage() {
       </section>
 
       {/* Sticky search */}
-      <div className="sticky top-16 z-20 border-y border-white/10 bg-navy/95 backdrop-blur">
+      <div className="sticky top-14 lg:top-16 z-20 border-y border-white/10 bg-navy lg:bg-navy/95 lg:backdrop-blur">
         <div className="wrap flex flex-col gap-3 py-3 sm:flex-row sm:items-center">
           <label className="flex flex-1 items-center gap-3 rounded-2xl bg-white/10 px-4 py-3">
             <Search className="size-5 text-white/60" aria-hidden />
@@ -189,7 +189,7 @@ export default function IngredientsPage() {
           <ul className="mt-4 grid gap-3 md:grid-cols-2">
             {shoppingTips.map((t) => (
               <li key={t} className="flex gap-3 leading-relaxed text-white/85">
-                <Check className="mt-1 size-5 shrink-0 text-[#30a46c]" /> {t}
+                <Check className="mt-1 size-5 shrink-0 text-[#3dd68c]" /> {t}
               </li>
             ))}
           </ul>

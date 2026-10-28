@@ -8,9 +8,9 @@ import { universitiesIn, cityList } from '../lib/data.js'
 
 export default function RegionsPage() {
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">Regions</p>
-      <h1 className="h-display mt-2 text-5xl sm:text-6xl">Germany, state by state</h1>
+      <h1 className="h-display mt-2 text-4xl sm:text-6xl">Germany, state by state</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
         Each state page brings together its host universities, videos, events, things to do, local prices, Studierendenwerk dorms and daily-life tips.
       </p>
