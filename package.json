@@ -5,11 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "node scripts/covers.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
     "preview": "vite preview",
     "videos": "python3 -I scripts/fetch_videos.py && python3 -I scripts/fetch_videos.py --topics && python3 -I scripts/curate_videos.py"
   },
   "dependencies": {
+    "@fontsource/cairo": "^5.2.6",
+    "@fontsource/ibm-plex-sans-arabic": "^5.2.6",
     "lucide-react": "^0.545.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",

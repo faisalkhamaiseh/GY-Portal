@@ -125,7 +125,7 @@ function PageFallback() {
 export default function App() {
   const { pathname } = useLocation()
   return (
-    <div className="flex min-h-screen flex-col">
+    <div className="flex min-h-screen flex-col pb-[calc(3.5rem+env(safe-area-inset-bottom))] xl:pb-0">
       <ScrollToTop />
       <Header />
       <main className="flex-1">

@@ -109,9 +109,9 @@ export default function UniversitiesPage() {
   )
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">Host universities</p>
-      <h1 className="h-display mt-2 text-5xl sm:text-6xl">All {universities.length} places, compared</h1>
+      <h1 className="h-display mt-2 text-4xl sm:text-6xl">All {universities.length} places, compared</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
         Filter by region, German level, GPA and fees, the same conditions as the GJU host-university list. Every card opens a full guide with videos, prices and housing.
       </p>

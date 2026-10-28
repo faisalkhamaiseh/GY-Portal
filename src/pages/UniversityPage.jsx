@@ -7,7 +7,7 @@ import PriceTable from '../components/PriceTable.jsx'
 import BudgetPlanner from '../components/BudgetPlanner.jsx'
 import UniversityCard from '../components/UniversityCard.jsx'
 import { SectionHead, LinkRow, Callout, Tag, ExtLink, OfficialLink, EstimateNote } from '../components/ui.jsx'
-import { universityById, universitiesIn, regionOf, requirementTags, rentForUniversity, coverVideoId } from '../lib/data.js'
+import { universityById, universitiesIn, regionOf, requirementTags, rentForUniversity, coverVideoId, heroVideo } from '../lib/data.js'
 import { tiers } from '../data/costs.js'
 import { portals, dormSearch } from '../data/housing.js'
 import { localGuides } from '../data/localGuides.js'
@@ -15,6 +15,8 @@ import useVideos from '../lib/useVideos.js'
 import { CompanyList, FairList } from '../components/Careers.jsx'
 import { HalalMap, AirportList } from '../components/SurvivalMap.jsx'
 import ShareButton from '../components/ShareButton.jsx'
+import Photo from '../components/Photo.jsx'
+import Sections, { Panel } from '../components/Sections.jsx'
 import NotFound from './NotFound.jsx'
 
 export default function UniversityPage() {
@@ -35,7 +37,7 @@ export default function UniversityPage() {
   const region = regionOf(u)
   const rent = rentForUniversity(u)
   const local = localGuides[id]
-  const hero = uniVideos?.[0]
+  const hero = uniVideos?.[0] ?? heroVideo(id)
   const siblings = universitiesIn(u.region).filter((x) => x.id !== u.id).slice(0, 3)
   const tags = requirementTags(u)
 
@@ -55,7 +57,7 @@ export default function UniversityPage() {
     <>
       <section className="relative overflow-hidden border-b border-line">
         <RegionArt region={region} label={false} className="absolute inset-x-0 bottom-0 h-40 w-full opacity-40" />
-        <div className="wrap relative grid gap-10 py-12 lg:grid-cols-[1.1fr_1fr] lg:py-16">
+        <div className="wrap relative grid gap-6 py-6 lg:grid-cols-[1.1fr_1fr] lg:gap-10 lg:py-16">
           <div>
             <nav className="flex flex-wrap items-center gap-1.5 font-semibold text-muted" aria-label="مسار التنقل">
               <Link to="/universities" className="inline-flex items-center gap-1 hover:text-ink">
@@ -66,10 +68,10 @@ export default function UniversityPage() {
                 {region.name}
               </Link>
             </nav>
-            <p className="eyebrow mt-8">
+            <p className="eyebrow mt-4 lg:mt-8">
               {u.abroad ? u.countryName : region.name} · <span dir="ltr">{u.zip} {u.city}</span>
             </p>
-            <h1 dir="auto" className="h-display mt-3 text-start text-4xl leading-[1.15] sm:text-6xl">
+            <h1 dir="auto" className="h-display mt-2 text-start text-[2rem] leading-[1.15] sm:text-6xl lg:mt-3">
               {u.name}
             </h1>
             <p className="mt-4 flex items-center gap-2 text-lg text-ink-2">
@@ -81,7 +83,7 @@ export default function UniversityPage() {
                 <Tag key={t.label} {...t} />
               ))}
             </div>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-5 grid grid-cols-3 gap-2 sm:flex sm:flex-wrap sm:gap-3 lg:mt-8 [&>*]:max-sm:justify-center [&>*]:max-sm:px-2 [&>*]:max-sm:text-sm">
               <ExtLink href={u.site} className="btn-primary">
                 موقع الجامعة <ArrowUpRight className="size-4" />
               </ExtLink>
@@ -94,11 +96,11 @@ export default function UniversityPage() {
           <div className="relative">
             {local?.photos ? (
               <div className="aspect-[4/3] overflow-hidden rounded-3xl shadow-xl">
-                <img src={local.photos[1].src} alt={local.photos[1].alt} className="size-full object-cover" />
+                <Photo src={local.photos[1].src} alt={local.photos[1].alt} width={1600} height={900} sizes="(min-width: 1024px) 45vw, 100vw" priority className="size-full object-cover" />
               </div>
             ) : hero ? (
               <button type="button" onClick={() => setPlaying(hero)} className="group relative block aspect-video w-full overflow-hidden rounded-3xl bg-ink text-start shadow-xl">
-                <img src={thumb(hero.id, 'hqdefault')} alt="" className="size-full scale-[1.34] object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.4]" />
+                <img src={thumb(hero.id, 'hqdefault')} alt="" width={480} height={360} fetchPriority="high" className="size-full scale-[1.34] object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.4]" />
                 <span className="absolute inset-0 bg-gradient-to-t from-ink/80 to-transparent" />
                 <span className="absolute top-1/2 left-1/2 grid size-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper shadow-xl">
                   <Play className="ms-1 size-6 fill-ink" />
@@ -136,7 +138,7 @@ export default function UniversityPage() {
         )}
       </section>
 
-      <nav className="sticky top-16 z-20 border-b border-line bg-paper/95 backdrop-blur" aria-label="في هذه الصفحة">
+      <nav className="sticky top-14 z-20 border-b max-lg:hidden lg:top-16 border-line bg-paper lg:bg-paper/95 lg:backdrop-blur" aria-label="في هذه الصفحة">
         <div className="wrap no-scrollbar flex gap-1 overflow-x-auto py-2">
           {nav.map(([sid, label]) => (
             <a key={sid} href={`#${sid}`} className="shrink-0 rounded-full px-3.5 py-1.5 font-bold text-ink-2 hover:bg-sand">
@@ -146,8 +148,8 @@ export default function UniversityPage() {
         </div>
       </nav>
 
-      <div className="wrap space-y-24 pt-16">
-        <section>
+      <Sections className="wrap lg:pt-16" label="أقسام الصفحة">
+        <Panel id="requirements" label="الشروط">
           <SectionHead id="requirements" eyebrow="قبل أن تختار" title="شروط GJU لهذه الجامعة" />
           <div className="grid gap-5 lg:grid-cols-[1.4fr_1fr]">
             <div className="card p-6">
@@ -182,9 +184,9 @@ export default function UniversityPage() {
             <OfficialLink href={u.site} label="الجامعة المضيفة" />
             <OfficialLink href="https://www.gju.edu.jo/" label="GJU" />
           </div>
-        </section>
+        </Panel>
 
-        <section>
+        <Panel id="videos" label="الفيديوهات">
           <SectionHead id="videos" eyebrow="شاهد قبل أن تذهب" title="الحرم والسكن وحياة الطلاب">
             جولات في الحرم والغرف ومدونات فيديو لطلاب عن <span dir="ltr">{u.name.split('·')[0].trim()}</span>. كل فيديو يعمل هنا أو على يوتيوب.
           </SectionHead>
@@ -197,10 +199,10 @@ export default function UniversityPage() {
               <VideoGrid videos={cityVideos} limit={4} />
             </div>
           )}
-        </section>
+        </Panel>
 
         {local && (
-          <section>
+          <Panel id="campus" label="الحرم">
             <SectionHead id="campus" eyebrow="في الحرم" title="جامعة شمالكالدن">
               {local.about}
             </SectionHead>
@@ -221,11 +223,11 @@ export default function UniversityPage() {
                 ))}
               </div>
             </div>
-          </section>
+          </Panel>
         )}
 
         {!u.abroad && (
-          <section>
+          <Panel id="housing" label="السكن">
             <SectionHead id="housing" eyebrow="السكن" title={<>أين تسكن في <span dir="ltr">{u.city}</span></>}>
               معظم طلاب GJU يسكنون في سكن Studierendenwerk: رخيص ومفروش وشامل الفواتير. إن فاتك، استخدم المواقع الخاصة أدناه وابدأ مبكراً.
             </SectionHead>
@@ -307,51 +309,51 @@ export default function UniversityPage() {
                 لا ترسل أي تأمين قبل أن ترى الغرفة شخصياً أو بمكالمة فيديو مباشرة. لا تدفع عبر Western Union أو بطاقات الهدايا. اسأل طلاب GJU من السنة الماضية: كثيراً ما يسلّمون غرفهم للدفعة التالية.
               </Callout>
             </div>
-          </section>
+          </Panel>
         )}
 
         {!u.abroad && (
-          <section>
+          <Panel id="costs" label="الأسعار">
             <SectionHead id="costs" eyebrow="الأسعار" title={<>أسعار كل شيء في <span dir="ltr">{u.city}</span></>}>
               نطاقات أسعار تقديرية لطالب في هذه المدينة، مبنية على المتوسطات الألمانية ومعدّلة لمدينة {tiers[rent.tier].label}. الأسعار تتغير باستمرار.
             </SectionHead>
             <PriceTable factor={rent.factor} city={u.city} />
-          </section>
+          </Panel>
         )}
 
         {!u.abroad && (
-          <section>
+          <Panel id="budget" label="الميزانية">
             <SectionHead id="budget" eyebrow="الميزانية الشهرية" title="هل يكفيك مصروفك الشهري؟">
               حرّك المؤشرات لتطابق حياتك. الخط المتقطع هو المبلغ الشهري من حسابك المجمّد.
             </SectionHead>
             <BudgetPlanner initialCity={u.city} lockCity />
-          </section>
+          </Panel>
         )}
 
         {!u.abroad && (
-          <section>
+          <Panel id="internships" label="التدريب">
             <SectionHead id="internships" eyebrow="فصل التدريب العملي" title={<>التدريب العملي قرب <span dir="ltr">{u.city}</span></>} action={<Link to={`/internships?region=${u.region}`} className="btn-ghost">مركز التدريب</Link>}>
               شركات في {region.name} تستقبل متدربين، والأقرب للمدينة أولاً. اضغط على الشركة لتبحث عن فرصها.
             </SectionHead>
             <CompanyList code={u.region} city={u.city} limit={6} />
             <h3 className="mt-12 mb-5 text-2xl font-extrabold">معارض التوظيف</h3>
             <FairList code={u.region} />
-          </section>
+          </Panel>
         )}
 
         {!u.abroad && (
-          <section>
+          <Panel id="halal" label="الحلال">
             <SectionHead id="halal" eyebrow="خريطة البقاء" title={<>الطعام الحلال والمساجد في <span dir="ltr">{u.city}</span></>}>
               ملاحم حلال وسوبرماركتات تركية وعربية ومطاعم عربية ومساجد على خريطة مباشرة. في المدن الصغيرة يتسوق الطلاب غالباً من أقرب مدينة كبيرة.
             </SectionHead>
             <HalalMap cities={[u.city]} />
             <h3 className="mt-12 mb-5 text-2xl font-extrabold">أقرب المطارات الاقتصادية</h3>
             <AirportList code={u.region} />
-          </section>
+          </Panel>
         )}
 
         {local && (
-          <section>
+          <Panel id="town" label="المدينة">
             <SectionHead id="town" eyebrow="المدينة" title="شمالكالدن وما حولها" />
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {local.sights.map((c) => (
@@ -394,53 +396,55 @@ export default function UniversityPage() {
               </div>
             </div>
             <figure className="mt-5 overflow-hidden rounded-3xl">
-              <img src={local.photos[0].src} alt={local.photos[0].alt} loading="lazy" className="aspect-[21/9] w-full object-cover" />
+              <Photo src={local.photos[0].src} alt={local.photos[0].alt} width={1800} height={1633} className="aspect-[21/9] w-full object-cover" />
               <figcaption className="mt-2 text-xs text-muted">الصورة: {local.photos[0].credit}.</figcaption>
             </figure>
-          </section>
+          </Panel>
         )}
 
-        <section>
-          <Link to={`/regions/${region.slug}`} className="group relative block overflow-hidden rounded-3xl border border-line">
-            <RegionArt region={region} label={false} className="h-64 w-full sm:h-80" />
-            <div className="absolute inset-0 bg-gradient-to-l from-ink/85 via-ink/50 to-transparent" />
-            <div className="absolute inset-y-0 start-0 flex max-w-xl flex-col justify-center p-6 text-paper sm:p-10">
-              <p className="text-sm font-bold text-gold">{u.abroad ? 'شركاء خارج ألمانيا' : 'منطقتك'}</p>
-              <p className="mt-2 font-display text-3xl font-extrabold sm:text-4xl">{region.name}</p>
-              <p className="mt-2 text-paper/80">{u.abroad ? 'كل الجامعات الشريكة خارج ألمانيا' : 'الفعاليات والمهرجانات والأماكن والمواصلات والطعام الحلال وكل الجامعات المضيفة القريبة.'}</p>
-              <span className="mt-5 inline-flex items-center gap-1.5 font-bold">
-                استكشف المنطقة <ArrowUpRight className="size-4" />
-              </span>
-            </div>
-          </Link>
-        </section>
-
-        {siblings.length > 0 && (
+        <Panel id="region" label="المنطقة" className="space-y-12 lg:space-y-24">
           <section>
-            <SectionHead eyebrow="قارن" title={`جامعات مضيفة أخرى في ${u.abroad ? 'أوروبا' : region.name}`} />
-            <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {siblings.map((s) => (
-                <UniversityCard key={s.id} u={s} videoId={coverVideoId(videos, s.id)} />
-              ))}
-            </div>
-          </section>
-        )}
-
-        {!u.abroad && (
-          <div className="card flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
-            <div className="flex items-center gap-4">
-              <Building2 className="size-8 text-forest" />
-              <div>
-                <p className="text-xl font-extrabold">قائمة الوصول والعبارات والطوارئ</p>
-                <p className="text-muted">كل ما هو مشترك بين كل المدن الألمانية.</p>
+            <Link to={`/regions/${region.slug}`} className="group relative block overflow-hidden rounded-3xl border border-line">
+              <RegionArt region={region} label={false} className="h-64 w-full sm:h-80" />
+              <div className="absolute inset-0 bg-gradient-to-l from-ink/85 via-ink/50 to-transparent" />
+              <div className="absolute inset-y-0 start-0 flex max-w-xl flex-col justify-center p-6 text-paper sm:p-10">
+                <p className="text-sm font-bold text-gold">{u.abroad ? 'شركاء خارج ألمانيا' : 'منطقتك'}</p>
+                <p className="mt-2 font-display text-3xl font-extrabold sm:text-4xl">{region.name}</p>
+                <p className="mt-2 text-paper/80">{u.abroad ? 'كل الجامعات الشريكة خارج ألمانيا' : 'الفعاليات والمهرجانات والأماكن والمواصلات والطعام الحلال وكل الجامعات المضيفة القريبة.'}</p>
+                <span className="mt-5 inline-flex items-center gap-1.5 font-bold">
+                  استكشف المنطقة <ArrowUpRight className="size-4" />
+                </span>
               </div>
-            </div>
-            <Link to="/guide" className="btn-primary">
-              افتح دليل البقاء
             </Link>
-          </div>
-        )}
-      </div>
+          </section>
+
+          {siblings.length > 0 && (
+            <section>
+              <SectionHead eyebrow="قارن" title={`جامعات مضيفة أخرى في ${u.abroad ? 'أوروبا' : region.name}`} />
+              <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+                {siblings.map((s) => (
+                  <UniversityCard key={s.id} u={s} videoId={coverVideoId(videos, s.id)} />
+                ))}
+              </div>
+            </section>
+          )}
+
+          {!u.abroad && (
+            <div className="card flex flex-col items-start gap-4 p-6 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex items-center gap-4">
+                <Building2 className="size-8 text-forest" />
+                <div>
+                  <p className="text-xl font-extrabold">قائمة الوصول والعبارات والطوارئ</p>
+                  <p className="text-muted">كل ما هو مشترك بين كل المدن الألمانية.</p>
+                </div>
+              </div>
+              <Link to="/guide" className="btn-primary">
+                افتح دليل البقاء
+              </Link>
+            </div>
+          )}
+        </Panel>
+      </Sections>
       <VideoModal video={playing} onClose={() => setPlaying(null)} />
     </>
   )

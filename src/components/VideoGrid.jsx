@@ -7,7 +7,7 @@ export function VideoCard({ v, onPlay }) {
   return (
     <button type="button" onClick={() => onPlay(v)} className="group block w-full text-start">
       <span className="relative block aspect-video overflow-hidden rounded-xl bg-sand">
-        <img src={thumb(v.id)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
+        <img src={thumb(v.id)} alt="" width={320} height={180} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-500 group-hover:scale-[1.04]" />
         <span className="absolute inset-0 bg-gradient-to-t from-ink/50 via-transparent to-transparent opacity-70" />
         <span className="absolute top-1/2 left-1/2 grid size-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-paper/90 text-ink shadow-lg transition-transform group-hover:scale-110">
           <Play className="ms-0.5 size-5 fill-current" aria-hidden />

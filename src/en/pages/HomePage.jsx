@@ -1,15 +1,17 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ArrowRight, Plane, KeyRound, Landmark, Briefcase, Play, ShieldCheck } from 'lucide-react'
+import { ArrowRight, Plane, KeyRound, Landmark, Briefcase, Play, ShieldCheck, Home } from 'lucide-react'
 import { FinderBox } from '../components/UniversityFinder.jsx'
 import GermanyMap from '../components/GermanyMap.jsx'
 import RegionArt from '../components/RegionArt.jsx'
 import { VideoCard, VideoModal, thumb } from '../components/VideoGrid.jsx'
 import { SectionHead, Stat } from '../components/ui.jsx'
 import { regions } from '../data/regions.js'
-import { universities, universitiesIn } from '../lib/data.js'
+import { universities, universitiesIn, gjuVideo } from '../lib/data.js'
 import { rentFor, BLOCKED_MONTHLY, priceGroups } from '../data/costs.js'
 import useVideos from '../lib/useVideos.js'
+import Photo from '../../components/Photo.jsx'
+import { QuickActions } from '../../components/AppShell.jsx'
 import { toolkit } from '../components/Header.jsx'
 
 const quickPicks = [
@@ -49,20 +51,20 @@ export default function HomePage() {
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-line">
         <div className="grain absolute inset-0 opacity-60" aria-hidden />
-        <div className="wrap relative grid items-center gap-12 py-14 lg:grid-cols-[1.05fr_1fr] lg:py-20">
-          <div className="rise">
+        <div className="wrap relative grid items-center gap-6 py-6 lg:grid-cols-[1.05fr_1fr] lg:gap-12 lg:py-20">
+          <div className="min-w-0">
             <p className="eyebrow">GJU German Year · unofficial guide</p>
-            <h1 className="h-display mt-4 text-5xl leading-[0.98] sm:text-6xl lg:text-7xl">
+            <h1 className="h-display mt-4 text-4xl leading-[0.98] sm:text-6xl lg:text-7xl">
               Your German Year,
               <br />
               <span className="text-rust italic">city by city.</span>
             </h1>
-            <p className="mt-6 max-w-xl text-lg leading-relaxed text-ink-2">
+            <p className="mt-3 max-w-xl leading-relaxed text-ink-2 max-sm:line-clamp-3 sm:mt-6 sm:text-lg">
               All {universities.length} host universities in one place. For each one: campus and city videos, estimated rent and price ranges, trusted housing links, local events, and the paperwork that gets you through the year.
             </p>
-            <div className="mt-8 max-w-xl">
+            <div className="mt-5 max-w-xl lg:mt-8">
               <FinderBox />
-              <div className="mt-4 flex flex-wrap items-center gap-2">
+              <div className="no-scrollbar -mx-4 mt-4 flex items-center gap-2 overflow-x-auto px-4 sm:mx-0 sm:flex-wrap sm:px-0 [&>*]:shrink-0">
                 <span className="font-mono text-[11px] text-muted uppercase">Popular</span>
                 {quickPicks.map(([id, label]) => (
                   <button key={id} type="button" onClick={() => navigate(`/universities/${id}`)} className="rounded-full border border-line bg-card px-3 py-1 text-sm hover:border-ink">
@@ -74,8 +76,8 @@ export default function HomePage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-xl lg:max-w-none">
-            <div className="relative aspect-[4/3.6] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(29,36,32,0.6)]">
-              <img src="/images/schmalkalden-altmarkt.jpg" alt="The Altmarkt square and St. Georg church in Schmalkalden" className="size-full object-cover" fetchPriority="high" />
+            <div className="relative aspect-[16/10] sm:aspect-[4/3.6] overflow-hidden rounded-[28px] shadow-[0_40px_80px_-40px_rgba(29,36,32,0.6)]">
+              <Photo src="/images/schmalkalden-altmarkt.jpg" alt="The Altmarkt square and St. Georg church in Schmalkalden" width={1800} height={1633} sizes="(min-width: 1024px) 45vw, 100vw" priority className="size-full object-cover" />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
               <div className="absolute right-5 bottom-5 left-5 text-paper">
                 <p className="font-mono text-[11px] tracking-widest uppercase opacity-80">Featured guide</p>
@@ -90,26 +92,24 @@ export default function HomePage() {
               <p className="mt-1 font-display text-3xl font-semibold">~€{BLOCKED_MONTHLY}*</p>
               <p className="text-xs text-muted">estimated, from your blocked account. See how far it goes in each city.</p>
             </div>
-            {videos && (
-              <button
-                type="button"
-                onClick={() => setPlaying(videos.gju)}
-                className="absolute -top-8 -right-3 hidden w-56 rotate-[2deg] overflow-hidden rounded-2xl border border-line bg-card text-left shadow-xl sm:block"
-              >
-                <span className="relative block aspect-video">
-                  <img src={thumb(videos.gju.id)} alt="" className="size-full object-cover" />
-                  <span className="absolute inset-0 grid place-items-center bg-ink/20">
-                    <span className="grid size-10 place-items-center rounded-full bg-paper">
-                      <Play className="ml-0.5 size-4 fill-ink" />
-                    </span>
+            <button
+              type="button"
+              onClick={() => setPlaying(gjuVideo)}
+              className="absolute -top-8 -right-3 hidden w-56 rotate-[2deg] overflow-hidden rounded-2xl border border-line bg-card text-left shadow-xl sm:block"
+            >
+              <span className="relative block aspect-video">
+                <img src={thumb(gjuVideo.id)} alt="" width={320} height={180} loading="lazy" decoding="async" className="size-full object-cover" />
+                <span className="absolute inset-0 grid place-items-center bg-ink/20">
+                  <span className="grid size-10 place-items-center rounded-full bg-paper">
+                    <Play className="ml-0.5 size-4 fill-ink" />
                   </span>
                 </span>
-                <span className="block p-3 text-sm font-semibold">Watch: German-Jordanian University</span>
-              </button>
-            )}
+              </span>
+              <span className="block p-3 text-sm font-semibold">Watch: German-Jordanian University</span>
+            </button>
           </div>
         </div>
-        <div className="wrap relative pb-10">
+        <div className="wrap relative pb-10 max-sm:hidden">
           <div className="card grid grid-cols-2 divide-line sm:grid-cols-4 sm:divide-x">
             <Stat value={universities.length} label="host universities, from Aachen to Zwickau" />
             <Stat value={`${regions.length - 1} + ${universitiesIn('INT').length}`} label="German states + partners abroad" />
@@ -119,8 +119,10 @@ export default function HomePage() {
         </div>
       </section>
 
+      <QuickActions title="Student toolkit" items={[{ to: '/internships', label: 'Internships', icon: Briefcase }, { to: '/housing', label: 'Housing', icon: Home }, ...toolkit.filter((t) => !['/videos', '/apps'].includes(t.to))]} />
+
       {/* Map */}
-      <section className="wrap pt-20">
+      <section className="wrap pt-12 lg:pt-20">
         <SectionHead eyebrow="Explore by region" title="Where in Germany will you live?" action={<Link to="/regions" className="btn-ghost">All regions <ArrowRight className="size-4" /></Link>}>
           Every state has its own feel, prices, festivals and transport network. Pick a state to see all its host universities, videos, events, costs and housing links together.
         </SectionHead>
@@ -128,11 +130,11 @@ export default function HomePage() {
       </section>
 
       {/* Journey */}
-      <section className="wrap pt-24">
+      <section className="wrap pt-12 lg:pt-24">
         <SectionHead eyebrow="The year at a glance" title="Do these in order">
           This checklist comes from the Schmalkalden Survival Book and works in every host city. Tick items off in the survival guide; your progress is saved in this browser.
         </SectionHead>
-        <ol className="grid gap-4 md:grid-cols-4">
+        <ol className="rail grid gap-4 md:grid-cols-4">
           {journey.map((j, i) => (
             <li key={j.when}>
               <Link to={j.to} className="group card flex h-full flex-col p-5 transition-colors hover:border-ink">
@@ -152,7 +154,7 @@ export default function HomePage() {
       </section>
 
       {/* Toolkit */}
-      <section className="wrap pt-24">
+      <section className="wrap pt-12 max-lg:hidden lg:pt-24">
         <SectionHead eyebrow="Student toolkit" title="Everything else you need to survive the year">
           Internships, halal food, the rules nobody tells you, the best bank and SIM card, cheap weekend trips and the apps to install before you fly.
         </SectionHead>
@@ -173,7 +175,7 @@ export default function HomePage() {
       </section>
 
       {/* Rent comparison */}
-      <section className="mt-24 bg-ink py-20 text-paper">
+      <section className="mt-12 bg-ink py-12 text-paper lg:mt-24 lg:py-20">
         <div className="wrap grid gap-12 lg:grid-cols-[1fr_1.3fr]">
           <div>
             <p className="eyebrow !text-gold">Costs</p>
@@ -217,18 +219,18 @@ export default function HomePage() {
       </section>
 
       {/* Videos */}
-      <section className="wrap pt-24">
+      <section className="wrap pt-12 lg:pt-24">
         <SectionHead eyebrow="Watch before you go" title="Campus tours from students who were there" action={<Link to="/videos" className="btn-ghost">Video library <ArrowRight className="size-4" /></Link>}>
           Every university and host city has its own playlist of campus tours, dorm room tours and city guides, filtered so that every video is about that place.
         </SectionHead>
         {featured ? (
-          <div className="grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rail grid gap-x-5 gap-y-8 sm:grid-cols-2 lg:grid-cols-4">
             {featured.map((v) => (
               <VideoCard key={v.id} v={v} onPlay={setPlaying} />
             ))}
           </div>
         ) : (
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="rail grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {Array.from({ length: 8 }, (_, i) => (
               <div key={i} className="aspect-video animate-pulse rounded-xl bg-sand" />
             ))}
@@ -237,9 +239,9 @@ export default function HomePage() {
       </section>
 
       {/* Regions */}
-      <section className="wrap pt-24">
+      <section className="wrap pt-12 lg:pt-24">
         <SectionHead eyebrow="16 states" title="Find your region" />
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="rail grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {regions
             .filter((r) => r.code !== 'INT')
             .map((r) => (
@@ -258,7 +260,7 @@ export default function HomePage() {
       </section>
 
       {/* Trust */}
-      <section className="wrap pt-24">
+      <section className="wrap pt-12 lg:pt-24">
         <div className="card grid gap-6 p-6 sm:p-8 md:grid-cols-[auto_1fr_auto] md:items-center">
           <ShieldCheck className="size-10 text-forest" aria-hidden />
           <div>

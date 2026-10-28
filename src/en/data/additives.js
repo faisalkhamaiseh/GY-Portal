@@ -8,10 +8,10 @@
 // Religious opinions differ; a "vegan" label or a halal certificate is the safest sign.
 
 export const statusInfo = {
-  avoid: { label: 'Avoid', text: 'Usually animal or pork source', color: '#e5484d', bg: 'rgba(229,72,77,0.14)' },
+  avoid: { label: 'Avoid', text: 'Usually animal or pork source', color: '#ff8a8a', bg: 'rgba(229,72,77,0.14)' },
   check: { label: 'Check', text: 'Can be plant or animal', color: '#f5a524', bg: 'rgba(245,165,36,0.14)' },
-  insect: { label: 'Insect', text: 'Insect source; opinions differ', color: '#b388ff', bg: 'rgba(179,136,255,0.14)' },
-  ok: { label: 'Usually fine', text: 'Usually plant-based or synthetic', color: '#30a46c', bg: 'rgba(48,164,108,0.14)' },
+  insect: { label: 'Insect', text: 'Insect source; opinions differ', color: '#c4a5ff', bg: 'rgba(179,136,255,0.14)' },
+  ok: { label: 'Usually fine', text: 'Usually plant-based or synthetic', color: '#3dd68c', bg: 'rgba(48,164,108,0.14)' },
 }
 
 export const eNumbers = [

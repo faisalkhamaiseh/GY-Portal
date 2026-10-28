@@ -2,23 +2,43 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>دليل السنة الألمانية | لطلاب الجامعة الألمانية الأردنية</title>
-    <meta name="description" content="كل جامعات السنة الألمانية لطلاب الجامعة الألمانية الأردنية: فيديوهات، سكن، أسعار حقيقية، تدريب عملي، طعام حلال وسفر، منطقة بمنطقة." />
-    <meta name="theme-color" content="#1d2420" />
+    <meta name="description" content="كل جامعات السنة الألمانية لطلاب الجامعة الألمانية الأردنية: فيديوهات، سكن، أسعار تقديرية، تدريب عملي، طعام حلال وسفر، منطقة بمنطقة." />
+    <meta name="theme-color" content="#f7f4ee" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="German Year" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="apple-touch-icon" href="/icon-180.png" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="دليل السنة الألمانية لطلاب GJU" />
     <meta property="og:description" content="126 جامعة مضيفة: فيديوهات، أسعار، سكن، تدريب عملي، طعام حلال وسفر، منطقة بمنطقة." />
     <meta property="og:image" content="/og-image.jpg" />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="preconnect" href="https://i.ytimg.com" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      // Runs before first paint: open the saved language, and flag the one-time
+      // disclaimer so CSS can show it without waiting for JavaScript.
+      ;(function () {
+        var d = document.documentElement
+        try {
+          var lang = localStorage.getItem('gy-lang')
+          var p = location.pathname
+          var en = p === '/en' || p.indexOf('/en/') === 0
+          if (lang === 'en' && !en) return location.replace((p === '/' ? '/en' : '/en' + p) + location.search + location.hash)
+          if (lang === 'ar' && en) return location.replace((p.slice(3) || '/') + location.search + location.hash)
+          if (localStorage.getItem('gy-disclaimer-accepted') !== '1') d.dataset.disclaimer = '1'
+        } catch (e) {
+          d.dataset.disclaimer = '1'
+        }
+      })()
+    </script>
+    <!--head-->
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app--></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

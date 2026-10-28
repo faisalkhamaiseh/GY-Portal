@@ -1,15 +1,17 @@
 import { Languages } from 'lucide-react'
+import { useLocation } from 'react-router-dom'
 import { pathFor, switchLang } from '../lib/lang.js'
 
 // Switches between Arabic and English on the same page.
 export default function LangSwitch({ to }) {
+  const { pathname } = useLocation()
   const label = to === 'en' ? 'English' : 'العربية'
   return (
     <a
-      href={pathFor(to)}
+      href={pathFor(to, pathname)}
       onClick={(e) => {
         e.preventDefault()
-        switchLang(to)
+        switchLang(to, pathname)
       }}
       lang={to}
       hrefLang={to}

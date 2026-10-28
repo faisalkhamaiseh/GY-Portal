@@ -1,27 +1,17 @@
 // The visitor's language choice. Both languages share the same paths; English
-// is prefixed with /en.
+// is prefixed with /en. index.html redirects to the saved language before the
+// page paints.
 const KEY = 'gy-lang'
 
-export function preferredLang() {
-  try {
-    return localStorage.getItem(KEY)
-  } catch {
-    return null
-  }
-}
+// `path` is the router path without the /en prefix.
+export const pathFor = (lang, path) => (lang === 'en' ? (path === '/' ? '/en' : `/en${path}`) : path)
 
-// The current page's path in the given language.
-export function pathFor(lang, pathname = window.location.pathname) {
-  const bare = pathname.replace(/^\/en(?=\/|$)/, '') || '/'
-  return lang === 'en' ? (bare === '/' ? '/en' : `/en${bare}`) : bare
-}
-
-export function switchLang(lang) {
+export function switchLang(lang, path) {
   try {
     localStorage.setItem(KEY, lang)
   } catch {
     // ignore: the link still switches for this visit
   }
   const { search, hash } = window.location
-  window.location.assign(pathFor(lang) + search + hash)
+  window.location.assign(pathFor(lang, path) + search + hash)
 }

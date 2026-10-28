@@ -109,9 +109,9 @@ export default function UniversitiesPage() {
   )
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">الجامعات المضيفة</p>
-      <h1 className="h-display mt-2 text-5xl sm:text-6xl">قارن كل الأماكن الـ{universities.length}</h1>
+      <h1 className="h-display mt-2 text-4xl sm:text-6xl">قارن كل الأماكن الـ{universities.length}</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
         فلتر حسب المنطقة ومستوى الألمانية والمعدل والرسوم، بنفس شروط قائمة الجامعات المضيفة من GJU. كل بطاقة تفتح دليلاً كاملاً بالفيديوهات والأسعار والسكن.
       </p>

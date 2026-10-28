@@ -13,7 +13,7 @@ const kinds = [
 ]
 
 export default function VideosPage() {
-  const videos = useVideos()
+  const videos = useVideos({ eager: true })
   const [params] = useSearchParams()
   const [region, setRegion] = useState(() => (regions.some((r) => r.code === params.get('region')) ? params.get('region') : 'all'))
   const [uni, setUni] = useState(() => (universityById[params.get('uni')] ? params.get('uni') : 'all'))
@@ -40,14 +40,14 @@ export default function VideosPage() {
   }, [videos, uni, kind, region, q, unisInRegion])
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <p className="eyebrow">Video library</p>
-      <h1 className="h-display mt-2 max-w-4xl text-5xl sm:text-6xl">See it before you choose it</h1>
+      <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">See it before you choose it</h1>
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
         Campus tours, dorm room tours, student vlogs and city guides for every host university and city. Filter by region or university, then press play.
       </p>
 
-      <div className="sticky top-16 z-20 -mx-4 mt-10 border-b border-line bg-paper/95 px-4 py-4 backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-5">
+      <div className="sticky top-14 lg:top-16 z-20 -mx-4 mt-10 border-b border-line bg-paper lg:bg-paper/95 px-4 py-4 lg:backdrop-blur sm:mx-0 sm:rounded-2xl sm:border sm:px-5">
         <div className="grid gap-3 md:grid-cols-[1fr_1fr_1.3fr]">
           <select
             value={region}

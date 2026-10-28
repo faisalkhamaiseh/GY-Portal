@@ -2,15 +2,26 @@ import { useEffect, useState } from 'react'
 import { loadVideos } from './data.js'
 
 // Returns the video index once loaded (null while loading).
-export default function useVideos() {
+// By default it waits until the browser is idle, so the first paint and
+// scrolling never compete with parsing the index; pass `eager` when videos are
+// the page's main content.
+export default function useVideos({ eager = false } = {}) {
   const [data, setData] = useState(null)
   useEffect(() => {
     let live = true
-    loadVideos().then((d) => live && setData(d))
+    const load = () => loadVideos().then((d) => live && setData(d))
+    if (eager || !('requestIdleCallback' in window)) {
+      load()
+      return () => {
+        live = false
+      }
+    }
+    const handle = requestIdleCallback(load, { timeout: 2500 })
     return () => {
       live = false
+      cancelIdleCallback(handle)
     }
-  }, [])
+  }, [eager])
   return data
 }
 

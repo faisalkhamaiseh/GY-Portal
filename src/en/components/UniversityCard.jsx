@@ -14,7 +14,7 @@ export default function UniversityCard({ u, videoId }) {
     >
       <div className="relative aspect-[16/8] overflow-hidden bg-sand">
         {videoId ? (
-          <img src={thumb(videoId)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" />
+          <img src={thumb(videoId)} alt="" width={320} height={180} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" />
         ) : (
           <div className="grain size-full" />
         )}

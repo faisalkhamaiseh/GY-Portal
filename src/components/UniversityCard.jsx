@@ -13,7 +13,7 @@ export default function UniversityCard({ u, videoId }) {
       className="group card flex flex-col overflow-hidden transition-all hover:-translate-y-0.5 hover:border-ink hover:shadow-[0_20px_40px_-24px_rgba(29,36,32,0.45)]"
     >
       <div className="relative aspect-[16/8] overflow-hidden bg-sand">
-        {videoId ? <img src={thumb(videoId)} alt="" loading="lazy" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" /> : <div className="grain size-full" />}
+        {videoId ? <img src={thumb(videoId)} alt="" width={320} height={180} loading="lazy" decoding="async" className="size-full object-cover transition-transform duration-500 group-hover:scale-105" /> : <div className="grain size-full" />}
         <span className="absolute top-3 start-3 rounded-md bg-paper/95 px-2 py-1 text-[11px] font-bold text-ink">{u.abroad ? u.countryName : `${region.name} · ${u.zip}`}</span>
       </div>
       <div className="flex flex-1 flex-col p-4">

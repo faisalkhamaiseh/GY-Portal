@@ -9,11 +9,11 @@ export default function AppsPage() {
   const essentials = appCategories.flatMap((c) => c.apps.filter((a) => a.essential))
 
   return (
-    <div className="wrap pt-12">
+    <div className="wrap pt-6 lg:pt-12">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div>
           <p className="eyebrow">دليل التطبيقات</p>
-          <h1 className="h-display mt-2 max-w-4xl text-5xl sm:text-6xl">حمّلها قبل أن تسافر</h1>
+          <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">حمّلها قبل أن تسافر</h1>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">التطبيقات التي يستخدمها طلاب GJU يومياً في ألمانيا، مرتبة حسب حاجتك لها. حمّلها في عمّان على شبكة Wi-Fi.</p>
         </div>
         <ShareButton title="التطبيقات الأساسية في ألمانيا لطلاب GJU" />
@@ -37,7 +37,7 @@ export default function AppsPage() {
         </div>
       </section>
 
-      <div className="no-scrollbar sticky top-16 z-20 -mx-4 mt-10 flex gap-2 overflow-x-auto border-b border-line bg-paper/95 px-4 py-3 backdrop-blur sm:mx-0 sm:px-0" role="tablist" aria-label="فئات التطبيقات">
+      <div className="no-scrollbar sticky top-14 lg:top-16 z-20 -mx-4 mt-10 flex gap-2 overflow-x-auto border-b border-line bg-paper lg:bg-paper/95 px-4 py-3 lg:backdrop-blur sm:mx-0 sm:px-0" role="tablist" aria-label="فئات التطبيقات">
         {[{ id: 'all', title: 'كل التطبيقات' }, ...appCategories].map((c) => (
           <button
             key={c.id}
