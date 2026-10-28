@@ -8,6 +8,11 @@ export const officialSources = {
   makeIt: { label: 'Make it in Germany (official portal)', href: 'https://www.make-it-in-germany.com/en/' },
   rundfunk: { label: 'Rundfunkbeitrag (official site)', href: 'https://www.rundfunkbeitrag.de/' },
   gju: { label: 'German Jordanian University (GJU)', href: 'https://www.gju.edu.jo/' },
+  gjuEligibility: { label: 'GJU: eligibility to start the German Year', href: 'https://www.gju.edu.jo/node/13323' },
+  gjuTerms: { label: 'GJU: terms to start the German Year', href: 'https://www.gju.edu.jo/node/16241' },
+  gjuLanguage: { label: 'GJU: German language regulations for the German Year', href: 'https://www.gju.edu.jo/content/german-language-regulations-german-year-12359' },
+  gjuManual: { label: 'GJU: German Year manual (PDF)', href: 'https://www.gju.edu.jo/sites/default/files/german_year_manual_final.pdf' },
+  fintiba: { label: 'Fintiba blocked account', href: 'https://www.fintiba.com/solutions/blocked-account-germany/' },
   daad: { label: 'DAAD: study in Germany', href: 'https://www.daad.de/en/' },
   dticket: { label: 'Deutschlandticket (official site)', href: 'https://deutschlandticket.de/' },
   ba: { label: 'Federal Employment Agency', href: 'https://www.arbeitsagentur.de/en/' },
@@ -17,12 +22,25 @@ const search = (q) => `https://www.google.com/search?q=${encodeURIComponent(q)}`
 
 export const checklist = [
   {
+    id: 'gju',
+    title: 'Before you go: GJU requirements',
+    place: 'GJU',
+    note: 'GJU only lets you start the German Year once these are done. The exact conditions, deadlines and fees are set by GJU and can differ by school and intake, so confirm each one with your Exchange Coordinator and the International Affairs Department.',
+    items: [
+      { id: 'gy-eligible', title: 'Check you meet the German Year eligibility conditions', text: 'GJU sets a minimum GPA and a minimum number of completed credit hours (German levels not counted) for your school. Your GPA must still meet the minimum when you leave.', official: officialSources.gjuEligibility },
+      { id: 'gy-german', title: 'Meet the German language requirement', text: 'Finish the required German courses and level (B1 track or above) as set in the GJU language regulations. Ask early what happens if you have not passed the last level before departure.', official: officialSources.gjuLanguage },
+      { id: 'gy-apply', title: 'Apply through your Exchange Coordinator', text: 'Submit the German Year application through your school\'s Exchange Coordinator and the International Affairs Department so you are placed on the outgoing list and matched with a partner university.', official: officialSources.gjuTerms },
+      { id: 'gy-training', title: 'Complete any training your study plan requires first', text: 'Some schools require field training in Jordan before the German Year. Check your study plan and finish it in time.', official: officialSources.gjuManual },
+      { id: 'gy-fee', title: 'Pay the German Year fee before the GJU deadline', text: 'GJU charges an organisational fee for the German Year. Check the current amount, deadline and cancellation rules with GJU before you pay.', official: officialSources.gjuManual },
+    ],
+  },
+  {
     id: 'before',
     title: 'Before you fly',
     place: 'Amman',
     items: [
       { id: 'dorm', title: 'Apply for a dorm room as soon as applications open', text: 'Applications usually open several months before the semester starts, and rooms go first come, first served. You can often apply before your admission letter arrives; confirm via the link in the follow-up email.', official: { label: 'Find your city\'s Studierendenwerk', href: search('Studierendenwerk Wohnheim Bewerbung') } },
-      { id: 'sperrkonto', title: 'Open the blocked account (Sperrkonto)', text: 'You deposit a full year of living costs, paid out to you monthly. The required amount is set by German law and changes, so check it officially before you transfer, and add a little extra for transfer fees.', official: officialSources.foreignOffice },
+      { id: 'sperrkonto', title: 'Open the blocked account (Sperrkonto)', text: 'You deposit a full year of living costs, paid out to you monthly. Providers such as Fintiba let you open it online in minutes, and it is accepted for the visa. The required amount is set by German law and changes, so check it officially before you transfer, and add a little extra for transfer fees.', official: [officialSources.foreignOffice, officialSources.fintiba] },
       { id: 'visa', title: 'Get the student visa', text: 'Book your embassy appointment as early as you can. The required documents and booking method are set by the embassy.', official: officialSources.visa },
       { id: 'insurance', title: 'Choose health insurance', text: 'Health insurance is required to enrol. Compare the public insurers, and get travel insurance for the first days until it starts.', official: { label: 'Compare TK and AOK', href: '/compare#health', internal: true } },
       { id: 'folder', title: 'Pack the document folder', text: 'Passport, visa, biometric photos, admission letter, GJU documents, transcripts, insurance letter, rental contract, and paper copies of everything. Bring enough cash for the first days.' },
