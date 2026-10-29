@@ -42,7 +42,7 @@ await writeFile(join(dist, '404.html'), template.replace('<!--head-->', '').repl
 
 // The public address for canonical links, link previews and the sitemap.
 // The site's own domain, not *.vercel.app, which some networks block.
-const origin = (process.env.SITE_URL || 'https://gyportal.online').replace(/\/$/, '')
+const origin = (process.env.SITE_URL || 'https://www.gyportal.online').replace(/\/$/, '')
 const bare = (path) => path.replace(/^\/en(?=\/|$)/, '') || '/'
 const inLang = (lang, path) => (lang === 'en' ? (bare(path) === '/' ? '/en' : `/en${bare(path)}`) : bare(path))
 // Canonical address plus the same page in the other language, for search engines.

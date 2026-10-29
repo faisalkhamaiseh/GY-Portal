@@ -39,7 +39,7 @@ When you edit content in `src/data/*.js` (Arabic) or `src/en/data/*.js` (English
 - **Deferred data**: a 16 KB cover index (`src/data/covers.json`) renders thumbnails right away. The full video index loads when the browser is idle.
 - **60 FPS**: animations use only `transform` and `opacity`, there is no backdrop blur on phones, and `prefers-reduced-motion` is respected.
 - **Lighthouse (mobile, simulated slow 4G)**: Performance 83–98, Accessibility 100, Best Practices 100, SEO 100, layout shift about 0.
-- **SEO and sharing**: every page has a canonical link, Arabic/English `hreflang` links, absolute link-preview tags (WhatsApp shows the title and image), plus `sitemap.xml` and `robots.txt`. Addresses use `https://gyportal.online` (override with `SITE_URL`).
+- **SEO and sharing**: every page has a canonical link, Arabic/English `hreflang` links, absolute link-preview tags (WhatsApp shows the title and image), plus `sitemap.xml` and `robots.txt`. Addresses use `https://www.gyportal.online`, the primary domain on Vercel; `gyportal.online` redirects there (override with `SITE_URL`).
 
 ## Works on every phone and every network
 
