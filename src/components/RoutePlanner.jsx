@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { ArrowLeftRight, ArrowUpRight, Bus, Plane, TrainFront, Zap } from 'lucide-react'
-import { stations, pickable, plan, verdict, links, SPARPREIS_FROM } from '../lib/routes.js'
+import { stations, pickable, plan, verdict, links, longDistance, SPARPREIS_FROM } from '../lib/routes.js'
 import { regions } from '../data/regions.js'
 import { EstimateNote, ExtLink } from './ui.jsx'
 
@@ -9,7 +9,8 @@ const amount = (n) => (n % 1 ? n.toFixed(2) : String(n))
 const euro = (n) => `${amount(n)} يورو`
 const duration = (m) => (m < 60 ? `${m} دقيقة` : `${Math.floor(m / 60)} س ${String(m % 60).padStart(2, '0')} د`)
 const changes = (n) => (n === 0 ? 'مباشر' : n === 1 ? 'تبديل واحد' : n === 2 ? 'تبديلان' : n <= 10 ? `${n} تبديلات` : `${n} تبديلاً`)
-const longDistance = (t) => t.legs.find((l) => l.type !== 'RE' && l.type !== 'RB' && l.type !== 'S').type
+const fastType = (t) => t.legs.find(longDistance).type
+const typeName = (type) => ({ Bus: 'حافلة', Tram: 'ترام' })[type] ?? type
 
 const groups = regions
   .filter((r) => r.code !== 'INT')
@@ -43,7 +44,7 @@ function Legs({ trip }) {
         <li key={i}>
           {i > 0 && <p className="mb-2 ps-1 text-xs font-bold text-muted">التبديل في {name(l.from)}</p>}
           <p className="flex items-center gap-2">
-            <span className={`chip shrink-0 ${l.type === 'RE' || l.type === 'RB' || l.type === 'S' ? 'bg-mint text-forest' : 'bg-blush text-rust-dark'}`}>{l.type}</span>
+            <span className={`chip shrink-0 ${longDistance(l) ? 'bg-blush text-rust-dark' : 'bg-mint text-forest'}`}>{typeName(l.type)}</span>
             <span className="min-w-0 flex-1 font-bold">
               {name(l.from)} ← {name(l.to)}
             </span>
@@ -81,13 +82,13 @@ function Advice({ r }) {
       return (
         <>
           <strong>خذ القطارات الإقليمية.</strong> مجانية مع تذكرتك الفصلية
-          {fast ? ` وأبطأ من ${longDistance(fast)} بـ${duration(saved)} فقط.` : '، ولا يوجد قطار أسرع على هذا الطريق.'}
+          {fast ? ` وأبطأ من ${fastType(fast)} بـ${duration(saved)} فقط.` : '، ولا يوجد قطار أسرع على هذا الطريق.'}
         </>
       )
     case 'free-or-fast':
       return (
         <>
-          <strong>مجاناً إذا كان عندك وقت:</strong> القطارات الإقليمية تأخذ {duration(free.minutes)} ({changes(free.changes)}). وإذا كان الوقت مهماً، فقطار {longDistance(fast)} يوفّر {duration(saved)} بسعر يبدأ من {euro(SPARPREIS_FROM)} إذا حجزت مبكراً.
+          <strong>مجاناً إذا كان عندك وقت:</strong> القطارات الإقليمية تأخذ {duration(free.minutes)} ({changes(free.changes)}). وإذا كان الوقت مهماً، فقطار {fastType(fast)} يوفّر {duration(saved)} بسعر يبدأ من {euro(SPARPREIS_FROM)} إذا حجزت مبكراً.
         </>
       )
     case 'bus':
@@ -142,13 +143,23 @@ export default function RoutePlanner() {
           </div>
 
           <div className="mt-5 grid gap-4 lg:grid-cols-2">
-            <Option icon={TrainFront} title="القطارات الإقليمية فقط" price="€0" tone="border-t-forest" time={duration(r.free.minutes)} sub={`${changes(r.free.changes)} · مجانية مع تذكرتك الفصلية`}>
+            <Option icon={TrainFront} title="القطارات الإقليمية والمواصلات المحلية" price="€0" tone="border-t-forest" time={duration(r.free.minutes)} sub={`${changes(r.free.changes)} · مجانية مع تذكرتك الفصلية`}>
               <Legs trip={r.free} />
-              <p className="mt-4 text-xs text-muted">ما عندك تذكرة فصلية؟ تذكرة Deutschlandticket بـ63 يورو تغطي هذه الرحلة أيضاً.</p>
+              {r.free.minutes > 600 && <p className="mt-4 rounded-lg bg-blush px-3 py-2 text-xs text-rust-dark">أكثر من 10 ساعات: طويلة جداً ليوم واحد بالقطارات الإقليمية. خطّط لليلة في الطريق، أو خذ القطار الأسرع.</p>}
+              <p className="mt-4 text-xs text-muted">ما عندك تذكرة فصلية؟ تذكرة Deutschlandticket بـ63 يورو تغطي هذه الرحلة أيضاً، مع الحافلات والترام.</p>
             </Option>
 
+            {!r.fast && (
+              <article className="flex flex-col justify-center rounded-2xl border border-dashed border-line p-5 text-sm text-ink-2">
+                <p className="flex items-center gap-2 font-bold text-ink">
+                  <Zap className="size-5 shrink-0" aria-hidden /> لا يوجد ICE أو IC أسرع
+                </p>
+                <p className="mt-2">على هذا الطريق لا توفّر القطارات السريعة وقتاً يُذكر، فالقطارات الإقليمية المجانية أعلاه هي أفضل طريقة.</p>
+              </article>
+            )}
+
             {r.fast && (
-              <Option icon={Zap} title={`الأسرع: ${longDistance(r.fast)}`} price={`€${amount(SPARPREIS_FROM)}+`} tone="border-t-rust" time={duration(r.fast.minutes)} sub={`${changes(r.fast.changes)} · يوفّر ${duration(r.free.minutes - r.fast.minutes)}`}>
+              <Option icon={Zap} title={`الأسرع: ${fastType(r.fast)}`} price={`€${amount(SPARPREIS_FROM)}+`} tone="border-t-rust" time={duration(r.fast.minutes)} sub={`${changes(r.fast.changes)} · يوفّر ${duration(r.free.minutes - r.fast.minutes)}`}>
                 <Legs trip={r.fast} />
                 <ul className="mt-4 space-y-1 border-t border-line pt-4 text-sm">
                   <li className="flex justify-between gap-3">
@@ -212,7 +223,7 @@ export default function RoutePlanner() {
 
       <EstimateNote className="mt-6" />
       <p className="mt-2 text-sm text-muted">
-        الأوقات قيم نموذجية من جدول المواعيد وليست بيانات مباشرة، وأعمال الصيانة قد تضيف ساعات. قبل السفر افحص تطبيق DB Navigator، وفعّل خيار «Nur Nahverkehr» (المواصلات المحلية فقط) لترى القطارات التي تغطيها تذكرتك. إذا كنت في بلدة صغيرة، أضف القطار الإقليمي المجاني إلى أقرب مدينة في القائمة.
+        الأوقات قيم نموذجية من جدول المواعيد وليست بيانات مباشرة، وأعمال الصيانة قد تضيف ساعات. قبل السفر افحص تطبيق DB Navigator، وفعّل خيار «Nur Nahverkehr» (المواصلات المحلية فقط) لترى القطارات التي تغطيها تذكرتك. كل مدن الجامعات المضيفة موجودة في القائمة؛ ولأي بلدة أخرى اختر أقرب مدينة، فالقطار أو الحافلة المحلية إليها مجانية مع تذكرتك.
       </p>
     </div>
   )

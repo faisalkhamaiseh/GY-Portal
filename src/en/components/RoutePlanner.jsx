@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { ArrowLeftRight, ArrowUpRight, Bus, Plane, TrainFront, Zap } from 'lucide-react'
-import { stations, pickable, plan, verdict, links, SPARPREIS_FROM } from '../../lib/routes.js'
+import { stations, pickable, plan, verdict, links, longDistance, SPARPREIS_FROM } from '../../lib/routes.js'
 import { regions } from '../data/regions.js'
 import { EstimateNote, ExtLink } from './ui.jsx'
 
@@ -8,7 +8,7 @@ const name = (id) => stations[id].en
 const euro = (n) => (n % 1 ? `€${n.toFixed(2)}` : `€${n}`)
 const duration = (m) => (m < 60 ? `${m} min` : `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')}`)
 const changes = (n) => (n === 0 ? 'direct' : n === 1 ? '1 change' : `${n} changes`)
-const longDistance = (t) => t.legs.find((l) => l.type !== 'RE' && l.type !== 'RB' && l.type !== 'S').type
+const fastType = (t) => t.legs.find(longDistance).type
 
 const groups = regions
   .filter((r) => r.code !== 'INT')
@@ -42,7 +42,7 @@ function Legs({ trip }) {
         <li key={i}>
           {i > 0 && <p className="mb-2 ps-1 font-mono text-[11px] tracking-wider text-muted uppercase">Change in {name(l.from)}</p>}
           <p className="flex items-center gap-2">
-            <span className={`chip shrink-0 ${l.type === 'RE' || l.type === 'RB' || l.type === 'S' ? 'bg-mint text-forest' : 'bg-blush text-rust-dark'}`}>{l.type}</span>
+            <span className={`chip shrink-0 ${longDistance(l) ? 'bg-blush text-rust-dark' : 'bg-mint text-forest'}`}>{l.type}</span>
             <span className="min-w-0 flex-1 font-medium">
               {name(l.from)} → {name(l.to)}
             </span>
@@ -78,13 +78,13 @@ function Advice({ r }) {
       return (
         <>
           <strong>Take the regional trains.</strong> They are free with your semester ticket
-          {fast ? ` and only ${duration(saved)} slower than the ${longDistance(fast)}.` : ', and nothing faster runs on this route.'}
+          {fast ? ` and only ${duration(saved)} slower than the ${fastType(fast)}.` : ', and nothing faster runs on this route.'}
         </>
       )
     case 'free-or-fast':
       return (
         <>
-          <strong>Free if you have the time:</strong> regional trains take {duration(free.minutes)} ({changes(free.changes)}). If time matters, the {longDistance(fast)} saves {duration(saved)} from {euro(SPARPREIS_FROM)} when you book early.
+          <strong>Free if you have the time:</strong> regional trains take {duration(free.minutes)} ({changes(free.changes)}). If time matters, the {fastType(fast)} saves {duration(saved)} from {euro(SPARPREIS_FROM)} when you book early.
         </>
       )
     case 'bus':
@@ -139,13 +139,23 @@ export default function RoutePlanner() {
           </div>
 
           <div className="mt-5 grid gap-4 lg:grid-cols-2">
-            <Option icon={TrainFront} title="Regional trains only" price="€0" tone="border-t-forest" time={duration(r.free.minutes)} sub={`${changes(r.free.changes)} · free with your Deutschlandsemesterticket`}>
+            <Option icon={TrainFront} title="Regional trains & local transport" price="€0" tone="border-t-forest" time={duration(r.free.minutes)} sub={`${changes(r.free.changes)} · free with your Deutschlandsemesterticket`}>
               <Legs trip={r.free} />
-              <p className="mt-4 text-xs text-muted">No semester ticket? The €63 Deutschlandticket covers this trip too.</p>
+              {r.free.minutes > 600 && <p className="mt-4 rounded-lg bg-blush px-3 py-2 text-xs text-rust-dark">Over 10 hours: too long for one day on regional trains. Plan a night on the way, or take the faster train.</p>}
+              <p className="mt-4 text-xs text-muted">No semester ticket? The €63 Deutschlandticket covers this trip too, buses and trams included.</p>
             </Option>
 
+            {!r.fast && (
+              <article className="flex flex-col justify-center rounded-2xl border border-dashed border-line p-5 text-sm text-ink-2">
+                <p className="flex items-center gap-2 font-semibold text-ink">
+                  <Zap className="size-5 shrink-0" aria-hidden /> No faster ICE or IC
+                </p>
+                <p className="mt-2">On this route long-distance trains save little or no time, so the free regional trains above are the best way to go.</p>
+              </article>
+            )}
+
             {r.fast && (
-              <Option icon={Zap} title={`Fastest: ${longDistance(r.fast)}`} price={`from ${euro(SPARPREIS_FROM)}`} tone="border-t-rust" time={duration(r.fast.minutes)} sub={`${changes(r.fast.changes)} · saves ${duration(r.free.minutes - r.fast.minutes)}`}>
+              <Option icon={Zap} title={`Fastest: ${fastType(r.fast)}`} price={`from ${euro(SPARPREIS_FROM)}`} tone="border-t-rust" time={duration(r.fast.minutes)} sub={`${changes(r.fast.changes)} · saves ${duration(r.free.minutes - r.fast.minutes)}`}>
                 <Legs trip={r.fast} />
                 <ul className="mt-4 space-y-1 border-t border-line pt-4 text-sm">
                   <li className="flex justify-between gap-3">
@@ -211,7 +221,7 @@ export default function RoutePlanner() {
 
       <EstimateNote className="mt-6" />
       <p className="mt-2 text-sm text-muted">
-        Times are typical timetable values, not live data, and construction can add hours. Before you go, check the DB Navigator app; tick “Nur Nahverkehr” (local transport only) to see the trains your ticket covers. From a smaller town, add the free regional train to the nearest city in the list.
+        Times are typical timetable values, not live data, and construction can add hours. Before you go, check the DB Navigator app; tick “Nur Nahverkehr” (local transport only) to see the trains your ticket covers. Every host university’s town is in the list; for any other town, pick the nearest one, since the local train or bus there is free with your ticket.
       </p>
     </div>
   )
