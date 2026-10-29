@@ -10,12 +10,24 @@ const MEDIA = 'media'
 // that precached copies lack, which some hosts list in `Vary`.
 const ANY = { ignoreSearch: true, ignoreVary: true }
 
+// Browsers refuse a redirected response for a page load (a host adding a
+// trailing slash, or turning /404.html into /404), so keep a plain copy.
+const plain = (res) => (res.redirected ? new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers }) : res)
+
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches
       .open(APP)
-      // One file failing must not stop the rest from being saved.
-      .then((cache) => Promise.all(PRECACHE.map((url) => cache.add(url).catch(() => {}))))
+      .then((cache) =>
+        Promise.all(
+          PRECACHE.map((url) =>
+            fetch(url)
+              .then((res) => res.ok && cache.put(url, plain(res)))
+              // One file failing must not stop the rest from being saved.
+              .catch(() => {}),
+          ),
+        ),
+      )
       .then(() => self.skipWaiting()),
   )
 })
@@ -28,10 +40,6 @@ self.addEventListener('activate', (event) => {
       .then(() => self.clients.claim()),
   )
 })
-
-// Browsers refuse a redirected response for a page load (e.g. a host that
-// adds a trailing slash), so serve a plain copy of it instead.
-const plain = (res) => (res.redirected ? new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers }) : res)
 
 // Waits for the network, but gives up after `ms` when a saved copy exists.
 function networkFirst(request, cacheName, ms) {

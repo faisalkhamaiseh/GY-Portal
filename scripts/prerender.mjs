@@ -80,7 +80,9 @@ const precache = [
   '/favicon.svg',
   ...assets.filter((f) => /\.(js|css|woff2)$/.test(f) && !f.startsWith('videos-') && !f.includes('latin-ext')).map((f) => `/assets/${f}`),
 ]
-const version = createHash('sha256').update(precache.join()).digest('hex').slice(0, 12)
-const worker = (await readFile('scripts/sw-template.js', 'utf8')).replace('__VERSION__', version).replace('__PRECACHE__', JSON.stringify(precache))
+const workerSource = await readFile('scripts/sw-template.js', 'utf8')
+// A new file list or new worker code gets a fresh cache.
+const version = createHash('sha256').update(precache.join() + workerSource).digest('hex').slice(0, 12)
+const worker = workerSource.replace('__VERSION__', version).replace('__PRECACHE__', JSON.stringify(precache))
 await writeFile(join(dist, 'sw.js'), worker)
 console.log(`Service worker ${version}: ${precache.length} files kept for offline use.`)
