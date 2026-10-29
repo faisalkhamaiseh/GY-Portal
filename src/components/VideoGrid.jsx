@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { showDialog, hideDialog } from '../lib/dialog.js'
 import { Play, X, ExternalLink, Youtube } from 'lucide-react'
 
 export const thumb = (id, q = 'mqdefault') => `https://i.ytimg.com/vi/${id}/${q}.jpg`
@@ -33,9 +34,8 @@ export function VideoCard({ v, onPlay }) {
 export function VideoModal({ video, onClose }) {
   const ref = useRef(null)
   useEffect(() => {
-    const d = ref.current
-    if (video && d && !d.open) d.showModal()
-    if (!video && d?.open) d.close()
+    if (video) showDialog(ref.current)
+    else hideDialog(ref.current)
   }, [video])
 
   return (

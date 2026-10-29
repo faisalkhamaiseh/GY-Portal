@@ -5,6 +5,7 @@ import {
   CalendarDays, GraduationCap, ListChecks, Siren, Languages, CloudSun, Landmark, Smartphone, HeartPulse, Scale, Bus, Tag, AppWindow, ScanBarcode,
 } from 'lucide-react'
 import { regionByCode } from '../data/regions.js'
+import { showDialog, hideDialog } from '../lib/dialog.js'
 import { smartSearch } from '../lib/search.js'
 
 const icons = { Wallet, Home, Moon, Briefcase, Plane, TrainFront, Play, CalendarDays, GraduationCap, ListChecks, Siren, Languages, CloudSun, MapPin, Landmark, Smartphone, HeartPulse, Scale, Bus, Tag, AppWindow, ScanBarcode }
@@ -181,10 +182,8 @@ export function FinderBox({ autoFocus = false, onPick, size = 'lg' }) {
 export function FinderDialog({ open, onClose }) {
   const ref = useRef(null)
   useEffect(() => {
-    const d = ref.current
-    if (!d) return
-    if (open && !d.open) d.showModal()
-    if (!open && d.open) d.close()
+    if (open) showDialog(ref.current)
+    else hideDialog(ref.current)
   }, [open])
 
   return (

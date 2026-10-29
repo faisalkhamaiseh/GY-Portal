@@ -3,6 +3,7 @@
 import { mkdir, readdir, readFile, rm, writeFile } from 'node:fs/promises'
 import { dirname, join } from 'node:path'
 import { pathToFileURL } from 'node:url'
+import { createHash } from 'node:crypto'
 
 const dist = 'dist'
 const { render, routes, regionArt } = await import(pathToFileURL(join('dist-ssr', 'entry-server.js')).href)
@@ -34,8 +35,10 @@ for (const [slug, svg] of Object.entries(regionArt())) {
   }
 }
 
-// A shell without content for paths that are not pre-rendered (unknown URLs).
-await writeFile(join(dist, 'spa.html'), shell.replace('<!--head-->', '').replace('<!--app-->', ''))
+// The app shell without content: every host serves 404.html for unknown
+// paths, and the app then renders its own "not found" page. The service
+// worker also uses it to open any page offline.
+await writeFile(join(dist, '404.html'), template.replace('<!--head-->', '').replace('<!--app-->', ''))
 
 let count = 0
 for (const path of routes()) {
@@ -53,9 +56,11 @@ for (const path of routes()) {
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escape(title)}</title>`)
   if (en) {
     html = html
-      .replace('<html lang="ar" dir="rtl">', '<html lang="en" dir="ltr">')
+      .replace('<html lang="ar" dir="rtl"', '<html lang="en" dir="ltr"')
       .replace(/<meta name="description" content="[^"]*"/, '<meta name="description" content="Every GJU German Year host university, region by region: videos, housing links, estimated costs, internships, halal food and travel."')
   }
+  // regions/bavaria.html is served at /regions/bavaria by Vercel (cleanUrls),
+  // Cloudflare Pages, Netlify and `vite preview`.
   const file = path === '/' ? join(dist, 'index.html') : join(dist, `${path}.html`)
   await mkdir(dirname(file), { recursive: true })
   await writeFile(file, html)
@@ -63,3 +68,19 @@ for (const path of routes()) {
 }
 await rm('dist-ssr', { recursive: true, force: true })
 console.log(`Pre-rendered ${count} pages.`)
+
+// Service worker: keeps the whole app on the phone after the first visit, so
+// it opens instantly and keeps working when the network is slow, offline, or
+// blocks the site's address (some Wi-Fi providers filter hosting domains).
+const precache = [
+  '/',
+  '/en',
+  '/404.html',
+  '/manifest.webmanifest',
+  '/favicon.svg',
+  ...assets.filter((f) => /\.(js|css|woff2)$/.test(f) && !f.startsWith('videos-') && !f.includes('latin-ext')).map((f) => `/assets/${f}`),
+]
+const version = createHash('sha256').update(precache.join()).digest('hex').slice(0, 12)
+const worker = (await readFile('scripts/sw-template.js', 'utf8')).replace('__VERSION__', version).replace('__PRECACHE__', JSON.stringify(precache))
+await writeFile(join(dist, 'sw.js'), worker)
+console.log(`Service worker ${version}: ${precache.length} files kept for offline use.`)

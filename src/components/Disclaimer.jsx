@@ -56,7 +56,7 @@ export default function DisclaimerModal({ lang = 'ar' }) {
           </span>
         </p>
         <DisclaimerText lang={lang} className="mt-4 space-y-2 text-[15px] leading-relaxed text-ink-2" />
-        <button ref={button} type="button" onClick={accept} className="btn-primary mt-6 min-h-12 w-full justify-center">
+        <button ref={button} type="button" onClick={accept} data-accept-disclaimer className="btn-primary mt-6 min-h-12 w-full justify-center">
           {en ? 'I understand and agree' : 'فهمت وأوافق'}
         </button>
       </div>

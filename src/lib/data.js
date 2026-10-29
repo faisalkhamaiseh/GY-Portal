@@ -63,7 +63,13 @@ export function requirementTags(u) {
 // Videos are ~350 KB, so they load on demand and are cached for the session.
 let videoCache
 export function loadVideos() {
-  videoCache ??= import('../data/videos.json').then((m) => m.default)
+  // A failed load (offline, flaky network) is forgotten so the next call retries.
+  videoCache ??= import('../data/videos.json')
+    .then((m) => m.default)
+    .catch((err) => {
+      videoCache = undefined
+      throw err
+    })
   return videoCache
 }
 

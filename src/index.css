@@ -222,3 +222,19 @@ button,
     scroll-snap-align: start;
   }
 }
+
+/* <dialog> on browsers without showModal(): see lib/dialog.js. */
+dialog:not([open]) {
+  display: none;
+}
+dialog.dialog-fallback[open] {
+  position: fixed;
+  top: 8vh;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: block;
+  max-height: 84vh;
+  overflow: auto;
+  box-shadow: 0 0 0 100vmax rgba(29, 36, 32, 0.7);
+}

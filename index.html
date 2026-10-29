@@ -1,7 +1,8 @@
 <!doctype html>
-<html lang="ar" dir="rtl">
+<html lang="ar" dir="rtl" translate="no">
   <head>
     <meta charset="UTF-8" />
+    <meta name="google" content="notranslate" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>دليل السنة الألمانية | لطلاب الجامعة الألمانية الأردنية</title>
     <meta name="description" content="كل جامعات السنة الألمانية لطلاب الجامعة الألمانية الأردنية: فيديوهات، سكن، أسعار تقديرية، تدريب عملي، طعام حلال وسفر، منطقة بمنطقة." />
@@ -19,20 +20,33 @@
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <script>
-      // Runs before first paint: open the saved language, and flag the one-time
-      // disclaimer so CSS can show it without waiting for JavaScript.
+      // Runs before first paint, in plain ES5 so it works on every phone:
+      // open the saved language, and flag the one-time disclaimer so CSS can
+      // show it without waiting for the app. Its button works even if the app
+      // script fails to load, so the disclaimer can never trap a visitor.
       ;(function () {
         var d = document.documentElement
         try {
           var lang = localStorage.getItem('gy-lang')
           var p = location.pathname
-          var en = p === '/en' || p.indexOf('/en/') === 0
+          var en = p === '/en' || p === '/en/' || p.indexOf('/en/') === 0
           if (lang === 'en' && !en) return location.replace((p === '/' ? '/en' : '/en' + p) + location.search + location.hash)
           if (lang === 'ar' && en) return location.replace((p.slice(3) || '/') + location.search + location.hash)
-          if (localStorage.getItem('gy-disclaimer-accepted') !== '1') d.dataset.disclaimer = '1'
+          if (localStorage.getItem('gy-disclaimer-accepted') !== '1') d.setAttribute('data-disclaimer', '1')
         } catch (e) {
-          d.dataset.disclaimer = '1'
+          d.setAttribute('data-disclaimer', '1')
         }
+        document.addEventListener('click', function (e) {
+          for (var t = e.target; t && t.getAttribute; t = t.parentNode) {
+            if (t.getAttribute('data-accept-disclaimer') !== null) {
+              try {
+                localStorage.setItem('gy-disclaimer-accepted', '1')
+              } catch (x) {}
+              d.removeAttribute('data-disclaimer')
+              return
+            }
+          }
+        })
       })()
     </script>
     <!--head-->

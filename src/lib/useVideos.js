@@ -9,7 +9,8 @@ export default function useVideos({ eager = false } = {}) {
   const [data, setData] = useState(null)
   useEffect(() => {
     let live = true
-    const load = () => loadVideos().then((d) => live && setData(d))
+    // Without a connection the videos stay in their loading state; nothing breaks.
+    const load = () => loadVideos().then((d) => live && setData(d), () => {})
     if (eager || !('requestIdleCallback' in window)) {
       load()
       return () => {

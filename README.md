@@ -38,7 +38,14 @@ When you edit content in `src/data/*.js` (Arabic) or `src/en/data/*.js` (English
 - **Images**: responsive WebP (`srcset`, 480 to 1200 px) with fixed width and height. Below-the-fold images and YouTube thumbnails are lazy-loaded. The region posters are pre-built SVG files (`public/art/`), not inline DOM.
 - **Deferred data**: a 16 KB cover index (`src/data/covers.json`) renders thumbnails right away. The full video index loads when the browser is idle.
 - **60 FPS**: animations use only `transform` and `opacity`, there is no backdrop blur on phones, and `prefers-reduced-motion` is respected.
-- **Lighthouse (mobile, simulated slow 4G)**: Performance 88–99, Accessibility 100, Best Practices 100, layout shift about 0.
+- **Lighthouse (mobile, simulated slow 4G)**: Performance 85–99, Accessibility 100, Best Practices 100, layout shift about 0.
+
+## Works on every phone and every network
+
+- **Older phones (iOS 14+, Android Chrome 80+)**: Tailwind's cascade layers are flattened into plain CSS (`flatten-css-layers` in `vite.config.js`), and JavaScript is transpiled for those browsers. Search and video pop-ups fall back gracefully where `<dialog>` is missing (`src/lib/dialog.js`).
+- **The page never gets stuck**: the content is in the HTML, and the one-time disclaimer can be accepted by a tiny inline script even if the app script fails to load.
+- **No auto-translate crashes**: `translate="no"` stops the browser's automatic translation from rewriting the page under React (the site has its own English version).
+- **Offline and blocked networks**: a service worker (`scripts/sw-template.js`, generated into `dist/sw.js`) keeps the app on the phone after the first visit (about 600 KB, downloaded once in the background). After that, every page opens instantly, even offline or on a Wi-Fi network that blocks the hosting address. Pages are loaded network-first, so updates show up as soon as the site is reachable.
 
 ## Tech
 
@@ -81,9 +88,13 @@ To refresh the videos (this needs `yt-dlp`), run `npm run videos`.
 
 ## Deploy (free)
 
-1. Import this repo on [vercel.com](https://vercel.com). The framework preset is Vite, the build command is `npm run build`, and the output directory is `dist`.
-2. `vercel.json` serves the pre-rendered pages with clean URLs, sends unknown paths to the app shell (`spa.html`), and sets the caching and security headers. On Netlify, `public/_redirects` does the same.
-3. Share the resulting `*.vercel.app` link.
+The build is plain static files (`dist/`) and runs on any static host. `vercel.json` covers Vercel, and `public/_headers` covers Cloudflare Pages and Netlify. Unknown paths get `404.html`, the app shell, which shows the "not found" page.
+
+**Important for Jordan:** some home and university Wi-Fi providers filter `*.vercel.app` addresses, so the site only opens on mobile data. This is a network block, not a site bug. Fix it with an address those networks don't block:
+
+1. **Cloudflare Pages (free, recommended):** on [dash.cloudflare.com](https://dash.cloudflare.com), go to Workers & Pages, then Create, then Pages, then Connect to Git. Pick this repo and set the build command to `npm run build` and the output directory to `dist`. You get `https://<name>.pages.dev`, served from Cloudflare's network.
+2. **Your own domain (best long-term):** a cheap domain such as `gy-portal.com`, connected to Cloudflare Pages (or Vercel), avoids hosting-domain filters altogether.
+3. Keep Vercel as a second link if you like. Both deploy automatically on every push.
 
 ---
 

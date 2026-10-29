@@ -26,3 +26,8 @@ load.then(({ default: App }) => {
   if (root.dataset.path === pathname.replace(/(.)\/$/, '$1') && !search) hydrateRoot(root, app)
   else createRoot(root).render(app)
 })
+
+// Keep the app on the phone for instant and offline visits (see scripts/sw-template.js).
+if (import.meta.env.PROD && 'serviceWorker' in navigator) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}))
+}
