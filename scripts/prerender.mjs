@@ -40,6 +40,18 @@ for (const [slug, svg] of Object.entries(regionArt())) {
 // worker also uses it to open any page offline.
 await writeFile(join(dist, '404.html'), template.replace('<!--head-->', '').replace('<!--app-->', ''))
 
+// The public address for canonical links and the sitemap: SITE_URL if set,
+// else the production domain Vercel provides at build time.
+const origin = (process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://gy-portal.vercel.app')).replace(/\/$/, '')
+const bare = (path) => path.replace(/^\/en(?=\/|$)/, '') || '/'
+const inLang = (lang, path) => (lang === 'en' ? (bare(path) === '/' ? '/en' : `/en${bare(path)}`) : bare(path))
+// Canonical address plus the same page in the other language, for search engines.
+const seoLinks = (path) =>
+  `<link rel="canonical" href="${origin}${path}">` +
+  `<link rel="alternate" hreflang="ar" href="${origin}${inLang('ar', path)}">` +
+  `<link rel="alternate" hreflang="en" href="${origin}${inLang('en', path)}">` +
+  `<link rel="alternate" hreflang="x-default" href="${origin}${inLang('ar', path)}">`
+
 let count = 0
 for (const path of routes()) {
   const en = path === '/en' || path.startsWith('/en/')
@@ -49,15 +61,21 @@ for (const path of routes()) {
   const title = path === '/' || path === '/en' ? site : `${h1} | ${site}`
   // Only fonts are preloaded: script preloads would compete with the first
   // paint, and the pre-rendered page is readable before any script runs.
-  const head = fontLinks(en ? 'latin' : 'arabic')
+  const head = fontLinks(en ? 'latin' : 'arabic') + seoLinks(path)
   let html = template
     .replace('<div id="root"><!--app--></div>', `<div id="root" data-path="${path}">${app}</div>`)
     .replace('<!--head-->', head)
     .replace(/<title>[\s\S]*?<\/title>/, `<title>${escape(title)}</title>`)
+    // Link previews (WhatsApp, social apps) need absolute addresses.
+    .replace('content="/og-image.jpg"', `content="${origin}/og-image.jpg"`)
+    .replace('<meta property="og:type" content="website" />', `<meta property="og:type" content="website" /><meta property="og:url" content="${origin}${path}" />`)
+    .replace(/<meta property="og:title" content="[^"]*"/, `<meta property="og:title" content="${escape(title)}"`)
   if (en) {
+    const description = 'Every GJU German Year host university, region by region: videos, housing links, estimated costs, internships, halal food and travel.'
     html = html
       .replace('<html lang="ar" dir="rtl"', '<html lang="en" dir="ltr"')
-      .replace(/<meta name="description" content="[^"]*"/, '<meta name="description" content="Every GJU German Year host university, region by region: videos, housing links, estimated costs, internships, halal food and travel."')
+      .replace(/<meta name="description" content="[^"]*"/, `<meta name="description" content="${description}"`)
+      .replace(/<meta property="og:description" content="[^"]*"/, `<meta property="og:description" content="${description}"`)
   }
   // regions/bavaria.html is served at /regions/bavaria by Vercel (cleanUrls),
   // Cloudflare Pages, Netlify and `vite preview`.
@@ -66,6 +84,13 @@ for (const path of routes()) {
   await writeFile(file, html)
   count++
 }
+await writeFile(
+  join(dist, 'sitemap.xml'),
+  `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${routes()
+    .map((path) => `  <url><loc>${origin}${path}</loc></url>`)
+    .join('\n')}\n</urlset>\n`,
+)
+await writeFile(join(dist, 'robots.txt'), `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`)
 await rm('dist-ssr', { recursive: true, force: true })
 console.log(`Pre-rendered ${count} pages.`)
 

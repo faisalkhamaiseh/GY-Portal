@@ -1,5 +1,5 @@
 import { StrictMode, Suspense } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { prerenderToNodeStream } from 'react-dom/static'
 import { StaticRouter } from 'react-router-dom'
 import ArabicApp from './App.jsx'
@@ -8,22 +8,29 @@ import { regions } from './data/regions.js'
 import { RegionArtSvg } from './components/RegionArtSvg.jsx'
 import { universities } from './lib/data.js'
 
-// Renders one route to HTML at build time, waiting for every lazy page.
-export async function render(url) {
+function tree(url) {
   const en = url === '/en' || url.startsWith('/en/')
   const App = en ? EnglishApp : ArabicApp
-  const { prelude } = await prerenderToNodeStream(
+  return (
     <StrictMode>
       <StaticRouter location={url} basename={en ? '/en' : '/'}>
         <Suspense fallback={null}>
           <App />
         </Suspense>
       </StaticRouter>
-    </StrictMode>,
+    </StrictMode>
   )
-  let html = ''
-  for await (const chunk of prelude) html += chunk
-  return html
+}
+
+// Renders one route to HTML at build time. `prerender` waits until the
+// route's lazy page modules have loaded; `renderToString` then writes the
+// page with its content in place. (prerender's own output moves large content
+// out of place, behind a loading skeleton that an inline script swaps later:
+// a slower first paint, and stuck on the skeleton if that script fails.)
+export async function render(url) {
+  const { prelude } = await prerenderToNodeStream(tree(url))
+  for await (const _ of prelude); // drain
+  return renderToString(tree(url))
 }
 
 // Every pre-rendered path, in both languages.
