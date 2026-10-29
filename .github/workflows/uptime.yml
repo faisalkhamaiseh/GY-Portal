@@ -1,0 +1,24 @@
+# Checks every 30 minutes that the live site answers with real pages. When a
+# check fails, GitHub marks the run red and emails the repository owner.
+name: Uptime check
+
+on:
+  schedule:
+    - cron: '7,37 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Open the main pages
+        run: |
+          for path in / /en /universities/schmalkalden /travel; do
+            code=$(curl -s -o page.html -w '%{http_code}' --retry 2 --retry-delay 30 --max-time 30 "https://www.gyportal.online$path")
+            echo "$path -> $code"
+            if [ "$code" != 200 ]; then echo "::error::$path answered $code"; exit 1; fi
+            if ! grep -q 'data-path=' page.html; then echo "::error::$path came back without its content"; exit 1; fi
+          done

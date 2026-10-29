@@ -81,7 +81,7 @@ npx vite preview   # serve dist/ locally
 | `src/data/universities.tsv`, `src/en/data/universities.tsv` | The 126 host universities (Arabic and English): GJU requirements, fees, notes and websites |
 | `src/data/videos.json` | Curated YouTube videos per university, city, state and topic |
 | `src/data/regions.js` | States: events, sights, housing and airports |
-| `src/data/costs.js` | Estimated price ranges and rent tiers |
+| `src/lib/costModel.js` | Every price, rent tier and fixed fee, once for both languages; `src/data/costs.js` and `src/en/data/costs.js` add the words |
 | `src/data/guide.js` | Arrival checklist with official sources |
 | `src/data/*.js` | Rules, comparisons, travel, apps, additives and careers |
 | `src/lib/routes.js` | Rail network model for the route planner: stations, regional and ICE/IC lines with typical times |
@@ -94,6 +94,17 @@ To refresh the videos (this needs `yt-dlp`), run `npm run videos`.
 2. `vercel.json` serves the pre-rendered pages with clean URLs and sets the caching and security headers. Unknown paths get `404.html`, the app shell, which shows the "not found" page.
 3. Every push to `main` deploys automatically.
 4. On Vercel's free Hobby plan, a deployment is **blocked** unless the commit author is linked to the repository owner's GitHub account. Commit with your GitHub email (or `270198751+faisalkhamaiseh@users.noreply.github.com`), or merge changes through a pull request on GitHub.
+
+## Staying online under load
+
+The site is static files: there is no server code to overload or crash. What can take it down, and what protects it:
+
+- **Vercel's free-plan limits** (about 1 million requests and 100 GB a month; past them Vercel pauses the project). Cloudflare sits in front and caches every page for 2 minutes (`Cloudflare-CDN-Cache-Control` in `vercel.json`, plus a Cloudflare Cache Rule), so a flood of visits or bots is answered by Cloudflare and barely reaches Vercel. If Vercel errors, Cloudflare keeps serving the saved copy for up to a week (`stale-if-error`).
+- **Floods from one address**: a Cloudflare rate limiting rule blocks an IP that sends hundreds of requests in 10 seconds. It is set high on purpose: in Jordan many phones share one public IP.
+- **A broken release**: `scripts/verify.mjs` runs at the end of `npm run build` and checks every page (content, heading, title, disclaimer, no `undefined`/`NaN`, no missing files). If anything fails, the build fails and Vercel keeps the previous version online. A bad release that slips through can be undone in Vercel under Deployments, then "Instant Rollback".
+- **Crashes in the browser**: every page has an error screen, the whole app has a last-resort one (`src/main.jsx`), and a tab left open across a release reloads once to fetch the new files (`src/lib/reload.js`).
+- **Knowing when it is down**: `.github/workflows/uptime.yml` opens the main pages every 30 minutes and fails (GitHub emails you) if they do not load.
+- **Emergencies**: Cloudflare, Security, then "Under Attack Mode" puts a browser check in front of every visitor; Vercel, Firewall, then "Attack Challenge Mode" does the same at Vercel.
 
 **Important for Jordan:** some home and university Wi-Fi providers cut connections to `*.vercel.app` addresses. Safari then shows "the network connection was lost", while the same link works on mobile data. This is a network block, not a site bug. The site therefore has its own domain, **gyportal.online**, connected to the Vercel project (Settings, then Domains, then "Connect to an environment: Production"). Share that address, not `*.vercel.app`. Once a phone has opened the site, the service worker also keeps it working on those networks.
 

@@ -5,6 +5,7 @@ import Footer from './components/Footer.jsx'
 import InstallPrompt from './components/InstallPrompt.jsx'
 import DisclaimerModal from './components/Disclaimer.jsx'
 import HomePage from './pages/HomePage.jsx'
+import { isMissingFile, reloadOnce } from './lib/reload.js'
 
 // Every page except the home page loads on demand, so the first visit only
 // downloads what it shows.
@@ -79,17 +80,8 @@ class ErrorBoundary extends Component {
   }
   render() {
     if (!this.state.error) return this.props.children
-    // A new deploy can make old page files disappear: reload once to get them.
-    const chunk = /dynamically imported module|Loading chunk|Importing a module script failed/i.test(String(this.state.error?.message))
-    if (chunk && !sessionStorage.getItem('reloaded')) {
-      try {
-        sessionStorage.setItem('reloaded', '1')
-      } catch {
-        // ignore
-      }
-      window.location.reload()
-      return null
-    }
+    // A new release can make old page files disappear: reload to get them.
+    if (isMissingFile(this.state.error) && reloadOnce()) return null
     return (
       <div className="wrap max-w-xl py-24 text-center">
         <p className="eyebrow">حدث خطأ</p>

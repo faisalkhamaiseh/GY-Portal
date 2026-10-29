@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "node scripts/covers.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs",
+    "build": "node scripts/covers.mjs && vite build && vite build --ssr src/entry-server.jsx --outDir dist-ssr && node scripts/prerender.mjs && node scripts/verify.mjs",
     "preview": "vite preview",
     "videos": "python3 -I scripts/fetch_videos.py && python3 -I scripts/fetch_videos.py --topics && python3 -I scripts/curate_videos.py"
   },
