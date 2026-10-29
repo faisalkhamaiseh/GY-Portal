@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Check, Phone, Stethoscope } from 'lucide-react'
 import { SectionHead, LinkRow, Callout, OfficialLink } from '../components/ui.jsx'
 import Sections, { Panel } from '../../components/Sections.jsx'
-import { checklist, internship, phrasebook, emergency, semester } from '../data/guide.js'
+import { checklist, internship, phrasebook, emergency, semester, keyDates, contacts, emailRules, officialSources } from '../data/guide.js'
 
 const KEY = 'gju-guide-checklist'
 
@@ -41,9 +41,9 @@ export default function GuidePage() {
       </p>
 
       <Sections className="mt-8 lg:mt-12" label="Page sections">
-        <Panel id="plan" label="Arrival plan">
+        <Panel id="plan" label="Steps to Germany">
           <SectionHead
-            eyebrow="Arrival plan"
+            eyebrow="From application to arrival"
             title="Do these in order"
             action={
               <div className="w-full max-w-xs">
@@ -61,6 +61,17 @@ export default function GuidePage() {
           >
             Tap a box to tick it. Your ticks are saved in this browser.
           </SectionHead>
+          <div className="mb-10">
+            <h3 className="font-display text-2xl font-semibold">Key dates for the 2026/27 intake</h3>
+            <ol className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {keyDates.map((d) => (
+                <li key={d.when} className="card p-4">
+                  <p className="font-display text-xl font-semibold text-rust">{d.when}</p>
+                  <p className="mt-1 text-sm leading-snug text-ink-2">{d.what}</p>
+                </li>
+              ))}
+            </ol>
+          </div>
           <div className="space-y-12">
             {checklist.map((group) => (
               <div key={group.id} id={group.id} className="scroll-mt-28">
@@ -101,6 +112,36 @@ export default function GuidePage() {
                 </ul>
               </div>
             ))}
+          </div>
+          <div className="mt-12 grid gap-8 lg:grid-cols-2">
+            <div>
+              <h3 className="font-display text-2xl font-semibold">Who to ask about what</h3>
+              <ul className="mt-4 space-y-3">
+                {contacts.map((c) => (
+                  <li key={c.who} className="card p-4">
+                    <p className="font-semibold">
+                      {c.who} <span className="text-sm font-normal text-muted">· {c.where}</span>
+                    </p>
+                    <p className="mt-1 text-sm leading-relaxed text-ink-2">{c.what}</p>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div>
+              <h3 className="font-display text-2xl font-semibold">Emailing IAD the right way</h3>
+              <ul className="mt-4 space-y-2">
+                {emailRules.map((r) => (
+                  <li key={r} className="flex gap-2 text-sm leading-relaxed">
+                    <Check className="mt-0.5 size-4 shrink-0 text-forest" aria-hidden /> {r}
+                  </li>
+                ))}
+              </ul>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {[officialSources.iad, officialSources.iadBooking, officialSources.gjuFaq].map((link) => (
+                  <OfficialLink key={link.href} {...link} />
+                ))}
+              </div>
+            </div>
           </div>
         </Panel>
 

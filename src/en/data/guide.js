@@ -1,6 +1,7 @@
-// Germany-wide guidance. Content policy: no fixed dates, deadlines or official
-// amounts. We describe the general steps only and link to the official source
-// for every legal, governmental or academic procedure (`official`).
+// Germany-wide guidance. Dates and amounts come from GJU's International
+// Affairs Department (kick-off meeting, winter semester 2026/27) or official
+// rates; every legal, governmental or academic step links to its official
+// source (`official`).
 
 export const officialSources = {
   visa: { label: 'German Embassy Amman', href: 'https://amman.diplo.de/' },
@@ -15,6 +16,9 @@ export const officialSources = {
   fintiba: { label: 'Fintiba blocked account', href: 'https://www.fintiba.com/solutions/blocked-account-germany/' },
   daad: { label: 'DAAD: study in Germany', href: 'https://www.daad.de/en/' },
   dticket: { label: 'Deutschlandticket (official site)', href: 'https://deutschlandticket.de/' },
+  iad: { label: 'Email the IAD outgoings team', href: 'mailto:IAD.Outgoing.Team@gju.edu.jo' },
+  iadBooking: { label: 'Book an IAD appointment', href: 'https://outlook.office365.com/owa/calendar/AppointmentBooking@gju.edu.jo/bookings/' },
+  gjuFaq: { label: 'GJU: German Year FAQs', href: 'https://www.gju.edu.jo/content/faqs-16127' },
   ba: { label: 'Federal Employment Agency', href: 'https://www.arbeitsagentur.de/en/' },
 }
 
@@ -35,13 +39,34 @@ export const checklist = [
     ],
   },
   {
+    id: 'apply',
+    title: 'Steps to Germany: your application',
+    place: 'GJU, November to January',
+    note: 'From the GJU International Affairs Department (IAD) kick-off meeting for the winter semester 2026/27. Exact visa appointment dates are announced by email, so check your GJU mailbox every day.',
+    items: [
+      { id: 'apply-research', title: 'Get to know your future university', text: 'Read the host university\'s website (programmes, courses, deadlines), find its International Office, your first contact on site, and look up the city: location, transport and daily life.', official: { label: 'Host universities', href: '/universities', internal: true } },
+      { id: 'apply-mailbox', title: 'Keep your GJU mailbox active and with free space', text: 'Every step arrives by email from IAD and from your host university. A full mailbox bounces their messages. Also join the GJU Outgoings Index when IAD sends the link.' },
+      { id: 'apply-transcript', title: 'Get your transcript of records (كشف العلامات)', text: 'Required. Ask GJU\'s Admission and Registration Department for an official English transcript with the stamp. Order it early: it can take a few working days.' },
+      { id: 'apply-enrolment', title: 'Get your certificate of enrolment (إثبات طالب)', text: 'Required. From the same Registration Department: an official letter in English confirming you are a current GJU student.' },
+      { id: 'apply-german', title: 'Get your German language certificate (Sprachzeugnis)', text: 'Required. The GJU DaF certificate from your German courses, or a Goethe B1 or ÖSD B1 certificate. Book outside exams early: places fill up.', official: [{ label: 'GJU German language rules', href: 'https://www.gju.edu.jo/content/german-language-regulations-german-year-12359' }, { label: 'Goethe-Institut Jordan: exams', href: 'https://www.goethe.de/ins/jo/en/spr/prf.html' }, { label: 'ÖSD exams', href: 'https://www.osd.at/en/' }] },
+      { id: 'apply-passport', title: 'Make a clear copy of your passport data page', text: 'Your passport must be valid for the whole year abroad and some months after. If it expires soon, renew it now at the Civil Status and Passports Department: you need it for the visa too.', official: { label: 'Civil Status and Passports Department', href: 'https://www.cspd.gov.jo/' } },
+      { id: 'apply-photos', title: 'Take 3 biometric passport photos', text: 'For the visa application: 35 × 45 mm, recent, light plain background, face straight to the camera. Any photo studio in Amman can do them; say they are for a German visa.' },
+      { id: 'apply-send', title: 'Email all documents to your outgoing coordinator', text: 'Transcript, enrolment certificate, German certificate, passport copy and photos, scanned in one email. Put your name, student ID, major, German Year and host university in every email.', official: { label: 'IAD.Outgoing.Team@gju.edu.jo', href: 'mailto:IAD.Outgoing.Team@gju.edu.jo' } },
+      { id: 'apply-learning', title: 'Fill in the Learning Agreement with your Exchange Coordinator', text: 'Choose your courses at the host university together with the Exchange Coordinator at your school. It decides which credits GJU recognises.' },
+      { id: 'apply-forms', title: 'Sign the IAD forms', text: 'The cancellation rules, the code of conduct (GJU IAD and your host university) and the German Year IAD procedures and timeline. IAD sends the templates.' },
+      { id: 'apply-extra', title: 'Prepare extra documents if your university asks', text: 'The university and dormitory application form; a motivation letter (about one page, at least half in German); a portfolio for Architecture and Design students; a CV in German or English with your photo. Each university can ask for something extra, so read every email.', official: { label: 'Europass CV template', href: 'https://europass.europa.eu/en/create-europass-cv' } },
+      { id: 'dorm', title: 'Find housing: three ways, all at once', text: 'Through the university application form (automatic), directly with the Studierendenwerk (on your own), or privately on the open market. Dorm rooms are not guaranteed, so search privately at the same time. Without a fixed address you cannot register in your city, and without registering you cannot reach your money. Never pay before a live video call and a real contract.', official: [{ label: 'Trusted housing sites', href: '/housing', internal: true }, { label: 'DAAD dormitory finder', href: 'https://www.daad.de/deutschland/nach-deutschland/bewerbung/en/22222-wohnheimfinder/' }] },
+      { id: 'sperrkonto', title: 'Deposit the blocked account by 1 December', text: 'GJU asks you to deposit €12,163 (about 9,339 JOD) with Fintiba (Sutor Bank) and send the blocking confirmation for the visa. It covers 12 months of living costs and pays out €992 a month once you are in Germany. Signing up with Fintiba and transferring on time is your own responsibility.', official: [officialSources.fintiba, officialSources.foreignOffice] },
+      { id: 'visa', title: 'Apply for the visa (end of November to January)', text: 'IAD sets the embassy appointment dates and announces them by email. Bring your acceptance letter, the blocked account confirmation, your passport and the biometric photos. The visa fee is €75.', official: officialSources.visa },
+      { id: 'apply-letters', title: 'Wait for your acceptance letter (end of December)', text: 'The host university sends the invitation or acceptance letter. Forward it to IAD and keep the original for the visa.' },
+      { id: 'apply-depart', title: 'Farewell on 14 January 2027, departure from February to March', text: 'Book your flight once the visa is in your passport, and arrive on a weekday so you can collect your keys.' },
+    ],
+  },
+  {
     id: 'before',
     title: 'Before you fly',
     place: 'Amman',
     items: [
-      { id: 'dorm', title: 'Apply for a dorm room as soon as applications open', text: 'Applications usually open several months before the semester starts, and rooms go first come, first served. You can often apply before your admission letter arrives; confirm via the link in the follow-up email.', official: { label: 'Find your city\'s Studierendenwerk', href: search('Studierendenwerk Wohnheim Bewerbung') } },
-      { id: 'sperrkonto', title: 'Open the blocked account (Sperrkonto)', text: 'You deposit €11,904 for a 12-month stay (the 2026 amount), paid out to you at €992 a month. Providers such as Fintiba let you open it online in minutes, and it is accepted for the visa. Add a little extra for transfer fees, and check the amount again if you apply in a new year.', official: [officialSources.foreignOffice, officialSources.fintiba] },
-      { id: 'visa', title: 'Get the student visa', text: 'Book your embassy appointment as early as you can. The visa fee is €75. The required documents and booking method are set by the embassy.', official: officialSources.visa },
       { id: 'insurance', title: 'Choose health insurance', text: 'Health insurance is required to enrol. Compare the public insurers, and get travel insurance for the first days until it starts.', official: { label: 'Compare TK and AOK', href: '/compare#health', internal: true } },
       { id: 'folder', title: 'Pack the document folder', text: 'Passport, visa, biometric photos, admission letter, GJU documents, transcripts, insurance letter, rental contract, and paper copies of everything. Bring enough cash for the first days.' },
       { id: 'ticket', title: 'Activate your semester ticket', text: 'If your university already sent it, activate it before you land so you can take the train from the airport.', official: officialSources.dticket },
@@ -146,3 +171,23 @@ export const semester = [
   { month: 'End of semester', label: 'Exams and getting ready to move to your internship' },
   { month: 'Second half', label: 'Internship at a German company' },
 ]
+
+// Who answers what, from the IAD kick-off meeting.
+export const contacts = [
+  { who: 'Exchange Coordinator', where: 'At your school', what: 'Academic questions: Learning Agreement, courses, transcripts' },
+  { who: 'IAD Outgoing Coordinators', where: 'International Affairs Department', what: 'University application, visa and your documents' },
+  { who: 'IAD Internship Coordinators', where: 'International Affairs Department', what: 'The internship half: contract and job opportunities' },
+  { who: 'You', where: 'Your own responsibility', what: 'Housing, address registration in Germany, enrolment, Fintiba sign-up and transfer confirmation, on time' },
+]
+
+// Key dates for the winter semester 2026/27 intake (IAD kick-off meeting).
+export const keyDates = [
+  { when: 'November', what: 'University applications' },
+  { when: '1 December', what: 'Blocked account deposit and confirmation for the visa' },
+  { when: 'End Nov to January', what: 'Visa applications (dates announced by email)' },
+  { when: 'End of December', what: 'Invitation and acceptance letters' },
+  { when: '14 January 2027', what: 'Farewell gathering' },
+  { when: 'February to March', what: 'Departure to Germany' },
+]
+
+export const emailRules = ['Write from your GJU email, never a private address', 'Use a clear subject, for example "Question about my German Year application"', 'Start with "Dear Ms./Mr." and the family name', 'End with your name, student ID, major, German Year and host university', 'Wait for a reply in working hours; one email is enough']
