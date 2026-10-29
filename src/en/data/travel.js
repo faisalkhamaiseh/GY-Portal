@@ -3,7 +3,7 @@
 // change every season, so the site always links to a live flight search.
 
 export const dticket = {
-  // The price changes regularly, so we never show a fixed figure.
+  // The price changes each January; the tips below give the current one.
   covered: [
     'All regional trains: RB, RE, IRE and S-Bahn, across all of Germany',
     'U-Bahn, trams and city buses in every city',

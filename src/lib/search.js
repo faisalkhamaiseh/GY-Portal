@@ -112,6 +112,7 @@ export const TOPICS = [
   { id: 'rules', label: 'القوانين والغرامات', icon: 'Scale', words: 'rule rules fine fines torrent torrents download downloading abmahnung piracy illegal penalty قوانين قانون غرامة غرامات مخالفة مخالفات تورنت تحميل افلام أفلام قرصنة' },
   { id: 'waste', label: 'فرز النفايات', icon: 'Scale', words: 'trash waste garbage rubbish recycling recycle mull mulltrennung pfand bottles bin bins sorting نفايات زبالة قمامة فرز تدوير' },
   { id: 'quiet', label: 'ساعات الهدوء', icon: 'Moon', words: 'quiet ruhezeit noise loud neighbours neighbors sunday laundry washing party music هدوء ازعاج إزعاج ضجيج غسالة جيران الاحد الأحد' },
+  { id: 'routes', label: 'السفر بين الولايات', icon: 'TrainFront', words: 'route routes journey train trains ice ic regional bus flixbus flight between cities travel قطار قطارات طريق مواصلات سفر تنقل بين المدن الولايات ولاية حافلة باص طيران كيف أصل' },
   { id: 'travel', label: 'السفر الاقتصادي', icon: 'Bus', words: 'weekend trips trip cheap travel flixbus blablacar border austria switzerland netherlands poland france holiday itinerary سفر رحلة رحلات حدود فليكس بلابلا عطلة' },
   { id: 'deals', label: 'التوفير', icon: 'Tag', words: 'discount discounts sale sales deals save saving toogoodtogo black friday second hand flohmarkt خصم خصومات تخفيضات تنزيلات توفير عروض' },
   { id: 'apps', label: 'دليل التطبيقات', icon: 'AppWindow', words: 'app apps doctolib check24 lieferando wolt navigator lime tier dott bolt deepl تطبيق تطبيقات برنامج برامج' },
@@ -267,6 +268,8 @@ function routeFor(topic, place) {
       return { to: '/rules#waste', title: 'فرز النفايات (Mülltrennung) بالصور' }
     case 'quiet':
       return { to: '/rules#quiet', title: 'ساعات الهدوء (Ruhezeit): الليل والأحد' }
+    case 'routes':
+      return { to: '/travel#germany', title: 'من ولاية إلى أخرى: قطار أو حافلة أو طائرة' }
     case 'travel':
       return { to: '/travel', title: 'السفر الاقتصادي: رحلات الحدود ونهاية أسبوع تحت 50 يورو' }
     case 'deals':

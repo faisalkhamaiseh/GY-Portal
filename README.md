@@ -8,7 +8,7 @@ A bilingual guide, in **Arabic and English**, for German Jordanian University st
 
 - **126 universities and 17 regions**, each with real YouTube campus, city and region videos, housing links (Studierendenwerk and trusted portals), estimated prices, and halal food and mosques.
 - **Smart search** in the top bar (Arabic and English): it handles typos and routes queries like "prices in Berlin", "housing in Munich", "halal food Erfurt" and "E120" to the right page.
-- **Student toolkit**: budget planner, internship hub, cultural survival map (halal food, Deutschlandticket, budget airports), hidden rules and fines, comparisons (banks, mobile providers, health insurance), budget travel, an app directory with **Google Play and App Store** links, an E-number and ingredient guide, and an arrival checklist.
+- **Student toolkit**: budget planner, internship hub, cultural survival map (halal food, Deutschlandticket, budget airports), hidden rules and fines, comparisons (banks, mobile providers, health insurance), a route planner between German regions (free regional trains vs. ICE, FlixBus and flights, with times and prices), budget travel, an app directory with **Google Play and App Store** links, an E-number and ingredient guide, and an arrival checklist.
 - **Free sharing**: every page has a share button (Web Share API, or copy the link).
 
 ## Content policy: Evergreen & Zero-Liability
@@ -84,6 +84,7 @@ npx vite preview   # serve dist/ locally
 | `src/data/costs.js` | Estimated price ranges and rent tiers |
 | `src/data/guide.js` | Arrival checklist with official sources |
 | `src/data/*.js` | Rules, comparisons, travel, apps, additives and careers |
+| `src/lib/routes.js` | Rail network model for the route planner: stations, regional and ICE/IC lines with typical times |
 
 To refresh the videos (this needs `yt-dlp`), run `npm run videos`.
 

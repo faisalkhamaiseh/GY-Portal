@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowRight, Bus, Car, TrainFront, Plane, Tag } from 'lucide-react'
 import ShareButton from '../components/ShareButton.jsx'
+import RoutePlanner from '../components/RoutePlanner.jsx'
 import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
 import Sections, { Panel } from '../../components/Sections.jsx'
 import { borderTrips, borderNote, weekendPlans, travelApps, saveMoney } from '../data/budgetTravel.js'
@@ -34,6 +35,13 @@ export default function TravelPage() {
       </section>
 
       <Sections className="wrap lg:pt-16" label="Page sections">
+        <Panel id="germany" label="Within Germany">
+          <SectionHead id="germany" eyebrow="Train, bus or plane" title="From one region to another">
+            Pick where you are and where you are going. See the free route on regional trains, the fastest train, the bus and, for long trips, the plane, with what each one costs.
+          </SectionHead>
+          <RoutePlanner />
+        </Panel>
+
         <Panel id="borders" label="Border trips">
           <SectionHead
             id="borders"

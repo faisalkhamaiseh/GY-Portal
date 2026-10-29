@@ -66,6 +66,7 @@ export const TOPICS = [
   { id: 'rules', label: 'Hidden rules & fines', words: 'rule rules fine fines torrent torrents download downloading abmahnung piracy illegal penalty', icon: 'Scale' },
   { id: 'waste', label: 'Waste sorting', words: 'trash waste garbage rubbish recycling recycle mull mulltrennung pfand bottles bin bins sorting', icon: 'Scale' },
   { id: 'quiet', label: 'Quiet hours', words: 'quiet ruhezeit noise loud neighbours neighbors sunday laundry washing party music', icon: 'Moon' },
+  { id: 'routes', label: 'Train between regions', words: 'route routes journey train trains ice ic regional bus flixbus flight plane between cities city region regions travel time get from to', icon: 'TrainFront' },
   { id: 'travel', label: 'Budget travel', words: 'weekend trips trip cheap travel flixbus blablacar border austria switzerland netherlands poland france holiday itinerary', icon: 'Bus' },
   { id: 'deals', label: 'Saving money', words: 'discount discounts sale sales deals save saving toogoodtogo too good go black friday second hand flohmarkt', icon: 'Tag' },
   { id: 'ingredients', label: 'Ingredient guide', words: 'ingredients ingredient additives additive gelatine gelatin pork schwein alkohol alcohol enumber enumbers zutaten halal-label', icon: 'ScanBarcode' },
@@ -220,6 +221,8 @@ function routeFor(topic, place) {
       return { to: '/rules#waste', title: 'Waste sorting (Mülltrennung), illustrated' }
     case 'quiet':
       return { to: '/rules#quiet', title: 'Quiet hours (Ruhezeit): nights & Sundays' }
+    case 'routes':
+      return { to: '/travel#germany', title: 'From one region to another: train, bus or plane' }
     case 'travel':
       return { to: '/travel', title: 'Budget travel: border trips & weekends under €50' }
     case 'deals':
