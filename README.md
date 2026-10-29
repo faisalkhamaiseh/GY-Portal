@@ -39,7 +39,7 @@ When you edit content in `src/data/*.js` (Arabic) or `src/en/data/*.js` (English
 - **Deferred data**: a 16 KB cover index (`src/data/covers.json`) renders thumbnails right away. The full video index loads when the browser is idle.
 - **60 FPS**: animations use only `transform` and `opacity`, there is no backdrop blur on phones, and `prefers-reduced-motion` is respected.
 - **Lighthouse (mobile, simulated slow 4G)**: Performance 83–98, Accessibility 100, Best Practices 100, SEO 100, layout shift about 0.
-- **SEO and sharing**: every page has a canonical link, Arabic/English `hreflang` links, absolute link-preview tags (WhatsApp shows the title and image), plus `sitemap.xml` and `robots.txt`. Addresses use `SITE_URL`, or the production domain Vercel provides at build time.
+- **SEO and sharing**: every page has a canonical link, Arabic/English `hreflang` links, absolute link-preview tags (WhatsApp shows the title and image), plus `sitemap.xml` and `robots.txt`. Addresses use `https://gyportal.online` (override with `SITE_URL`).
 
 ## Works on every phone and every network
 
@@ -94,7 +94,7 @@ To refresh the videos (this needs `yt-dlp`), run `npm run videos`.
 3. Every push to `main` deploys automatically.
 4. On Vercel's free Hobby plan, a deployment is **blocked** unless the commit author is linked to the repository owner's GitHub account. Commit with your GitHub email (or `270198751+faisalkhamaiseh@users.noreply.github.com`), or merge changes through a pull request on GitHub.
 
-**Important for Jordan:** some home and university Wi-Fi providers cut connections to `*.vercel.app` addresses. Safari then shows "the network connection was lost", while the same link works on mobile data. This is a network block, not a site bug. Keep the site on Vercel, but give it a custom domain: in the Vercel project go to Settings, then Domains, and add a domain (buy one in Vercel, or point a domain you own at Vercel). The address then no longer contains `vercel.app`. Once a phone has opened the site, the service worker also keeps it working on those networks.
+**Important for Jordan:** some home and university Wi-Fi providers cut connections to `*.vercel.app` addresses. Safari then shows "the network connection was lost", while the same link works on mobile data. This is a network block, not a site bug. The site therefore has its own domain, **gyportal.online**, connected to the Vercel project (Settings, then Domains, then "Connect to an environment: Production"). Share that address, not `*.vercel.app`. Once a phone has opened the site, the service worker also keeps it working on those networks.
 
 ---
 

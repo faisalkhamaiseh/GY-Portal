@@ -40,9 +40,9 @@ for (const [slug, svg] of Object.entries(regionArt())) {
 // worker also uses it to open any page offline.
 await writeFile(join(dist, '404.html'), template.replace('<!--head-->', '').replace('<!--app-->', ''))
 
-// The public address for canonical links and the sitemap: SITE_URL if set,
-// else the production domain Vercel provides at build time.
-const origin = (process.env.SITE_URL || (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : 'https://gy-portal.vercel.app')).replace(/\/$/, '')
+// The public address for canonical links, link previews and the sitemap.
+// The site's own domain, not *.vercel.app, which some networks block.
+const origin = (process.env.SITE_URL || 'https://gyportal.online').replace(/\/$/, '')
 const bare = (path) => path.replace(/^\/en(?=\/|$)/, '') || '/'
 const inLang = (lang, path) => (lang === 'en' ? (bare(path) === '/' ? '/en' : `/en${bare(path)}`) : bare(path))
 // Canonical address plus the same page in the other language, for search engines.
