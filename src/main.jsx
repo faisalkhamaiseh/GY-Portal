@@ -27,6 +27,13 @@ load.then(({ default: App }) => {
   else createRoot(root).render(app)
 })
 
+// Chrome offers installing the app; keep the offer for the install card
+// (components/InstallPrompt.jsx) instead of Chrome's own banner.
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault()
+  window.installPrompt = e
+})
+
 // Keep the app on the phone for instant and offline visits (see scripts/sw-template.js).
 if (import.meta.env.PROD && 'serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js').catch(() => {}))

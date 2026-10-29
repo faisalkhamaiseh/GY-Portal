@@ -45,7 +45,7 @@ When you edit content in `src/data/*.js` (Arabic) or `src/en/data/*.js` (English
 - **Older phones (iOS 14+, Android Chrome 80+)**: Tailwind's cascade layers are flattened into plain CSS (`flatten-css-layers` in `vite.config.js`), and JavaScript is transpiled for those browsers. Search and video pop-ups fall back gracefully where `<dialog>` is missing (`src/lib/dialog.js`).
 - **The page never gets stuck**: the content is in the HTML, and the one-time disclaimer can be accepted by a tiny inline script even if the app script fails to load.
 - **No auto-translate crashes**: `translate="no"` stops the browser's automatic translation from rewriting the page under React (the site has its own English version).
-- **Offline and blocked networks**: a service worker (`scripts/sw-template.js`, generated into `dist/sw.js`) keeps the app on the phone after the first visit (about 600 KB, downloaded once in the background). After that, every page opens instantly, even offline or on a Wi-Fi network that blocks the hosting address. Pages are loaded network-first, so updates show up as soon as the site is reachable.
+- **Offline and blocked networks**: a service worker (`scripts/sw-template.js`, generated into `dist/sw.js`) keeps the app on the phone after the first visit (about 600 KB, downloaded once in the background). After that, every page opens instantly, even offline or on a Wi-Fi network that blocks the hosting address. Pages are loaded network-first, so updates show up as soon as the site is reachable. On phones, a one-time card (`src/components/InstallPrompt.jsx`) invites students to add the guide to their home screen: the Chrome install button on Android, and step-by-step instructions on iPhone.
 
 ## Tech
 

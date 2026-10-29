@@ -2,6 +2,7 @@ import { Component, Suspense, lazy, useEffect } from 'react'
 import { Routes, Route, useLocation, useParams, Link } from 'react-router-dom'
 import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
+import InstallPrompt from '../components/InstallPrompt.jsx'
 import DisclaimerModal from '../components/Disclaimer.jsx'
 import HomePage from './pages/HomePage.jsx'
 
@@ -155,6 +156,7 @@ export default function App() {
       </main>
       <Footer />
       <DisclaimerModal lang="en" />
+      <InstallPrompt lang="en" />
     </div>
   )
 }
