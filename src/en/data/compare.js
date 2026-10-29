@@ -42,6 +42,7 @@ export const comparisons = [
     intro: 'Both are public (statutory) insurers. By law, about 95% of their benefits are identical, and students pay a similar monthly contribution set by law. The differences are the additional contribution (Zusatzbeitrag), service and extras.',
     options: ['TK (Techniker Krankenkasse)', 'AOK'],
     rows: [
+      ['Student contribution 2026', '€141.16 a month under 23; €146.29 from 23 without children', 'Set by your regional AOK; usually within a few euros of TK'],
       ['Organisation', 'One nationwide insurer', '11 regional AOKs; extras depend on your region'],
       ['Service in English', 'Strong: English website, app and hotline', 'Varies by region; branch staff in every town'],
       ['Digital', 'Very good app (documents, sick notes, uploads)', 'Good apps; many questions handled in local branches'],

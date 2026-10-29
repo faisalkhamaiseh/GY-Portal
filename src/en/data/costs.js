@@ -1,12 +1,10 @@
-// Estimated cost model for the German Year. Every figure is an estimated range,
-// never an official price; the UI always shows an "estimate" badge.
-// Official fees are exact. Everyday prices are realistic student ranges, built
-// from German averages and scaled by a city's price tier. They are estimates,
-// not quotes.
+// Cost model for the German Year. Fixed official costs (blocked account, health
+// insurance, broadcast fee, semester ticket, permits) are exact current rates.
+// Everyday prices are realistic student ranges, built from German averages and
+// scaled by a city's price tier. They are estimates, not quotes.
 
-// Estimated default for the monthly blocked-account payout; check the current
-// official amount.
-export const BLOCKED_MONTHLY = 990
+// Monthly blocked-account payout for study visas in 2026 (€11,904 a year).
+export const BLOCKED_MONTHLY = 992
 
 // Rent bands per city tier: [min, max] per month, warm (bills included).
 export const tiers = {
@@ -54,11 +52,12 @@ export const priceGroups = [
     title: 'Fees & paperwork',
     icon: 'FileText',
     items: [
-      { name: 'Semester fee', min: 200, max: 400, unit: 'semester', fixed: true, note: 'Varies by university; most include the semester ticket. Check your university.' },
-      { name: 'Blocked account payout', min: 950, max: 1050, unit: 'month', fixed: true, note: 'Set by law and changes; check it officially. Providers charge a one-off fee.' },
-      { name: 'Public health insurance', min: 130, max: 160, unit: 'month', fixed: true, note: 'The student contribution is set by law and changes. Compare insurers.' },
-      { name: 'Residence permit', min: 50, max: 120, unit: 'once', fixed: true, note: 'Fee set by the immigration office (Ausländerbehörde).' },
-      { name: 'Broadcast fee (Rundfunkbeitrag)', min: 17, max: 20, unit: 'month', fixed: true, note: 'Per flat, split among flatmates. The current amount is on the official site.' },
+      { name: 'Semester fee', min: 280, max: 420, unit: 'semester', fixed: true, note: 'Set by each university and includes the €226.80 Deutschlandsemesterticket. Hochschule Schmalkalden: €331.80 for winter 2026/27.' },
+      { name: 'Blocked account payout', min: 992, max: 992, unit: 'month', fixed: true, note: 'Official 2026 amount for study visas: €11,904 for 12 months. Providers charge a one-off fee.' },
+      { name: 'Public health insurance', min: 141.16, max: 141.16, unit: 'month', fixed: true, note: 'TK student rate for 2026, under 23. From 23 without children: €146.29. Other public insurers differ by a few euros.' },
+      { name: 'Visa (national D visa)', min: 75, max: 75, unit: 'once', fixed: true, note: 'Paid at the German embassy in Amman.' },
+      { name: 'Residence permit', min: 100, max: 100, unit: 'once', fixed: true, note: 'First permit at the immigration office (Ausländerbehörde). Extending it by more than 3 months costs €93.' },
+      { name: 'Broadcast fee (Rundfunkbeitrag)', min: 18.36, max: 18.36, unit: 'month', fixed: true, note: 'Per flat, split among flatmates: €6.12 each with three.' },
       { name: 'Biometric photos', min: 10, max: 15, unit: 'once', note: 'Photo booth or drugstore (dm, Rossmann).' },
     ],
   },
@@ -109,8 +108,10 @@ export const priceGroups = [
     title: 'Transport',
     icon: 'TrainFront',
     items: [
-      { name: 'Regional trains & buses, all Germany', min: 0, max: 0, unit: 'extra', fixed: true, note: 'Included in the semester fee (Deutschlandsemesterticket) at almost every host university.' },
-      { name: 'ICE / IC long-distance train', min: 18, max: 80, unit: 'trip', fixed: true, note: 'Book early for Sparpreis. A BahnCard 25 for under-27s pays off fast.' },
+      { name: 'Regional trains & buses, all Germany', min: 0, max: 0, unit: 'extra', fixed: true, note: 'The Deutschlandsemesterticket is part of the semester fee at almost every host university: €226.80 a semester (€37.80 a month) from winter 2026/27.' },
+      { name: 'Deutschlandticket (no semester ticket)', min: 63, max: 63, unit: 'month', fixed: true, note: 'Only if your university has no semester ticket. Monthly subscription, cancel any month.' },
+      { name: 'My BahnCard 25 (under 27)', min: 39.9, max: 39.9, unit: 'year', fixed: true, note: '25% off ICE and IC tickets, 2nd class. Cancel at least 6 weeks before the year ends, or it renews.' },
+      { name: 'ICE / IC long-distance train', min: 18, max: 80, unit: 'trip', fixed: true, note: 'Book early for Sparpreis tickets.' },
       { name: 'FlixBus to big cities', min: 10, max: 35, unit: 'trip', fixed: true },
       { name: 'Used bike', min: 80, max: 200, unit: 'once', note: 'Kleinanzeigen or university bike markets. Buy a good lock.' },
       { name: 'E-scooter ride', min: 3, max: 6, unit: 'ride', note: 'Lime, Tier and Voi in bigger cities.' },
@@ -129,7 +130,7 @@ export const priceGroups = [
       { name: 'Laundry (dorm machine)', min: 1.5, max: 3, unit: 'wash' },
       { name: 'Printing (per page)', min: 0.05, max: 0.1, unit: 'page', fixed: true, note: 'University printers with your student card.' },
       { name: 'Doctor visit', min: 0, max: 0, unit: 'visit', fixed: true, note: 'Covered by public health insurance. Bring your card.' },
-      { name: 'Prescription medicine', min: 5, max: 10, unit: 'item', fixed: true, note: 'Standard co-payment per prescribed item.' },
+      { name: 'Prescription medicine', min: 5, max: 10, unit: 'item', fixed: true, note: 'Co-payment set by law: 10% of the price, at least €5 and at most €10 per item.' },
     ],
   },
   {
@@ -172,14 +173,18 @@ export const priceGroups = [
   },
 ]
 
-// Fixed monthly costs used by the budget planner (same as the survival book).
+// Fixed monthly costs used by the budget planner. `exact` items are official
+// 2026 rates; the rest are estimates.
 export const fixedMonthly = [
-  { name: 'Health insurance', amount: 142 },
-  { name: 'Semester fee ÷ 6', amount: 54 },
+  { name: 'Health insurance', amount: 141.16, exact: true },
+  { name: 'Semester fee ÷ 6', amount: 55.3, exact: true },
   { name: 'Phone', amount: 12 },
-  { name: 'Broadcast fee share', amount: 7 },
+  { name: 'Broadcast fee ÷ 3', amount: 6.12, exact: true },
   { name: 'Toiletries', amount: 35 },
 ]
+
+// Rounded to whole euros for the planner's totals.
+export const fixedTotal = Math.round(fixedMonthly.reduce((s, f) => s + f.amount, 0))
 
 export const lifestyles = {
   saver: { label: 'Saver', text: 'Cook almost always, rare trips, low going out', food: 170, trips: 20, fun: 30 },

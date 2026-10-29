@@ -96,14 +96,14 @@ export const quietHours = {
 }
 
 export const otherRules = [
-  { title: 'Riding without a ticket', fine: 'about €60', text: 'Carry your semester ticket and student ID or passport. "I forgot it" still costs the fine, sometimes reduced if you show the ticket later.' },
-  { title: 'Late address registration', fine: 'Can reach hundreds of euros', text: 'Register (Anmeldung) within the legal deadline after moving in, and de-register when you leave Germany.' },
-  { title: 'Cycling through a red light', fine: 'about €60–100', text: 'Bikes follow traffic law. Points in Flensburg are possible too.' },
-  { title: 'Phone in hand while cycling', fine: 'about €55', text: 'Use a phone mount.' },
-  { title: 'Cycling on the pavement', fine: 'about €55', text: 'Use the bike lane or the road. Only children may ride on pavements.' },
-  { title: 'No lights on your bike', fine: 'about €20', text: 'Front and rear lights are required after dark.' },
+  { title: 'Riding without a ticket', fine: '€60', text: 'Carry your semester ticket and student ID or passport. Forgot it? Show your personal ticket to the transport company within a week and the fine drops to €7.' },
+  { title: 'Late address registration', fine: 'Up to €1,000', text: 'Register (Anmeldung) within the legal deadline after moving in, and de-register when you leave Germany.' },
+  { title: 'Cycling through a red light', fine: '€60', text: 'Bikes follow traffic law: €100 if the light was red for more than a second, plus a point in Flensburg.' },
+  { title: 'Phone in hand while cycling', fine: '€55', text: 'Use a phone mount.' },
+  { title: 'Cycling on the pavement', fine: '€55', text: 'Use the bike lane or the road. Only children may ride on pavements.' },
+  { title: 'No lights on your bike', fine: '€20', text: 'Front and rear lights are required after dark.' },
   { title: 'E-scooter after drinking', fine: 'Like a car', text: 'The same alcohol limits as for drivers apply, plus driving bans.' },
-  { title: 'Crossing on a red pedestrian light', fine: 'about €5–10', text: 'Small fine, but people will stare, especially near children.' },
+  { title: 'Crossing on a red pedestrian light', fine: '€5', text: 'Small fine, but people will stare, especially near children.' },
   { title: 'Not airing your room (Lüften)', fine: 'Your deposit', text: 'Open windows wide for 5–10 minutes a few times a day, even in winter. Mould damage is deducted from your deposit.' },
   { title: 'Ignoring the broadcast fee', fine: 'Back payments', text: 'The monthly Rundfunkbeitrag per flat is mandatory. Unpaid months are collected later with fees.' },
 ]

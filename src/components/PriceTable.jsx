@@ -9,7 +9,7 @@ const units = {
   month: '/ شهر', semester: '/ فصل', once: 'مرة واحدة', extra: 'إضافي', meal: '/ وجبة', piece: '/ حبة', kg: '/ كغ',
   jar: '/ علبة', litre: '/ لتر', pack: '/ علبة', cup: '/ كوب', glass: '/ كأس', bottle: '/ زجاجة', scoop: '/ كرة',
   trip: '/ رحلة', ride: '/ رحلة', return: 'ذهاب وعودة', cut: '/ مرة', wash: '/ غسلة', page: '/ صفحة', visit: '/ زيارة',
-  item: '/ صنف', entry: '/ دخول', ticket: '/ تذكرة', person: '/ شخص',
+  item: '/ صنف', entry: '/ دخول', ticket: '/ تذكرة', person: '/ شخص', year: '/ سنة',
 }
 
 function range(item, factor) {

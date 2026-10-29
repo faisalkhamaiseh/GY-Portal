@@ -10,7 +10,7 @@ export const localGuides = {
     facts: [
       { value: '~19,000', label: 'people in town, about 2,500 students' },
       { value: '5', label: 'faculties, every campus a few minutes\' walk apart' },
-      { value: '€230–300', label: 'dorm room per month, bills included', estimate: true },
+      { value: '€231–300', label: 'dorm room per month, bills included (official prices)' },
       { value: '~3.5 h', label: 'by train from Frankfurt Airport' },
     ],
     about:
@@ -19,16 +19,16 @@ export const localGuides = {
       {
         name: 'Blechhammer 9b',
         where: 'On campus',
-        price: 'about €230–300 / month',
-        deposit: 'about €300',
+        price: '€231–300 / month, by room size',
+        deposit: '€300',
         points: ['285 places, directly on campus behind the Mensa', 'Single rooms of 9–20 m² in 2- and 3-person flats; 10 single apartments of 19 m²', 'Furnished, fitted kitchen, own shower/WC per flat, LAN in every room', 'Washing machines, dryers, bike room; very few parking spaces'],
         url: 'https://www.stw-thueringen.de/en/housing/schmalkalden/blechhammer-9b.html',
       },
       {
         name: 'Martin-Luther-Ring 38',
         where: 'About 8 min walk',
-        price: 'about €240–300 / month',
-        deposit: 'about €300',
+        price: '€244–299 / month, by room size',
+        deposit: '€300',
         points: ['258 places, close to the old town and shops', 'Single rooms of 11–20 m² in 3- and 4-person flats; 18 single apartments of 20 m²', 'Furnished, fitted kitchen, shower/WC, LAN in every room', 'Washing machines, dryer, bike room'],
         url: 'https://www.stw-thueringen.de/en/housing/schmalkalden/martin-luther-ring-38.html',
       },
@@ -46,7 +46,7 @@ export const localGuides = {
       { title: 'Hochschule Schmalkalden', text: 'Main website in English', url: 'https://www.hs-schmalkalden.de/en/' },
       { title: 'International Office', text: 'Orientation, buddy programme, permits', url: 'https://www.hs-schmalkalden.de/en/international' },
       { title: 'Mensa', text: 'Menus and opening hours', url: 'https://www.hs-schmalkalden.de/en/university/campus/mensa' },
-      { title: 'Paying the semester fee', text: 'Amounts, deadlines, bank details', url: 'https://www.hs-schmalkalden.de/en/university/organization/departments/dep-1-studies-and-international-relatations/student-administration/payment-semester-fee' },
+      { title: 'Paying the semester fee', text: '€331.80 for winter 2026/27, deadlines, bank details', url: 'https://www.hs-schmalkalden.de/en/university/organization/departments/dep-1-studies-and-international-relatations/student-administration/payment-semester-fee' },
       { title: 'Semester fee breakdown', text: 'Studierendenwerk Thüringen', url: 'https://www.stw-thueringen.de/finanzen/semesterbeitrag/beitragshoehe.html' },
       { title: 'Town of Schmalkalden', text: 'Bürgerbüro appointments, events, tourist information', url: 'https://www.schmalkalden.de/' },
       { title: 'Museum Schloss Wilhelmsburg', text: 'Opening hours and tickets', url: 'https://www.museumwilhelmsburg.de/' },

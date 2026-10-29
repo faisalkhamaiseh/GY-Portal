@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import BudgetPlanner, { BudgetMatrix } from '../components/BudgetPlanner.jsx'
 import PriceTable from '../components/PriceTable.jsx'
 import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
-import { BLOCKED_MONTHLY, cityTier, fixedMonthly, rentFor, tiers } from '../data/costs.js'
+import { BLOCKED_MONTHLY, cityTier, fixedTotal, rentFor, tiers } from '../data/costs.js'
 import Sections, { Panel } from '../components/Sections.jsx'
 import { universities } from '../lib/data.js'
 
@@ -22,12 +22,12 @@ export default function CostsPage() {
 
   return (
     <div className="wrap pt-6 lg:pt-12">
-      <p className="eyebrow">التكاليف · نطاقات تقديرية</p>
+      <p className="eyebrow">التكاليف · رسوم رسمية وأسعار تقديرية</p>
 
       <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">كم تكلّف سنتك الألمانية فعلاً؟</h1>
 
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
-        حسابك المجمّد يصرف حوالي {BLOCKED_MONTHLY} يورو شهرياً (تقديرياً؛ المبلغ الرسمي يتغير). حوالي {fixedMonthly.reduce((s, f) => s + f.amount, 0)} يورو منها تذهب للمصاريف الثابتة، والإيجار يحدد الباقي. اختر مدينتك وشاهد أين تذهب أموالك.
+        حسابك المجمّد يصرف {BLOCKED_MONTHLY} يورو شهرياً (المبلغ الرسمي لعام 2026). حوالي {fixedTotal} يورو منها تذهب للمصاريف الثابتة، والإيجار يحدد الباقي. اختر مدينتك وشاهد أين تذهب أموالك.
       </p>
 
       <EstimateNote className="mt-4" />
@@ -102,7 +102,7 @@ export default function CostsPage() {
 
       <div className="mt-12">
         <Callout title="كيف تقرأ هذه الأرقام؟">
-          كل الأرقام تقديرية، حتى الرسوم الرسمية (الحساب المجمّد، التذكرة الفصلية، رسوم البث، تصريح الإقامة) التي تتغير باستمرار. الأسعار اليومية نطاقات نموذجية وليست عروض أسعار، وإيجارات شمالكالدن من Studierendenwerk Thüringen. تأكد من الرسوم والمواعيد من المصادر الرسمية قبل الدفع.
+          التكاليف الرسمية الثابتة (الحساب المجمّد، التأمين الصحي، التذكرة الفصلية، رسوم البث، التأشيرة وتصريح الإقامة) معروضة بأسعارها الدقيقة لعام 2026، وقد تتغير مرة في السنة. الأسعار اليومية نطاقات نموذجية وليست عروض أسعار، وإيجارات شمالكالدن من Studierendenwerk Thüringen. تأكد من الرسوم والمواعيد من المصادر الرسمية قبل الدفع.
         </Callout>
       </div>
     </div>

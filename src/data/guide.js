@@ -40,8 +40,8 @@ export const checklist = [
     place: 'عمّان',
     items: [
       { id: 'dorm', title: 'قدّم على السكن الطلابي بمجرد فتح التقديم', text: 'التقديم يفتح عادةً قبل بداية الفصل بعدة أشهر، والغرف بالأسبقية. يمكن غالباً التقديم قبل وصول رسالة القبول، ويجب تأكيد الحجز عبر رسالة المتابعة.', official: { label: 'ابحث عن Studierendenwerk مدينتك', href: search('Studierendenwerk Wohnheim Bewerbung') } },
-      { id: 'sperrkonto', title: 'افتح الحساب المجمّد (Sperrkonto)', text: 'تودع فيه مبلغ سنة كاملة يُصرف لك شهرياً. مزودون مثل Fintiba يتيحون فتحه عبر الإنترنت خلال دقائق، وهو مقبول للتأشيرة. المبلغ المطلوب يحدده القانون الألماني ويتغير، فتحقق منه رسمياً قبل التحويل، وأضف مبلغاً بسيطاً لرسوم التحويل.', official: [officialSources.foreignOffice, officialSources.fintiba] },
-      { id: 'visa', title: 'احصل على تأشيرة الدراسة', text: 'احجز موعد السفارة مبكراً قدر الإمكان. الوثائق المطلوبة وطريقة الحجز تُحدد رسمياً من السفارة.', official: officialSources.visa },
+      { id: 'sperrkonto', title: 'افتح الحساب المجمّد (Sperrkonto)', text: 'تودع فيه 11,904 يورو لإقامة 12 شهراً (مبلغ 2026)، ويُصرف لك 992 يورو شهرياً. مزودون مثل Fintiba يتيحون فتحه عبر الإنترنت خلال دقائق، وهو مقبول للتأشيرة. أضف مبلغاً بسيطاً لرسوم التحويل، وتأكد من المبلغ مجدداً إذا قدّمت في سنة جديدة.', official: [officialSources.foreignOffice, officialSources.fintiba] },
+      { id: 'visa', title: 'احصل على تأشيرة الدراسة', text: 'احجز موعد السفارة مبكراً قدر الإمكان. رسوم التأشيرة 75 يورو. الوثائق المطلوبة وطريقة الحجز تُحدد رسمياً من السفارة.', official: officialSources.visa },
       { id: 'insurance', title: 'اختر التأمين الصحي', text: 'التأمين الصحي إلزامي للتسجيل في الجامعة. قارن بين شركات التأمين الحكومية، واحرص على تأمين سفر للأيام الأولى حتى يبدأ تأمينك.', official: { label: 'قارن TK وAOK', href: '/compare#health', internal: true } },
       { id: 'folder', title: 'جهّز ملف الوثائق', text: 'جواز السفر والتأشيرة وصور بيومترية ورسالة القبول ووثائق GJU وكشف العلامات ورسالة التأمين وعقد الإيجار، مع نسخ ورقية من كل شيء، ومبلغ نقدي يكفي الأيام الأولى.' },
       { id: 'ticket', title: 'فعّل تذكرتك الفصلية', text: 'إن أرسلتها جامعتك قبل السفر، فعّلها قبل الهبوط لتستخدم القطار من المطار.', official: officialSources.dticket },
@@ -65,8 +65,8 @@ export const checklist = [
     title: 'الشهر الأول',
     place: 'الاستقرار',
     items: [
-      { id: 'permit', title: 'قدّم على تصريح الإقامة', text: 'في مكتب الأجانب (Ausländerbehörde) التابع لمدينتك قبل انتهاء التأشيرة. الوثائق والرسوم والمواعيد يحددها المكتب نفسه.', official: { label: 'مكتب الأجانب في مدينتك', href: search('Ausländerbehörde Aufenthaltstitel Studium Termin') } },
-      { id: 'rundfunk', title: 'سجّل رسوم البث (Rundfunkbeitrag)', text: 'رسوم شهرية إلزامية لكل شقة، وفي الشقة المشتركة يدفعها شخص واحد ويتقاسمها الآخرون. المبلغ والتسجيل من الموقع الرسمي.', official: officialSources.rundfunk },
+      { id: 'permit', title: 'قدّم على تصريح الإقامة', text: 'في مكتب الأجانب (Ausländerbehörde) التابع لمدينتك قبل انتهاء التأشيرة. الرسوم 100 يورو. الوثائق والمواعيد يحددها المكتب نفسه.', official: { label: 'مكتب الأجانب في مدينتك', href: search('Ausländerbehörde Aufenthaltstitel Studium Termin') } },
+      { id: 'rundfunk', title: 'سجّل رسوم البث (Rundfunkbeitrag)', text: '18.36 يورو شهرياً لكل شقة، وهي إلزامية. في الشقة المشتركة يدفعها شخص واحد ويتقاسمها الآخرون. التسجيل من الموقع الرسمي.', official: officialSources.rundfunk },
       { id: 'learning', title: 'وقّع اتفاقية التعلّم', text: 'أكّد موادك مع منسق الجامعة المضيفة ومع GJU حتى تُعادل ساعاتك. قواعد المعادلة تحددها GJU.', official: officialSources.gju },
       { id: 'internship', title: 'ابدأ التقديم على التدريب العملي', text: 'التدريب هو النصف الثاني من السنة الألمانية، والشركات توظف قبل أشهر.', official: { label: 'مركز التدريب العملي', href: '/internships', internal: true } },
       { id: 'taxid', title: 'احتفظ برسالة الرقم الضريبي', text: 'الرقم الضريبي (Steuer-ID) يصلك بالبريد بعد تسجيل العنوان، وكل صاحب عمل سيطلبه.' },

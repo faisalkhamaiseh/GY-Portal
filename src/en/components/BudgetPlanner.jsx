@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react'
 import { EstimateNote } from './ui.jsx'
-import { BLOCKED_MONTHLY, cityTier, fixedMonthly, lifestyles, rentFor, tiers } from '../data/costs.js'
+import { BLOCKED_MONTHLY, cityTier, fixedMonthly, fixedTotal, fmt, lifestyles, rentFor, tiers } from '../data/costs.js'
 import { universities } from '../lib/data.js'
 
 const housingTypes = [
@@ -9,7 +9,6 @@ const housingTypes = [
   { id: 'flat', label: 'Own flat', sub: 'One-room flat, warm rent' },
 ]
 
-const fixedTotal = fixedMonthly.reduce((s, f) => s + f.amount, 0)
 const mid = ([a, b]) => Math.round((a + b) / 2 / 5) * 5
 const germanCities = [...new Set(universities.filter((u) => !u.abroad).map((u) => u.city))].sort((a, b) => a.localeCompare(b))
 
@@ -222,7 +221,7 @@ export default function BudgetPlanner({ initialCity = 'Schmalkalden', lockCity =
         </ul>
         <div className="mt-6 border-t border-ink/15 pt-4 text-sm text-ink-2">
           <p className="font-semibold">Fixed costs every month (€{fixedTotal})</p>
-          <p className="mt-1 text-[13px] text-muted">{fixedMonthly.map((f) => `${f.name} ~€${f.amount}*`).join(' · ')}</p>
+          <p className="mt-1 text-[13px] text-muted">{fixedMonthly.map((f) => (f.exact ? `${f.name} ${fmt(f.amount)}` : `${f.name} ~€${f.amount}*`)).join(' · ')}</p>
         </div>
       </div>
     </div>

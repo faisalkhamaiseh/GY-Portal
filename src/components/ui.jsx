@@ -81,7 +81,7 @@ export function EstimateNote({ className = '' }) {
     <p className={`flex flex-wrap items-center gap-2 text-sm text-muted ${className}`}>
       <EstimateBadge />
       <span dir="ltr">{ESTIMATE_TEXT}</span>
-      <span>الأرقام نطاقات تقديرية وليست أسعاراً رسمية.</span>
+      <span>الأسعار اليومية نطاقات تقديرية، والرسوم الرسمية الثابتة معروضة بسعرها الدقيق لعام 2026.</span>
     </p>
   )
 }

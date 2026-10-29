@@ -253,7 +253,7 @@ export default function RulesPage() {
               </article>
             ))}
           </div>
-          <p className="mt-5 text-muted">مبالغ الغرامات تقديرية من كتالوج المخالفات الألماني والممارسة القضائية، وتتغير وتختلف حسب الولاية والحالة. *Estimated cost. Prices are subject to change.</p>
+          <p className="mt-5 text-muted">الغرامات هي المبالغ المعتمدة في كتالوج المخالفات الألماني (Bußgeldkatalog) وقوانين المواصلات، وتزيد إذا عرّضت أحداً للخطر أو سببت ضرراً. Prices are subject to change.</p>
         </Panel>
       </Sections>
     </div>

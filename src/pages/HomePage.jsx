@@ -93,9 +93,9 @@ export default function HomePage() {
             <div className="absolute -top-5 -start-4 hidden w-56 rotate-[3deg] rounded-2xl border border-line bg-card p-4 shadow-xl sm:block">
               <p className="eyebrow">المصروف الشهري</p>
               <p className="num mt-1 text-3xl font-extrabold" dir="ltr">
-                ~€{BLOCKED_MONTHLY}*
+                €{BLOCKED_MONTHLY}
               </p>
-              <p className="text-sm text-muted">تقديري من حسابك المجمّد. شاهد إلى أين يوصلك في كل مدينة.</p>
+              <p className="text-sm text-muted">من حسابك المجمّد (المبلغ الرسمي لعام 2026). شاهد إلى أين يوصلك في كل مدينة.</p>
             </div>
             <button type="button" onClick={() => setPlaying(gjuVideo)} className="absolute -top-8 -end-3 hidden w-56 rotate-[-2deg] overflow-hidden rounded-2xl border border-line bg-card text-start shadow-xl sm:block">
               <span className="relative block aspect-video">

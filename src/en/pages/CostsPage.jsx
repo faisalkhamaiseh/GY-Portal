@@ -3,7 +3,7 @@ import { useSearchParams } from 'react-router-dom'
 import BudgetPlanner, { BudgetMatrix } from '../components/BudgetPlanner.jsx'
 import PriceTable from '../components/PriceTable.jsx'
 import { SectionHead, Callout, EstimateNote } from '../components/ui.jsx'
-import { BLOCKED_MONTHLY, cityTier, fixedMonthly, rentFor, tiers } from '../data/costs.js'
+import { BLOCKED_MONTHLY, cityTier, fixedTotal, rentFor, tiers } from '../data/costs.js'
 import Sections, { Panel } from '../../components/Sections.jsx'
 import { universities } from '../lib/data.js'
 
@@ -22,12 +22,12 @@ export default function CostsPage() {
 
   return (
     <div className="wrap pt-6 lg:pt-12">
-      <p className="eyebrow">Costs · estimated ranges</p>
+      <p className="eyebrow">Costs · official fees and estimated prices</p>
 
       <h1 className="h-display mt-2 max-w-4xl text-4xl sm:text-6xl">What your German Year really costs</h1>
 
       <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ink-2">
-        Your blocked account pays out about €{BLOCKED_MONTHLY} a month (an estimate; the official amount changes). About €{fixedMonthly.reduce((s, f) => s + f.amount, 0)} of that goes on fixed costs; rent decides the rest. Pick your city and see where the money goes.
+        Your blocked account pays out €{BLOCKED_MONTHLY} a month (the official 2026 amount). About €{fixedTotal} of that goes on fixed costs; rent decides the rest. Pick your city and see where the money goes.
       </p>
 
       <EstimateNote className="mt-4" />
@@ -102,7 +102,7 @@ export default function CostsPage() {
 
       <div className="mt-12">
         <Callout title="How to read these numbers.">
-          Every figure is an estimate, including official fees (blocked account, semester ticket, broadcast fee, residence permit), which change regularly. Everyday prices are typical ranges, not quotes, and Schmalkalden rents come from the Studierendenwerk Thüringen. Confirm fees and deadlines on the official pages before you pay.
+          Fixed official costs (blocked account, health insurance, semester ticket, broadcast fee, visa and residence permit) are shown at their exact 2026 rates; they can change once a year. Everyday prices are typical ranges, not quotes, and Schmalkalden rents come from the Studierendenwerk Thüringen. Confirm fees and deadlines on the official pages before you pay.
         </Callout>
       </div>
     </div>

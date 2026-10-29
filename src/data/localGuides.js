@@ -10,7 +10,7 @@ export const localGuides = {
     facts: [
       { value: '~19,000', label: 'نسمة في المدينة، منهم حوالي 2,500 طالب' },
       { value: '5', label: 'كليات، وكل الحرم على بُعد دقائق مشياً' },
-      { value: '€230–300', label: 'غرفة السكن الطلابي شهرياً شاملة الفواتير', estimate: true },
+      { value: '€231–300', label: 'غرفة السكن الطلابي شهرياً شاملة الفواتير (أسعار رسمية)' },
       { value: '~3.5 ساعة', label: 'بالقطار من مطار فرانكفورت' },
     ],
     about:
@@ -19,16 +19,16 @@ export const localGuides = {
       {
         name: 'Blechhammer 9b',
         where: 'داخل الحرم',
-        price: 'حوالي 230–300 يورو / شهر',
-        deposit: 'حوالي 300 يورو',
+        price: '231–300 يورو / شهر حسب مساحة الغرفة',
+        deposit: '300 يورو',
         points: ['285 سريراً، داخل الحرم مباشرة خلف المطعم الجامعي', 'غرف فردية 9–20 م² في شقق لشخصين أو ثلاثة؛ و10 شقق فردية مساحتها 19 م²', 'مفروشة، مع مطبخ مجهز ودش وحمام خاص لكل شقة، وإنترنت سلكي في كل غرفة', 'غسالات ونشافات وغرفة دراجات؛ مواقف سيارات قليلة جداً'],
         url: 'https://www.stw-thueringen.de/en/housing/schmalkalden/blechhammer-9b.html',
       },
       {
         name: 'Martin-Luther-Ring 38',
         where: 'حوالي 8 دقائق مشياً',
-        price: 'حوالي 240–300 يورو / شهر',
-        deposit: 'حوالي 300 يورو',
+        price: '244–299 يورو / شهر حسب مساحة الغرفة',
+        deposit: '300 يورو',
         points: ['258 سريراً، قريب من البلدة القديمة والمحلات', 'غرف فردية 11–20 م² في شقق لـ3 أو 4 أشخاص؛ و18 شقة فردية مساحتها 20 م²', 'مفروشة، مع مطبخ مجهز ودش وحمام، وإنترنت سلكي في كل غرفة', 'غسالات ونشافة وغرفة دراجات'],
         url: 'https://www.stw-thueringen.de/en/housing/schmalkalden/martin-luther-ring-38.html',
       },
@@ -46,7 +46,7 @@ export const localGuides = {
       { title: 'Hochschule Schmalkalden', text: 'الموقع الرئيسي بالإنجليزية', url: 'https://www.hs-schmalkalden.de/en/' },
       { title: 'المكتب الدولي', text: 'التوجيه وبرنامج المرافقين والتصاريح', url: 'https://www.hs-schmalkalden.de/en/international' },
       { title: 'المطعم الجامعي (Mensa)', text: 'القوائم وأوقات العمل', url: 'https://www.hs-schmalkalden.de/en/university/campus/mensa' },
-      { title: 'دفع الرسوم الفصلية', text: 'المبالغ والمواعيد وبيانات البنك', url: 'https://www.hs-schmalkalden.de/en/university/organization/departments/dep-1-studies-and-international-relatations/student-administration/payment-semester-fee' },
+      { title: 'دفع الرسوم الفصلية', text: '331.80 يورو للفصل الشتوي 2026/27، المواعيد وبيانات البنك', url: 'https://www.hs-schmalkalden.de/en/university/organization/departments/dep-1-studies-and-international-relatations/student-administration/payment-semester-fee' },
       { title: 'تفاصيل الرسوم الفصلية', text: 'Studierendenwerk Thüringen', url: 'https://www.stw-thueringen.de/finanzen/semesterbeitrag/beitragshoehe.html' },
       { title: 'بلدية شمالكالدن', text: 'مواعيد مكتب المواطنين والفعاليات ومعلومات السياحة', url: 'https://www.schmalkalden.de/' },
       { title: 'متحف قصر فيلهلمسبورغ', text: 'أوقات العمل والتذاكر', url: 'https://www.museumwilhelmsburg.de/' },

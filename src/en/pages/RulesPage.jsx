@@ -248,7 +248,7 @@ export default function RulesPage() {
               </article>
             ))}
           </div>
-          <p className="mt-5 text-sm text-muted">Fine amounts are estimates based on the German fine catalogue and court practice; they change and vary by state and case. *Estimated cost. Prices are subject to change.</p>
+          <p className="mt-5 text-sm text-muted">Fines are the standard amounts in the German fine catalogue (Bußgeldkatalog) and transport rules; they are higher if you endanger someone or cause damage. Prices are subject to change.</p>
         </Panel>
       </Sections>
     </div>

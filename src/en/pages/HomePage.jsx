@@ -89,8 +89,8 @@ export default function HomePage() {
             </div>
             <div className="absolute -top-5 -left-4 hidden w-56 rotate-[-3deg] rounded-2xl border border-line bg-card p-4 shadow-xl sm:block">
               <p className="eyebrow">Monthly payout</p>
-              <p className="mt-1 font-display text-3xl font-semibold">~€{BLOCKED_MONTHLY}*</p>
-              <p className="text-xs text-muted">estimated, from your blocked account. See how far it goes in each city.</p>
+              <p className="mt-1 font-display text-3xl font-semibold">€{BLOCKED_MONTHLY}</p>
+              <p className="text-xs text-muted">from your blocked account (official 2026 amount). See how far it goes in each city.</p>
             </div>
             <button
               type="button"

@@ -70,7 +70,7 @@ export function Tag({ kind, label }) {
 
 export const ESTIMATE_TEXT = '*Estimated cost. Prices are subject to change.'
 
-// Every price, rent or fine on the site is an estimate; this badge says so.
+// Everyday prices and rents are estimates; this badge says so.
 export function EstimateBadge({ className = '' }) {
   return (
     <span title={ESTIMATE_TEXT} aria-label={ESTIMATE_TEXT} className={`chip cursor-help bg-amber text-[#7a5410] ${className}`}>
@@ -83,7 +83,7 @@ export function EstimateNote({ className = '' }) {
   return (
     <p className={`flex flex-wrap items-center gap-2 text-sm text-muted ${className}`}>
       <EstimateBadge />
-      <span>{ESTIMATE_TEXT} Figures are estimated ranges, not official prices.</span>
+      <span>{ESTIMATE_TEXT} Everyday prices are estimated ranges; fixed official fees are shown at their exact 2026 rate.</span>
     </p>
   )
 }

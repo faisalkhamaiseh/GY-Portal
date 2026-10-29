@@ -18,11 +18,11 @@ export const dticket = {
     'Most routes beyond the German border',
   ],
   tips: [
-    'Your Deutschlandsemesterticket is usually included in the semester fee, so you do not buy a separate Deutschlandticket.',
+    'Your Deutschlandsemesterticket (€226.80 a semester from winter 2026/27) is usually included in the semester fee, so you do not buy a separate €63 Deutschlandticket.',
     'Keep the ticket on your phone (the university app or DB Navigator) and carry your student card or passport. Inspectors check both.',
     'Filter for "only local transport" (Nur Nahverkehr) in DB Navigator to see which connections are free.',
-    'For long distances, book ICE Sparpreis tickets early. A BahnCard 25 for under-27s pays for itself after a few trips.',
-    'Riding without a valid ticket costs a fine (estimated about €60).',
+    'For long distances, book ICE Sparpreis tickets early. The My BahnCard 25 for under-27s costs €39.90 a year and pays for itself after a few trips.',
+    'Riding without a valid ticket costs a €60 fine (€7 if you show your personal semester ticket within a week).',
   ],
 }
 
