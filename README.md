@@ -86,15 +86,13 @@ npx vite preview   # serve dist/ locally
 
 To refresh the videos (this needs `yt-dlp`), run `npm run videos`.
 
-## Deploy (free)
+## Deploy (free, on Vercel)
 
-The build is plain static files (`dist/`) and runs on any static host. `vercel.json` covers Vercel, and `public/_headers` covers Cloudflare Pages and Netlify. Unknown paths get `404.html`, the app shell, which shows the "not found" page.
+1. Import this repo on [vercel.com](https://vercel.com). The framework preset is Vite, the build command is `npm run build`, and the output directory is `dist`.
+2. `vercel.json` serves the pre-rendered pages with clean URLs and sets the caching and security headers. Unknown paths get `404.html`, the app shell, which shows the "not found" page.
+3. Every push to `main` deploys automatically.
 
-**Important for Jordan:** some home and university Wi-Fi providers filter `*.vercel.app` addresses, so the site only opens on mobile data. This is a network block, not a site bug. Fix it with an address those networks don't block:
-
-1. **Cloudflare Pages (free, recommended):** on [dash.cloudflare.com](https://dash.cloudflare.com), go to Workers & Pages, then Create, then Pages, then Connect to Git. Pick this repo and set the build command to `npm run build` and the output directory to `dist`. You get `https://<name>.pages.dev`, served from Cloudflare's network.
-2. **Your own domain (best long-term):** a cheap domain such as `gy-portal.com`, connected to Cloudflare Pages (or Vercel), avoids hosting-domain filters altogether.
-3. Keep Vercel as a second link if you like. Both deploy automatically on every push.
+**Important for Jordan:** some home and university Wi-Fi providers cut connections to `*.vercel.app` addresses. Safari then shows "the network connection was lost", while the same link works on mobile data. This is a network block, not a site bug. Keep the site on Vercel, but give it a custom domain: in the Vercel project go to Settings, then Domains, and add a domain (buy one in Vercel, or point a domain you own at Vercel). The address then no longer contains `vercel.app`. Once a phone has opened the site, the service worker also keeps it working on those networks.
 
 ---
 

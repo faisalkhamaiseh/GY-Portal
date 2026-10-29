@@ -11,8 +11,10 @@ const MEDIA = 'media'
 const ANY = { ignoreSearch: true, ignoreVary: true }
 
 // Browsers refuse a redirected response for a page load (a host adding a
-// trailing slash, or turning /404.html into /404), so keep a plain copy.
-const plain = (res) => (res.redirected ? new Response(res.body, { status: res.status, statusText: res.statusText, headers: res.headers }) : res)
+// trailing slash, or turning /404.html into /404), so keep a plain copy. It is
+// rebuilt from a Blob, which every Safari version accepts (streams are not).
+const plain = (res) =>
+  res.redirected ? res.blob().then((body) => new Response(body, { status: res.status, statusText: res.statusText, headers: res.headers })) : Promise.resolve(res)
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -22,7 +24,8 @@ self.addEventListener('install', (event) => {
         Promise.all(
           PRECACHE.map((url) =>
             fetch(url)
-              .then((res) => res.ok && cache.put(url, plain(res)))
+              .then(plain)
+              .then((res) => res.ok && cache.put(url, res))
               // One file failing must not stop the rest from being saved.
               .catch(() => {}),
           ),
@@ -45,11 +48,12 @@ self.addEventListener('activate', (event) => {
 function networkFirst(request, cacheName, ms) {
   return caches.open(cacheName).then((cache) =>
     cache.match(request, ANY).then((saved) => {
-      const live = fetch(request).then((response) => {
-        const res = plain(response)
-        if (res.ok) cache.put(request, res.clone())
-        return res
-      })
+      const live = fetch(request)
+        .then(plain)
+        .then((res) => {
+          if (res.ok) cache.put(request, res.clone())
+          return res
+        })
       if (!saved) return live
       const timeout = new Promise((resolve) => setTimeout(() => resolve(saved), ms))
       return Promise.race([live.catch(() => saved), timeout])
@@ -94,7 +98,7 @@ self.addEventListener('fetch', (event) => {
               if (res.ok) cache.put(request, res.clone())
               return res
             })
-            .catch(() => saved)
+            .catch(() => saved || Response.error())
           return saved || live
         }),
       ),
