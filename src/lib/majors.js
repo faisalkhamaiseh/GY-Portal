@@ -104,7 +104,7 @@ export const majorsAt = {
   'fh-potsdam': ['DVC', 'ARCH-INT', 'ARCH'],
   'frankfurt-uas': ['ARCH-INT', 'ARCH', 'MechT', 'PCE', 'MS', 'IA', 'LOG', 'NURS', 'BIDA', 'DM'],
   'tu-freiberg': [],
-  fulda: ['IE', 'PCE', 'MS', 'LOG', 'IA', 'CS', 'CE-SS', 'CE-ES', 'CE', 'ComE'],
+  fulda: ['IE', 'PCE', 'MS', 'LOG', 'IA', 'CS', 'CE-SS', 'CE-ES', 'CE', 'ComE', 'ECE', 'EnE', 'EE-EP', 'EE-RE', 'BIDA', 'ElE', 'GDMI', 'DMI', 'NURS'],
   goettingen: ['GEBC'],
   'haw-hamburg': [],
   'hcu-hamburg': [],
@@ -121,7 +121,7 @@ export const majorsAt = {
   'jade-wilhelmshaven': ['IE', 'MechT', 'BME', 'BME-SSI', 'BME-BB', 'BIOMEMS', 'EnE', 'EE-EP', 'EE-RE', 'MS', 'IA', 'LOG', 'BIDA', 'ElE', 'ComE', 'ECE'],
   'eah-jena': ['IE', 'MEM', 'MME', 'WEE', 'WEE-E', 'WEE-W', 'CivE', 'ENV', 'CEE', 'MechT'],
   'th-koeln-gummersbach': ['IE', 'CE-ES', 'CE', 'CS', 'CE-SS', 'ARCH', 'ARCH-INT', 'GDMI', 'DMI'],
-  'rptu-kaiserslautern': ['CE', 'CE-ES', 'CE-SS', 'CS', 'CivE', 'MechT', 'IE', 'CEE', 'WEE-W', 'WEE-E'],
+  'rptu-kaiserslautern': ['CE', 'CE-ES', 'CE-SS', 'CS', 'CivE', 'MechT', 'IE', 'CEE', 'WEE-W', 'WEE-E', 'WEE', 'ENV', 'GDMI', 'DMI'],
   kit: ['ARCH-INT', 'ARCH'],
   'uni-kassel': ['MechT', 'EnE', 'EE-EP', 'IE', 'WEE-W', 'WEE-E', 'CEE', 'WEE', 'CivE', 'ENV', 'MEM', 'MME', 'ElE', 'ComE', 'ECE', 'BIDA', 'MS', 'IA', 'LOG', 'DM'],
   kempten: ['MechT', 'PCE', 'EE-RE', 'EnE', 'EE-EP', 'MS', 'IA', 'LOG', 'BIDA', 'ECE', 'ComE', 'ElE', 'NURS'],
@@ -139,7 +139,7 @@ export const majorsAt = {
   'mainz-germersheim': ['TRANS'],
   'hs-mannheim': ['IE'],
   marburg: ['GEBC'],
-  merseburg: ['MechT', 'MEM', 'MME', 'BIDA', 'DM', 'MS', 'LOG', 'IA', 'EnE', 'EE-EP'],
+  merseburg: ['MechT', 'MEM', 'MME', 'BIDA', 'DM', 'MS', 'LOG', 'IA', 'EnE', 'EE-EP', 'EE-RE', 'ComE', 'ECE', 'ElE'],
   'hm-muenchen': ['EE-EP', 'EE-RE', 'EnE', 'DVC', 'ECE', 'ElE', 'ComE', 'IE'],
   tum: ['CivE', 'CEE'],
   'fh-muenster': ['CivE', 'CEE'],
@@ -148,7 +148,7 @@ export const majorsAt = {
   neubrandenburg: ['PCE'],
   'hs-niederrhein': ['MechT', 'CE-ES', 'CE', 'CS', 'CE-SS', 'GDMI', 'DMI'],
   'th-nuernberg': ['CivE', 'CEE', 'MS', 'IA', 'LOG', 'BIDA'],
-  'hfwu-nuertingen': ['MS', 'IA', 'LOG', 'CivE', 'CEE', 'WEE', 'WEE-W', 'WEE-E', 'ENV', 'EnE'],
+  'hfwu-nuertingen': ['MS', 'IA', 'LOG', 'CivE', 'CEE', 'WEE', 'WEE-W', 'WEE-E', 'ENV', 'EnE', 'EE-EP', 'EE-RE', 'ARCH-INT', 'ARCH', 'ECE', 'ElE', 'ComE', 'BIDA', 'DM'],
   odisee: [],
   offenburg: ['CE', 'ComE', 'CS', 'CE-SS', 'CE-ES', 'IE', 'BME', 'BME-SSI', 'BME-BB', 'BIOMEMS', 'GDMI', 'DMI', 'BIDA', 'DM', 'MS', 'LOG', 'IA'],
   'hs-osnabrueck': ['MME', 'MechT', 'IE', 'MEM', 'CE-ES', 'CE', 'CS', 'ComE', 'CE-SS', 'GDMI', 'DMI'],
@@ -169,8 +169,8 @@ export const majorsAt = {
   'silesian-tech': [],
   'htw-saar': ['MechT', 'ARCH-INT', 'ARCH'],
   'hft-stuttgart': ['ARCH-INT', 'ARCH', 'DMI', 'GDMI', 'CE', 'CS', 'CE-SS', 'CE-ES'],
-  'th-aschaffenburg': ['MechT', 'IE', 'MS', 'IA', 'LOG', 'EnE', 'EE-EP', 'EE-RE', 'BIDA', 'ECE'],
-  'thm-giessen': ['BIOMEMS', 'BME-BB', 'BME-SSI', 'BME', 'CS', 'DVC', 'ARCH-INT', 'ARCH', 'CEE', 'CivE'],
+  'th-aschaffenburg': ['MechT', 'IE', 'MS', 'IA', 'LOG', 'EnE', 'EE-EP', 'EE-RE', 'BIDA', 'ECE', 'ElE', 'ComE', 'DM', 'DMI', 'GDMI', 'CE', 'CS', 'CE-SS', 'CE-ES'],
+  'thm-giessen': ['BIOMEMS', 'BME-BB', 'BME-SSI', 'BME', 'CS', 'DVC', 'ARCH-INT', 'ARCH', 'CEE', 'CivE', 'CE-ES', 'CE', 'CE-SS', 'DMI', 'GDMI'],
   'tu-ilmenau': ['IA', 'BME', 'BME-BB', 'BIOMEMS', 'BME-SSI', 'BIDA', 'DM', 'MS', 'LOG'],
   'tu-chemnitz': ['BME-BB', 'BIOMEMS', 'BME-SSI', 'BME', 'ECE', 'EE-RE', 'ElE', 'ComE'],
   'hs-trier': ['DVC', 'ARCH-INT', 'ARCH', 'CE-ES', 'CE', 'CS', 'CE-SS', 'EnE', 'EE-EP', 'EE-RE', 'IE', 'ECE', 'ElE', 'ComE', 'GDMI', 'DMI'],
@@ -183,13 +183,13 @@ export const majorsAt = {
   'vilnius-tech': [],
   'bauhaus-weimar': ['ARCH-INT', 'ARCH'],
   'th-wildau': ['IE', 'MS', 'IA', 'LOG', 'BIDA'],
-  'fhws-schweinfurt': ['EE-EP', 'EnE', 'EE-RE', 'MechT', 'IE', 'LOG', 'ComE', 'ECE', 'MME', 'MEM'],
+  'fhws-schweinfurt': ['EE-EP', 'EnE', 'EE-RE', 'MechT', 'IE', 'LOG', 'ComE', 'ECE', 'MME', 'MEM', 'ElE'],
   'fhws-wuerzburg': ['ARCH-INT', 'DVC', 'ARCH', 'MS', 'IA', 'BIDA', 'DM'],
   'hs-worms': ['MS', 'IA', 'LOG', 'BIDA'],
   'whz-zwickau': ['IE', 'MechT', 'WEE-E', 'WEE', 'CivE', 'ENV', 'WEE-W', 'CEE', 'BME-SSI', 'BIOMEMS', 'BME-BB', 'BME'],
 }
 
-export const incomplete = new Set(['hfwu-nuertingen', 'fulda', 'rptu-kaiserslautern', 'merseburg', 'th-aschaffenburg', 'thm-giessen', 'fhws-schweinfurt'])
+export const incomplete = new Set([])
 
 // Whether a university takes a major: true, false, or null when we do not know.
 export function offersMajor(id, major) {
