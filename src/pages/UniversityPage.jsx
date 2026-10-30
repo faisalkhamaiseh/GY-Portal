@@ -17,6 +17,7 @@ import { HalalMap, AirportList } from '../components/SurvivalMap.jsx'
 import ShareButton from '../components/ShareButton.jsx'
 import Photo from '../components/Photo.jsx'
 import Sections, { Panel } from '../components/Sections.jsx'
+import { majorsAt, majorById, incomplete } from '../lib/majors.js'
 import NotFound from './NotFound.jsx'
 
 export default function UniversityPage() {
@@ -177,6 +178,23 @@ export default function UniversityPage() {
               ))}
             </div>
           </div>
+          {majorsAt[u.id] && (
+            <div className="card mt-5 p-6">
+              <p className="text-sm font-bold text-muted">التخصصات التي ترسلها GJU إلى هنا (MyGJU)</p>
+              {majorsAt[u.id].length ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {majorsAt[u.id].map((id) => (
+                    <Link key={id} to={`/universities?major=${id}`} className="chip bg-mint text-forest hover:bg-forest hover:text-paper">
+                      {majorById[id].ar}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-2 text-ink-2">لا توجد تخصصات مدرجة لهذه الجامعة في MyGJU حالياً.</p>
+              )}
+              {incomplete.has(u.id) && <p className="mt-3 text-sm text-muted">نسختنا من هذه القائمة غير مكتملة؛ راجع الباقي في MyGJU.</p>}
+            </div>
+          )}
           <p className="mt-4 flex items-start gap-2 text-muted">
             <Info className="mt-1 size-4 shrink-0" /> الشروط والرسوم والمواعيد قد تتغير في أي وقت. هذه معلومات عامة فقط؛ تأكد مع مكتب السنة الألمانية في GJU ومع الجامعة المضيفة قبل تقديم اختياراتك.
           </p>

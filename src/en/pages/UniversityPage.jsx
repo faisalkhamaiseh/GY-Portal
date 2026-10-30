@@ -17,6 +17,7 @@ import { HalalMap, AirportList } from '../components/SurvivalMap.jsx'
 import ShareButton from '../components/ShareButton.jsx'
 import Photo from '../../components/Photo.jsx'
 import Sections, { Panel } from '../../components/Sections.jsx'
+import { majorsAt, majorById, incomplete } from '../../lib/majors.js'
 import NotFound from './NotFound.jsx'
 
 export default function UniversityPage() {
@@ -166,6 +167,23 @@ export default function UniversityPage() {
               ))}
             </div>
           </div>
+          {majorsAt[u.id] && (
+            <div className="card mt-5 p-6">
+              <p className="font-mono text-[11px] tracking-wider text-muted uppercase">Majors GJU sends here (MyGJU)</p>
+              {majorsAt[u.id].length ? (
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {majorsAt[u.id].map((id) => (
+                    <Link key={id} to={`/universities?major=${id}`} className="chip bg-mint text-forest hover:bg-forest hover:text-paper">
+                      {majorById[id].en}
+                    </Link>
+                  ))}
+                </div>
+              ) : (
+                <p className="mt-2 text-ink-2">No majors are listed for this university in MyGJU at the moment.</p>
+              )}
+              {incomplete.has(u.id) && <p className="mt-3 text-sm text-muted">Our copy of this list is incomplete; check MyGJU for the rest.</p>}
+            </div>
+          )}
           <p className="mt-4 flex items-start gap-2 text-sm text-muted">
             <Info className="mt-0.5 size-4 shrink-0" /> Conditions, fees and deadlines can change at any time. This is general information only; confirm with the GJU German Year office and the host university before you submit your choices.
           </p>

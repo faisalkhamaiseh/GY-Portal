@@ -1,10 +1,11 @@
 import { useMemo, useState } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { Search, SlidersHorizontal, X } from 'lucide-react'
 import UniversityCard from '../components/UniversityCard.jsx'
 import { universities, searchUniversities, levelRank, coverVideoId } from '../lib/data.js'
 import { regions } from '../data/regions.js'
 import { rentFor } from '../data/costs.js'
+import { schools, majorById, offersMajor } from '../lib/majors.js'
 import useVideos from '../lib/useVideos.js'
 
 const levels = [
@@ -23,6 +24,7 @@ export default function UniversitiesPage() {
   const noGpa = params.get('gpa') === 'none'
   const noFee = params.get('fees') === 'none'
   const sort = params.get('sort') ?? 'name'
+  const major = majorById[params.get('major')] ? params.get('major') : 'any'
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   const set = (key, value, fallback) => {
@@ -40,12 +42,15 @@ export default function UniversitiesPage() {
     if (level === 'B2') l = l.filter((u) => levelRank(u.german) <= 2)
     if (noGpa) l = l.filter((u) => !u.gpa)
     if (noFee) l = l.filter((u) => !u.fee)
+    if (major !== 'any') l = l.filter((u) => offersMajor(u.id, major))
     if (sort === 'rent') l = [...l].sort((a, b) => (a.abroad ? 9999 : rentFor(a.city).wg[0]) - (b.abroad ? 9999 : rentFor(b.city).wg[0]))
     if (sort === 'city') l = [...l].sort((a, b) => a.city.localeCompare(b.city, 'de'))
     return l
-  }, [q, region, level, noGpa, noFee, sort])
+  }, [q, region, level, noGpa, noFee, sort, major])
+  // Universities whose list of majors we only have in part.
+  const maybe = major === 'any' ? [] : universities.filter((u) => !u.abroad && offersMajor(u.id, major) === null)
 
-  const active = region !== 'all' || level !== 'any' || noGpa || noFee
+  const active = region !== 'all' || level !== 'any' || noGpa || noFee || major !== 'any'
   const clear = () => {
     setQ('')
     setParams({}, { replace: true })
@@ -61,6 +66,21 @@ export default function UniversitiesPage() {
             <option key={r.code} value={r.code}>
               {r.name} ({universities.filter((u) => u.region === r.code).length})
             </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <p className="text-sm font-bold text-muted">تخصصك</p>
+        <select value={major} onChange={(e) => set('major', e.target.value, 'any')} className="mt-2 w-full rounded-xl border border-line bg-card px-3 py-2.5 text-sm">
+          <option value="any">أي تخصص</option>
+          {schools.map((s) => (
+            <optgroup key={s.id} label={s.ar}>
+              {s.majors.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.ar}
+                </option>
+              ))}
+            </optgroup>
           ))}
         </select>
       </div>
@@ -156,6 +176,26 @@ export default function UniversitiesPage() {
           {filtersOpen && <div className="card mt-4 p-5 lg:hidden">{filters}</div>}
 
           <p className="mt-6 mb-5 text-sm font-bold text-muted">{list.length} جامعة</p>
+          {major !== 'any' && (
+            <p className="-mt-2 mb-5 text-sm text-ink-2">
+              الجامعات التي ترسل لها GJU طلاب <strong>{majorById[major].ar}</strong> حسب قائمة الجامعات المضيفة في MyGJU.
+              {maybe.length > 0 && (
+                <>
+                  {' '}
+                  قائمتنا غير مكتملة لـ{' '}
+                  {maybe.map((u, i) => (
+                    <span key={u.id}>
+                      {i > 0 && '، '}
+                      <Link to={`/universities/${u.id}`} className="link">
+                        {u.name}
+                      </Link>
+                    </span>
+                  ))}
+                  ؛ تأكد منها في MyGJU.
+                </>
+              )}
+            </p>
+          )}
           {list.length ? (
             <div className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
               {list.map((u) => (
