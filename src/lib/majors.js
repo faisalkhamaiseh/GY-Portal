@@ -64,6 +64,9 @@ export const schools = [
 export const majorById = Object.fromEntries(schools.flatMap((s) => s.majors.map((m) => [m.id, { ...m, school: s.id }])))
 
 export const majorsAt = {
+  'aalen': ['MEM', 'MME', 'IE', 'CS', 'CE-SS', 'CE-ES', 'CE', 'IA', 'LOG', 'MS', 'BIDA', 'GDMI', 'DMI'],
+  'fh-erfurt': ['MS', 'IA', 'LOG', 'BIDA'],
+  'hs-magdeburg': ['TRANS', 'GEBC', 'DVC', 'WEE-E', 'WEE', 'ENV', 'WEE-W', 'MME', 'IE', 'MEM', 'CivE', 'CEE', 'MechT'],
   'rwth-aachen': ['ARCH-INT', 'ARCH'],
   'albstadt-sigmaringen-albstadt': ['IE'],
   'albstadt-sigmaringen-sigmaringen': ['PCE'],
